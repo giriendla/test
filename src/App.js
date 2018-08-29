@@ -11,7 +11,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started 123, edit <code>src/App.js</code> and save to reload.
+          To get started 123 476 789, edit <code>src/App.js</code> and save to reload.
         </p>
       </div>
     );
