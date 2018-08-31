@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import ReactDOM from 'react-dom';
+import { Grid } from '@material-ui/core';
+import { Scrollbars } from 'react-custom-scrollbars';
+import MainNav from './components/_/navigation';
+import Config from './container/config';
+import Appheader from './components/_/header';
+import Approute from './components/_/router';
+import {Footer} from './components/_/elements';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Grid className="mainContainer">
+        <Appheader />
+        <Approute />
+        <Footer />
+      </Grid>
     );
   }
 }
+
+
+
 
 export default App;
