@@ -34,10 +34,10 @@ class App extends Component {
 
 
 const mapStateToProps = state => {
-  const { users } = state;  
-  return {  users }
+  const obj = state;
+  return obj;
 }
 
 
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, null)(App);
