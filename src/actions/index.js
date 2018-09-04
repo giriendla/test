@@ -1,3 +1,8 @@
-import { ADD_ARTICLE } from "../constants/action-types";
+import {ALL_USERS} from '../constants/action-types';
+import axios from 'axios';
+import {connect, dispatch } from 'react-redux';
 
-export const addArticle = article => ({ type: "ADD_ARTICLE", payload: article });
+export const getAllUsers = allUsers => ({
+    type: ALL_USERS,
+    users: allUsers
+});

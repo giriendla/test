@@ -9,6 +9,8 @@ import {
   Redirect,
   withRouter
 } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Config from './container/config';
 import Appheader from './components/_/header';
 import Approute from './components/_/router';
@@ -17,6 +19,7 @@ import Root from './container/root';
 import './App.css';
 
 class App extends Component {
+  static propTypes = {}
   render() {    
     return (
       <Router>
@@ -30,5 +33,11 @@ class App extends Component {
 
 
 
+const mapStateToProps = state => {
+  const { users } = state;  
+  return {  users }
+}
 
-export default App;
+
+
+export default connect(mapStateToProps)(App);

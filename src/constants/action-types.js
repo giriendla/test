@@ -1,1 +1,4 @@
-export const ADD_ARTICLE = "ADD_ARTICLE";
+import { combineActions } from 'redux-actions';
+
+
+export const ALL_USERS = "ALL_USERS";

@@ -6,7 +6,7 @@ import Config from '../container/config';
 
 
 axios.getEmployees = () => {
-    return Config.baseUrl + "/employees"
+    return Config.baseUrl + Config.api.users.url
 };
 
 

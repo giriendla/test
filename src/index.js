@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './index.css';
 import App from './App';
@@ -7,6 +8,7 @@ import registerServiceWorker from './registerServiceWorker';
 import green from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
+import store from './store';
 
 
 const theme = createMuiTheme({
@@ -25,9 +27,11 @@ const theme = createMuiTheme({
   });
 
 ReactDOM.render(
-    <MuiThemeProvider theme={theme}>
-        <App />
-    </MuiThemeProvider>
+    <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+            <App />
+        </MuiThemeProvider>
+    </Provider>
     , 
     document.getElementById('root'));
 registerServiceWorker();

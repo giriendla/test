@@ -1,2 +1,6 @@
-import React from 'react';
-import Redux from 'redux';
+import { combineReducers } from 'redux';
+import users from './users';
+
+export default combineReducers({
+    users: users
+  });

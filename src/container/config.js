@@ -1,5 +1,5 @@
 const Config =  {
-    "baseUrl" : "http://dummy.restapiexample.com/api/v1",
+    "baseUrl" : "https://jsonplaceholder.typicode.com",
     "images" : "./assets/images/",
     "isRoute": false,
     "mainnav" : [
@@ -14,8 +14,8 @@ const Config =  {
         {name: "Forgot Password", link: "/forgotpassword", icon: "forgotpassword.png", isLogin: false, template: "single"}
     ],
     "api": {
-        "employees": {
-            "url" : "/employees",
+        "users": {
+            "url" : "/users",
             "type": "post"
         }
     }

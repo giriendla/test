@@ -13,7 +13,6 @@ export default class Login extends Component {
             employees: []
         }
     }
-    employees;
     componentWillMount() {
         console.log("Loading Component");
         
