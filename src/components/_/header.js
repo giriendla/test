@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Button,Grid, Menu, MenuItem } from '@material-ui/core';
 import { Scrollbars } from 'react-custom-scrollbars';
 import MainNav from './navigation';
@@ -9,6 +8,10 @@ import Config from '../../container/config';
 
 
 export default class Appheader extends Component {
+    constructor(props){
+        super(props);
+
+    }
     state = {
         anchorEl: null,
       };
@@ -20,17 +23,14 @@ export default class Appheader extends Component {
       handleClose = () => {
         this.setState({ anchorEl: null });
       };
-    render() {
+
+      checkProfile () {
         const { anchorEl } = this.state;
-        return (
-            <Grid container className="headerContainer">
-                <Grid className="headerLeftSection" item lg={2} md={2} sm={3} xs={12}>
-                    <a href="/" >
-                        <img src={Config.images + "logo.png"}/>
-                    </a>
-                </Grid>
-                <Grid className="headerRightSection" item lg={10} md={10} sm={9} xs={12}>
-                    <div className="profileSection">
+        let showProfile;
+        if(this.props != undefined && this.props.showProfile !== undefined){
+            showProfile = <div></div>
+        }else {
+            showProfile = <div className="profileSection">
                         <Button
                             aria-owns={anchorEl ? 'simple-menu' : null}
                             aria-haspopup="true" onClick={this.handleClick} >
@@ -40,6 +40,19 @@ export default class Appheader extends Component {
                             <MenuItem onClick={this.handleClose}>Logout</MenuItem>
                         </Menu>
                     </div>
+        }
+        return showProfile;
+      }
+    render() {        
+        return (
+            <Grid container className="headerContainer">
+                <Grid className="headerLeftSection" item lg={2} md={2} sm={3} xs={12}>
+                    <a href="/" >
+                        <img src={Config.images + "logo.png"}/>
+                    </a>
+                </Grid>
+                <Grid className="headerRightSection" item lg={10} md={10} sm={9} xs={12}>
+                    {this.checkProfile()}                    
                 </Grid>
             </Grid>
         );

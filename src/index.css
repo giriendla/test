@@ -122,3 +122,14 @@ body {
   height: auto;
   margin: 0px auto;
 }
+.loginSliderMessage{
+  display: block;
+  text-align: center;
+  font-size: 2em;
+  width: 80%;
+  margin: 0px auto;
+  letter-spacing: 1px;
+  color: #555;
+  height: 80%;
+  margin-top: 10%;
+}
