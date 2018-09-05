@@ -1,9 +1,6 @@
 import {
     ALL_USERS
 } from '../constants/action-types';
-import {
-    getAllUsers
-} from '../actions';
 
 const initialState = {
     users: []

@@ -13,10 +13,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Config from './container/config';
 import Appheader from './components/_/header';
-import Approute from './components/_/router';
 import {Footer} from './components/_/elements';
 import Root from './container/root';
-import './App.css';
 
 class App extends Component {
   static propTypes = {}

@@ -1,0 +1,14 @@
+body {
+    .track-vertical {
+        /* background-color: darkred; */
+        height: 100%;
+        width: 6px;
+        right: 0px;
+        
+        >div {
+            border-radius: 5px !important;
+            background-color: #47b16f !important;
+            transition: all 50ms;
+        }
+    }
+}

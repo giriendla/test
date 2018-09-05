@@ -15,6 +15,7 @@ import {
 export default class Dashboard extends Component {
     constructor(props) {
         super(props);
+        
         this.state = {
             employees: []
         }
@@ -24,6 +25,7 @@ export default class Dashboard extends Component {
         
     }
     componentDidMount() {        
+        console.log("All Props", this.props);
         this.getEmpoyeesList();        
     }
 

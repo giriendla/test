@@ -1,0 +1,137 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  min-width: 100%;
+
+  .mainContainer {
+    display: block;
+    height: 100%;
+    width: 100%;
+
+    .bodySection {
+      display: block;
+      /* min-height: 750px; */
+      padding: 15px;
+    }
+
+    .headerContainer,
+    .bodyContainer,
+    .footerContainer {
+      /* display: block; */
+      /* background-color: #ccc; */
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+
+    .headerContainer {
+      height: 60px;
+      background-color: #eaeaea;
+    }
+
+    .footerContainer {
+      height: 40px;
+      background-color: #1e1e1e;
+      top: auto;
+      bottom: 0px;
+      color: #ccc;
+      text-align: center;
+      line-height: 40px;
+    }
+
+    .bodyContainer {
+      /* background-color: forestgreen; */
+      height: calc(100% - 100px);
+      top: 60px;
+
+      .bodyContent {
+        display: block;
+        height: 100%;
+        /* overflow-y: scroll; */
+        padding: 15px;
+      }
+    }
+
+    .navContainer {
+      background-color: #3f4b80;
+      height: 100%;
+
+      ul {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        margin-top: 15px;
+
+        >li {
+          display: block;
+          position: relative;
+
+          >a {
+            display: block;
+            color: #fff;
+            padding: 8px 15px;
+            text-decoration: none;
+            outline: none;
+            border: none;
+
+            &.active {
+              background-color: #cccccc33;
+              position: relative;
+
+              &::after {
+                content: " ";
+                position: absolute;
+                right: -6px;
+                width: 6px;
+                top: 0px;
+                height: 100%;
+                background-color: #47b16f;
+              }
+            }
+
+            >img,
+            >span {
+              display: inline-block;
+              max-height: 22px;
+              vertical-align: middle;
+            }
+
+            >img {
+              margin-right: 8px;
+              padding: 2px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .profileSection {
+    display: block;
+    margin: 5px 20px;
+    text-align: right;
+
+    >button {
+      background-color: transparent !important;
+    }
+  }
+
+  .headerLeftSection {
+    text-align: center;
+
+    >a {
+      display: block;
+      padding: 5px;
+
+      >img {
+        display: block;
+        height: 50px;
+        margin: 0px auto;
+      }
+    }
+  }
+}

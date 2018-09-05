@@ -23,7 +23,7 @@ export default class userPage extends Component{
     loadComponent = () => {
         const path = this.props.location.pathname;
         if(path.indexOf('/dashboard') !== -1){
-            return (<div><Dashboard  /></div>);
+            return (<div><Dashboard {...this.props} /></div>);
         }else if(path.indexOf('/visit') !== -1){
             return (<div><Visit /></div>);
         }else if(path.indexOf('/communites') !== -1){
@@ -44,11 +44,11 @@ export default class userPage extends Component{
                 <Header />
                 <Grid container className="bodyContainer">            
                     <Grid className="navContainer" item lg={2} md={2} sm={3} xs={12}>
-                        <MainNav />
+                        <MainNav {...this.props} />
                     </Grid>
                     <Grid className="bodyContent" item lg={10} md={10} sm={9} xs={12}>
                     <Scrollbars
-                    renderTrackVertical={props => <div {...props} className="track-vertical"/>}>
+                        renderTrackVertical={props => <div {...props} className="track-vertical"/>}>
                         <div className="bodySection">
                              {this.loadComponent()}
                         </div>

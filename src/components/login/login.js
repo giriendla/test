@@ -35,17 +35,23 @@ export default class Login extends Component {
 
     render() {                
         return (
-            <Grid container>
-                <Grid item xs={12} sm={6} md={7} lg={7}>
-                    <div>
-                        <img src={Config.images + "kiosk.png"} width="100%" />
+            <Grid 
+                className="loginSection" 
+                container 
+                spacing={16} 
+                direction="row"
+                justify="space-between"
+                alignItems="stretch">
+                <Grid item xs={12} sm={6} md={7} lg={7} className="loginSliderContainer">
+                    <div className="slideImageSection">
+                        <img src={Config.images + "kiosk.png"} />
                     </div>
                     <div className="loginSliderMessage">
                         <p>Touchscreen visitor management
                         designed for senior living.</p>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={6} md={5} lg={5}>
+                <Grid item xs={12} sm={6} md={5} lg={5} className="loginFormContainer">
                     Login Form
                 </Grid>
             </Grid>
