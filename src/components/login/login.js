@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Grid } from '@material-ui/core';
+import { Grid, TextField } from '@material-ui/core';
 import Config from '../../container/config';
 import {getEmployees} from '../../service/api';
+
+import LoginForm from './loginForm';
 
 export default class Login extends Component {
 
     constructor(props) {
         super(props);
-
+        console.log("At Login Container", props);
         this.state = {
             employees: []
         }
@@ -52,7 +54,10 @@ export default class Login extends Component {
                     </div>
                 </Grid>
                 <Grid item xs={12} sm={6} md={5} lg={5} className="loginFormContainer">
-                    Login Form
+                    <div className="logoSection">Logo Section</div>
+                    <div className="loginFormHolder">
+                        <LoginForm {...this.props} />
+                    </div>
                 </Grid>
             </Grid>
         );

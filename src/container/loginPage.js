@@ -11,9 +11,9 @@ export default class BeforeLoginPage extends Component{
     checkView() {
         const path = this.props.location.pathname;
         if(path.indexOf('/login') !== -1){
-            return (<Login />);
+            return (<Login {...this.props} />);
         }else if(path.indexOf('/register') !== -1){
-            return (<Register />);
+            return (<Register  {...this.props} />);
         }
     }
 
