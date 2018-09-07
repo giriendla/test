@@ -25,17 +25,17 @@ export default class userPage extends Component{
         if(path.indexOf('/dashboard') !== -1){
             return (<div><Dashboard {...this.props} /></div>);
         }else if(path.indexOf('/visit') !== -1){
-            return (<div><Visit /></div>);
+            return (<div><Visit {...this.props} /></div>);
         }else if(path.indexOf('/communites') !== -1){
-            return (<div><Communites /></div>);
+            return (<div><Communites {...this.props} /></div>);
         }else if(path.indexOf('/employees') !== -1){
-            return (<div><Employees /></div>);
+            return (<div><Employees {...this.props} /></div>);
         }else if(path.indexOf('/account') !== -1){
-            return (<div><Account /></div>);
+            return (<div><Account {...this.props} /></div>);
         }else if(path.indexOf('/profile') !== -1){
-            return (<div><Profile /></div>);
+            return (<div><Profile {...this.props} /></div>);
         }else if(path.indexOf('/') !== -1){
-            return (<div><Dashboard /></div>);
+            return (<div><Dashboard {...this.props} /></div>);
         }
     }
     render() {
