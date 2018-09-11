@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Grid, Button, Typography } from '@material-ui/core';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import { RaisedButton, TextField, Snackbar } from 'material-ui';
+import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Config from '../../container/config';
 import { Scrollbars } from 'react-custom-scrollbars';
 import green from '@material-ui/core/colors/green';
@@ -139,8 +138,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
                                     id="firstname"
-                                    hintText="First Name"
-                                    floatingLabelText="First Name"
+                                    label="First Name"
+                                    // floatingLabelText="First Name"
                                     className="halfWidth"
                                     value={this.state.firstname}
                                     onChange={this.handleChange('firstname')}
@@ -152,8 +151,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
                                     id="lastname"
-                                    hintText="Last Name"
-                                    floatingLabelText="Last Name"
+                                    label="Last Name"
+                                    // floatingLabelText="Last Name"
                                     className="halfWidth"
                                     value={this.state.lastname}
                                     onChange={this.handleChange('lastname')}
@@ -165,8 +164,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                                 <TextField
                                     id="phone"
-                                    hintText="Phone"
-                                    floatingLabelText="Phone"
+                                    label="Phone"
+                                    // floatingLabelText="Phone"
                                     className="fullWidth"
                                     value={this.state.phone}
                                     onChange={this.handleChange('phone')}
@@ -180,8 +179,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                                 <TextField
                                     id="email"
-                                    hintText="Email"
-                                    floatingLabelText="Email"
+                                    label="Email"
+                                    // floatingLabelText="Email"
                                     className="fullWidth"
                                     value={this.state.email}
                                     onChange={this.handleChange('email')}
@@ -195,8 +194,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                                 <TextField
                                     id="street"
-                                    hintText="Street"
-                                    floatingLabelText="Street"
+                                    label="Street"
+                                    // floatingLabelText="Street"
                                     className="fullWidth"
                                     value={this.state.street}
                                     onChange={this.handleChange('street')}
@@ -207,8 +206,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
                                     id="city"
-                                    hintText="City"
-                                    floatingLabelText="City"
+                                    label="City"
+                                    // floatingLabelText="City"
                                     className="halfWidth"
                                     value={this.state.city}
                                     onChange={this.handleChange('city')}
@@ -219,8 +218,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
                                     id="state"
-                                    hintText="State"
-                                    floatingLabelText="State"
+                                    label="State"
+                                    // floatingLabelText="State"
                                     className="halfWidth"
                                     value={this.state.state}
                                     onChange={this.handleChange('state')}
@@ -231,8 +230,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
                                     id="country"
-                                    hintText="Country"
-                                    floatingLabelText="Country"
+                                    label="Country"
+                                    // floatingLabelText="Country"
                                     className="halfWidth"
                                     value={this.state.country}
                                     onChange={this.handleChange('country')}
@@ -243,8 +242,8 @@ export default class RegisterForm extends Component {
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
                                     id="pin"
-                                    hintText="Pin"
-                                    floatingLabelText="Pin"
+                                    label="Pin"
+                                    // floatingLabelText="Pin"
                                     className="halfWidth"
                                     value={this.state.pin}
                                     maxLength="6"
