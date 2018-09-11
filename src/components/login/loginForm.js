@@ -49,15 +49,16 @@ class LoginForm extends Component {
       };
 
     loginUser() {
-        if(!this.state.username){
-            console.log("username ", this.state.username);
-            this.setState({username_error: "Username is required!"});
+        if(this.state.username && this.state.password){
+            window.location.pathname = "./dashboard";
+        }else{
+            if(!this.state.username){
+                this.setState({"username_error": "username is required!"});
+            }
+            if(!this.state.password){
+                this.setState({"password_error": "password is required!"});
+            }
         }
-        if(!this.state.password){
-            console.log("password", this.state.password);
-            this.setState({password_error: "Password is required!"});
-        }
-        console.log("State is ", this.state);
     }
     
 
