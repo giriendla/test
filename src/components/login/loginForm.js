@@ -31,17 +31,34 @@ class LoginForm extends Component {
         super(props);
         console.log("Login form", props);
         this.state = {
-            username: ""
+            username: "",
+            username_error: "",
+            password: "",
+            password_error: ""
         }
         this.handleChange = this.handleChange.bind(this);
+        this.loginUser = this.loginUser.bind(this);
     }
     handleChange = name => event => {
-        console.log("Handle change", event.target.value);
+        // console.log("Handle change", event.target.value);
         event.persist();
         this.setState({
           [name]: event.target.value,
+          [name+"_error"]: (event.target.value) ? "" : name + " is required!"
         });
       };
+
+    loginUser() {
+        if(!this.state.username){
+            console.log("username ", this.state.username);
+            this.setState({username_error: "Username is required!"});
+        }
+        if(!this.state.password){
+            console.log("password", this.state.password);
+            this.setState({password_error: "Password is required!"});
+        }
+        console.log("State is ", this.state);
+    }
     
 
     render() {  
@@ -62,18 +79,29 @@ class LoginForm extends Component {
                         value={this.state.username}
                         onChange={this.handleChange('username')}
                         margin="normal"
+                        helperText={this.state.username_error}
+                        error={(this.state.username_error == "") ? false : true}
                         fullWidth
                         />
+
                     <TextField
                         id="password"
                         label="Password"
+                        value={this.state.password}
+                        onChange={this.handleChange('password')}
                         placeholder="Password"
                         type="password"
                         fullWidth
                         margin="normal"
+                        helperText={this.state.password_error}
+                        error={(this.state.password_error == "") ? false : true}
                         />
                     <MuiThemeProvider theme={theme}>
-                        <Button variant="contained" color="primary" className="loginButton">
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            className="loginButton"
+                            onClick={this.loginUser}>
                           Login
                         </Button>
                         <div>
@@ -84,8 +112,8 @@ class LoginForm extends Component {
                 <Grid className="section signupSection" item sm={12} md={12} lg={12} xs={12} xl={12}>
                     <MuiThemeProvider theme={theme}>
                         <div className="signupText">Still not registered</div>
-                        <Button variant="outlined" color="primary" className="signupButton">
-                        Sign Up
+                        <Button href="./register" variant="outlined" color="primary" className="signupButton">
+                            Sign Up
                         </Button>
                     </MuiThemeProvider>
                 </Grid>
