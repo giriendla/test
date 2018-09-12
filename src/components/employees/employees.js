@@ -1,76 +1,189 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-    Button,
-    Grid,
-    Menu,
-    MenuItem,
-    TableHead,
-    TableRow, 
-    TableCell, 
-    Tooltip, 
-    TableSortLabel
+  Button,
+  Grid,
+  Menu,
+  MenuList,
+  MenuItem,
+  TableHead,
+  TableRow,
+  TableCell,
+  Tooltip,
+  TableSortLabel,
+  Typography,
+  IconButton,
+  Popper,
+  Grow,
+  Paper,
+  ClickAwayListener
 } from '@material-ui/core';
-import { Scrollbars } from 'react-custom-scrollbars';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {Scrollbars} from 'react-custom-scrollbars';
 import axios from 'axios';
 import MainNav from '../_/navigation';
 import Config from '../../container/config';
 import Dummy from '../_/dummyText';
-import { callUsers } from '../../actions';
+import {callUsers} from '../../actions';
 import store from '../../store';
-import {
-    getAllUsers
-} from '../../actions';
+import {getAllUsers} from '../../actions';
+import ListComponent from './list';
+
+const options = [
+  'None',
+  'Atria',
+  'Callisto',
+  'Dione',
+  'Ganymede',
+  'Hangouts Call',
+  'Luna',
+  'Oberon',
+  'Phobos',
+  'Pyxis',
+  'Sedna',
+  'Titania',
+  'Triton',
+  'Umbriel'
+];
+
+const ITEM_HEIGHT = 48;
 
 export default class Employees extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            employees: []
-        }
-    }
-    componentWillMount() {
-        
-        
-    }
-    componentDidMount() {        
-        console.log("All Props", this.props);
-        this.getEmpoyeesList();        
-    }
+  constructor(props) {
+    super(props);
 
-    getEmpoyeesList() {
-        axios
-        .get(axios.getEmployees())
-        .then((response) => {
-            // console.log("Employee Response", response);
-            this.setState({employees: response.data});            
-            // console.log("At First Response", this.state.employees);    
-            store.dispatch(getAllUsers(response.data));      
-        })
-        /* .then(allUsers =>
+    this.state = {
+      employees: [],
+      anchorEl: null,
+      open: false
+    }
+    this.handleClick = this
+      .handleClick
+      .bind(this);
+    this.handleClose = this
+      .handleClose
+      .bind(this);
+    this.getEmpoyeesList = this
+      .getEmpoyeesList
+      .bind(this);
+    this.handleToggle = this
+      .handleToggle
+      .bind(this);
+  }
+  componentWillMount() {}
+  componentDidMount() {
+    console.log("All Props", this.props);
+    this.getEmpoyeesList();
+  }
+
+  getEmpoyeesList() {
+    axios
+      .get(axios.getEmployees())
+      .then((response) => {
+        // console.log("Employee Response", response);
+        this.setState({employees: response.data});
+        // console.log("At First Response", this.state.employees);
+        store.dispatch(getAllUsers(response.data));
+      })
+      /* .then(allUsers =>
             dispatch({
               type: ALL_USERS,
               users: allUsers
             })
           ) */
-        .catch(function (error) {
-            console.log("At First Error", error);
-        });
-    }
-    render() {        
-        return (
-            <Grid container>
-                
-                {
-                    this.state.employees.map((n, i) => {
-                        return(
-                            <div key={i}>
-                                {JSON.stringify(n)}
-                            </div>
-                        )
-                    })
-                }
-            </Grid>
-        );
-    };
+      .catch(function (error) {
+        console.log("At First Error", error);
+      });
+  }
+
+  handleClick = event => {
+    this.setState({anchorEl: event.currentTarget});
+  };
+  handleToggle = () => {
+    this.setState({
+      open: !this.state.open
+    });
+  };
+
+  handleClose = () => {
+    this.setState({anchorEl: null});
+  };
+
+  /* {
+        this.state.employees.map((n, i) => {
+            return(
+                <div key={i}>
+                    {JSON.stringify(n)}
+                </div>
+            )
+        })
+    } */
+  render() {
+    const {anchorEl} = this.state;
+    const open = Boolean(anchorEl);
+    return (
+      <Grid container>
+        <Grid container>
+          <Grid item sm={6}>
+            <Typography className="pageTitle titleSection" variant="title" gutterBottom>
+              Employees
+            </Typography>
+          </Grid>
+          <Grid item sm={6} align="right">
+          <Button
+          buttonRef={node => {
+          this.anchorEl = node;
+        }}
+          aria-owns={open
+          ? 'menu-list-grow'
+          : null}
+          aria-haspopup="true"
+          onClick={this.handleToggle}>
+          <MoreVertIcon />
+        </Button>
+        <Popper
+          open={this.state.open}
+          anchorEl={this.anchorEl}
+          transition
+          disablePortal
+          style={{
+          zIndex: 9999
+        }}>
+          {({TransitionProps, placement}) => (
+            <Grow
+              {...TransitionProps}
+              id="menu-list-grow"
+              style={{
+              transformOrigin: placement === 'bottom'
+                ? 'center top'
+                : 'center bottom'
+            }}>
+              <Paper>
+                <ClickAwayListener onClickAway={this.handleClose}>
+                  <MenuList>
+                    <MenuItem onClick={(event) => {
+                      this.handleClose(event);
+                      this.handleToggle();
+                    }}>Profile</MenuItem>
+                    <MenuItem
+                      onClick={(event) => {
+                      this.handleClose(event);
+                      this.handleToggle();
+                    }}>Logout</MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+          </Grid>
+        </Grid>
+        <Grid item sm={12}>
+          <ListComponent
+            {...this.props}
+            data={this.state.employees}
+            header={["id", "name", "username", "email", "phone"]}/>
+        </Grid>
+      </Grid>
+    );
+  };
 }
