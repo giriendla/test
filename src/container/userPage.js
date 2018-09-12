@@ -12,6 +12,7 @@ import Dashboard from '../components/dashboard/dashboard';
 import Visit from '../components/visits/visit';
 import Employees from '../components/employees/employees';
 import Account from '../components/account/account';
+import AccountForm from '../components/account/accountForm';
 import Profile from '../components/profile/profile';
 import Communites from '../components/communities/communities';
 
@@ -32,6 +33,8 @@ export default class userPage extends Component{
             return (<div><Employees {...this.props} /></div>);
         }else if(path.indexOf('/account') !== -1){
             return (<div><Account {...this.props} /></div>);
+        }else if(path.indexOf('/accountform') !== -1){
+            return (<div><AccountForm {...this.props} /></div>);
         }else if(path.indexOf('/profile') !== -1){
             return (<div><Profile {...this.props} /></div>);
         }else if(path.indexOf('/') !== -1){

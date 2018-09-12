@@ -42,9 +42,9 @@ export default class Forgotpassword extends Component {
         }
     }
     render() {
-        
 
-        
+
+
         return (
             <Grid container className="forgotPwdBlock1" >
                 <Grid item sm={12} md={12} lg={12} xs={12} xl={12} className='forgotPwdBlock2' >

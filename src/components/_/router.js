@@ -14,6 +14,7 @@ import Config from '../../container/config';
 import Dummy from './dummyText';
 import Dashboard from '../dashboard/dashboard';
 import Account from '../account/account';
+import AccountForm from '../account/accountForm';
 import Communities from '../communities/communities';
 import Employees from "../employees/employees";
 import Login from "../login/login";
@@ -54,6 +55,7 @@ export default class Approute extends Component {
                         <div className="bodySection">
                             <Route path="/dashboard" component={Dashboard} />
                             <Route path="/account" component={Account} />
+                            <Route path="/accountform" component={AccountForm} />
                             <Route path="/communites" component={Communities} />
                             <Route path="/employees" component={Employees} />
                             <Route path="/login" component={Login} />
