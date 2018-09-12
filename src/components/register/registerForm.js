@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Config from '../../container/config';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -129,7 +129,7 @@ export default class RegisterForm extends Component {
                     <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                         <Typography className="loginHeading" variant="title" gutterBottom align="center">
                             Vendor Registration
-                  </Typography>
+                        </Typography>
                     </Grid>
                     {/* <Grid item sm={12} md={12} lg={12} xs={12} xl={12}></Grid> */}
                     <Scrollbars style={{ height: '350px' }}>

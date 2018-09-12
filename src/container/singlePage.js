@@ -7,6 +7,7 @@ import Header from '../components/_/header';
 import { Footer } from "../components/_/elements";
 
 import Forgotpassword from '../components/forgotpassword/forgotpassword';
+import Resetpassword from '../components/forgotpassword/resetPassword';
 
 export default class LoadSinglePage extends Component{
     constructor(props) {
@@ -16,6 +17,8 @@ export default class LoadSinglePage extends Component{
         const path = this.props.location.pathname;
         if(path.indexOf('/forgotpassword') !== -1){
             return (<div><Forgotpassword /></div>);
+        } else if (path.indexOf('/resetpassword') !== -1) {
+            return (<div><Resetpassword /></div>);
         }
     }
     render() {
