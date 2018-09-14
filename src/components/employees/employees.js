@@ -18,6 +18,7 @@ import {
   ClickAwayListener
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import {Scrollbars} from 'react-custom-scrollbars';
 import axios from 'axios';
 import MainNav from '../_/navigation';
@@ -98,25 +99,20 @@ export default class Employees extends Component {
   handleClick = event => {
     this.setState({anchorEl: event.currentTarget});
   };
+
   handleToggle = () => {
-    this.setState({
-      open: !this.state.open
-    });
+    this.setState(state => ({
+      open: !state.open
+    }));
   };
 
-  handleClose = () => {
-    this.setState({anchorEl: null});
-  };
+  handleClose = event => {
+    if (this.anchorEl.contains(event.target)) {
+      return;
+    }
 
-  /* {
-        this.state.employees.map((n, i) => {
-            return(
-                <div key={i}>
-                    {JSON.stringify(n)}
-                </div>
-            )
-        })
-    } */
+    this.setState({open: false});
+  };
   render() {
     const {anchorEl} = this.state;
     const open = Boolean(anchorEl);
@@ -129,52 +125,53 @@ export default class Employees extends Component {
             </Typography>
           </Grid>
           <Grid item sm={6} align="right">
-          <Button
-          buttonRef={node => {
-          this.anchorEl = node;
-        }}
-          aria-owns={open
-          ? 'menu-list-grow'
-          : null}
-          aria-haspopup="true"
-          onClick={this.handleToggle}>
-          <MoreVertIcon />
-        </Button>
-        <Popper
-          open={this.state.open}
-          anchorEl={this.anchorEl}
-          transition
-          disablePortal
-          style={{
-          zIndex: 9999
-        }}>
-          {({TransitionProps, placement}) => (
-            <Grow
-              {...TransitionProps}
-              id="menu-list-grow"
+            <Button
+              buttonRef={node => {
+              this.anchorEl = node;
+            }}
+              aria-owns={open
+              ? 'menu-list-grow'
+              : null}
+              aria-haspopup="true"
+              onClick={this.handleToggle}>
+              <MoreVertIcon/>
+            </Button>
+            <Popper
+              open={this.state.open}
+              anchorEl={this.anchorEl}
+              transition
+              disablePortal
               style={{
-              transformOrigin: placement === 'bottom'
-                ? 'center top'
-                : 'center bottom'
+              zIndex: 9999
             }}>
-              <Paper>
-                <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>
-                    <MenuItem onClick={(event) => {
-                      this.handleClose(event);
-                      this.handleToggle();
-                    }}>Profile</MenuItem>
-                    <MenuItem
-                      onClick={(event) => {
-                      this.handleClose(event);
-                      this.handleToggle();
-                    }}>Logout</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+              {({TransitionProps, placement}) => (
+                <Grow
+                  {...TransitionProps}
+                  id="menu-list-grow"
+                  style={{
+                  transformOrigin: placement === 'bottom'
+                    ? 'center top'
+                    : 'center bottom'
+                }}>
+                  <Paper>
+                    <ClickAwayListener onClickAway={this.handleClose}>
+                      <MenuList>
+                        <MenuItem
+                          onClick={(event) => {
+                          this.handleClose(event);
+                          this.handleToggle();
+                        }}>Profile</MenuItem>
+                        <MenuItem
+                          onClick={(event) => {
+                          this.handleClose(event);
+                          this.handleToggle();
+                        }}>Logout</MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
           </Grid>
         </Grid>
         <Grid item sm={12}>

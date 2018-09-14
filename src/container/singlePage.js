@@ -26,7 +26,7 @@ export default class LoadSinglePage extends Component{
             <div>
                 <Header showProfile={false} />
                 <Grid container className="bodyContainer">                                
-                    <Grid className="bodyContent forgotPassword" item lg={10} md={10} sm={9} xs={12}>
+                    <Grid className="bodyContent forgotPassword" item lg={12} md={12} sm={12} xs={12}>
                         {this.checkView()}
                     </Grid>
                 </Grid>
