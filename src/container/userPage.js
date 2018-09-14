@@ -12,7 +12,7 @@ import Dashboard from '../components/dashboard/dashboard';
 import Visit from '../components/visits/visit';
 import Employees from '../components/employees/employees';
 import Account from '../components/account/account';
-import AccountForm from '../components/account/accountForm';
+import AccountForm from '../components/account/accountform';
 import Profile from '../components/profile/profile';
 import Communites from '../components/communities/communities';
 

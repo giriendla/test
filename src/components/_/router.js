@@ -14,7 +14,7 @@ import Config from '../../container/config';
 import Dummy from './dummyText';
 import Dashboard from '../dashboard/dashboard';
 import Account from '../account/account';
-import AccountForm from '../account/accountForm';
+import AccountForm from '../account/accountform';
 import Communities from '../communities/communities';
 import Employees from "../employees/employees";
 import Login from "../login/login";
