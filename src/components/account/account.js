@@ -26,7 +26,7 @@ export default class Account extends Component {
                         </Typography>
                     </Grid>
                     <Grid item className="text-right" >
-                        <Button variant="outlined" className="outlinedButton" >
+                        <Button href="/account/edit/8" variant="outlined" className="outlinedButton" >
                             Edit
                             {/* <Link to="/register" />Edit</Link> */}
                         </Button>

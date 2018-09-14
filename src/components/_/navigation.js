@@ -20,7 +20,7 @@ export default class MainNav extends Component {
             <div className="mainNavigation">
                 <ul>
                     {Config.mainnav.map((n, i) => {
-                        if(n.isLogin){
+                        if(n.isLogin && !n.hasOwnProperty('child')){
                             return <li key={i}>
                             <Link to={n.link} className={(n.link === currentUrl) ? "active": ""}>
                                 <img src={Config.images + "icons/white/" + n.icon} />

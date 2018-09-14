@@ -8,7 +8,6 @@ const Config = {
         { name: "Communites", link: "/communites", icon: "communites.png", isLogin: true, template: "user" },
         { name: "Employees", link: "/employees", icon: "employees.png", isLogin: true, template: "user" },
         { name: "Account", link: "/account", icon: "account.png", isLogin: true, template: "user" },
-        { name: "AccountForm", link: "/accountform", icon: "accountform.png", isLogin: true, template: "user" },
         { name: "Profile", link: "/profile", icon: "profile.png", isLogin: true, template: "user" },
         { name: "Login", link: "/login", icon: "login.png", isLogin: false, template: "beforeLogin" },
         { name: "Register", link: "/register", icon: "login.png", isLogin: false, template: "beforeLogin" },

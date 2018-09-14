@@ -6,6 +6,7 @@ import {
     Route,
     Link,
     Redirect,
+    matchPath,
     withRouter
 } from "react-router-dom";
 import MainNav from './navigation';
@@ -55,7 +56,7 @@ export default class Approute extends Component {
                         <div className="bodySection">
                             <Route path="/dashboard" component={Dashboard} />
                             <Route path="/account" component={Account} />
-                            <Route path="/accountform" component={AccountForm} />
+                            <Route path="/account/edit/:id" component={AccountForm} />
                             <Route path="/communites" component={Communities} />
                             <Route path="/employees" component={Employees} />
                             <Route path="/login" component={Login} />

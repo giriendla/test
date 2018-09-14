@@ -23,6 +23,7 @@ export default class userPage extends Component{
     };
     loadComponent = () => {
         const path = this.props.location.pathname;
+        console.log("Current Location", path);
         if(path.indexOf('/dashboard') !== -1){
             return (<div><Dashboard {...this.props} /></div>);
         }else if(path.indexOf('/visit') !== -1){
@@ -32,9 +33,17 @@ export default class userPage extends Component{
         }else if(path.indexOf('/employees') !== -1){
             return (<div><Employees {...this.props} /></div>);
         }else if(path.indexOf('/account') !== -1){
-            return (<div><Account {...this.props} /></div>);
-        }else if(path.indexOf('/accountform') !== -1){
-            return (<div><AccountForm {...this.props} /></div>);
+            var account = path.split('/');
+            if(account.length > 2){
+                switch(account[2]){
+                    case "edit":
+                        return (<div><AccountForm {...this.props} /></div>);    
+                    break;
+                    default: return false;                    
+                }
+            }else{
+                return (<div><Account {...this.props} /></div>);
+            }
         }else if(path.indexOf('/profile') !== -1){
             return (<div><Profile {...this.props} /></div>);
         }else if(path.indexOf('/') !== -1){

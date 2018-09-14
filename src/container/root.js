@@ -13,13 +13,13 @@ import Config from './config';
 
 const Root = () => {
     return (
-        <div>        
+        <div className="root">        
             {
                 Config.mainnav.map((n, i) => {
                     if(n.isLogin){
                         // After Login
                         return (
-                            <Route path={n.link} exact component={UserPage} key={i} />
+                            <Route path={n.link} component={UserPage} key={i} />
                         )
                     }else{
                         // Before Login

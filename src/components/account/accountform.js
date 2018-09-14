@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import InputLabel from '@material-ui/core/InputLabel';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Redirect,
-    withRouter
-} from "react-router-dom";
 import MaskedInput from 'react-text-mask';
 import Input from '@material-ui/core/Input';
 import { TextField, Button, Typography, Grid, Menu, MenuItem } from '@material-ui/core';
 import { Scrollbars } from 'react-custom-scrollbars';
 import MainNav from '../_/navigation';
 import Config from '../../container/config';
+import { matchPath } from 'react-router-dom';
+
 
 import "./account.scss";
 
@@ -40,10 +35,12 @@ export default class AccountForm extends Component {
     constructor(props) {
         super(props);
         console.log("Account form", props);
+        
         this.state = {
             firstname: "",
             firstname_error: false,
             showLabel: false,
+            id: null
         }
         // this.handleChange = this.handleChange.bind(this);
     }
@@ -119,15 +116,26 @@ export default class AccountForm extends Component {
         }
         console.log('handleUpdate');
     }
+    componentDidMount() {
+        this.getParams();
+    }
+    getParams () {
+        const match = matchPath(this.props.history.location.pathname, {
+            path: '/account/edit/:id',
+            exact: true,
+            strict: false
+        });
+        this.setState({ id: (match !== null || undefined && match.params !== null || undefined) ? match.params.id : null});
+    }
 
-    render() {
+    render() {      
         return (
             <Grid container className="accountBlock" >
                 <Grid container className="header" justify="flex-start" >
                     {/* <Grid item xs={12} sm={6} md={6} > */}
                     <Grid item>
                         <Typography className="Heading" variant="title" gutterBottom align="center">
-                            Account Edit
+                            Account Edit Form - {this.state.id}
                         </Typography>
                     </Grid>
 
