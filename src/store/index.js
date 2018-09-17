@@ -18,14 +18,14 @@ let logger = store =>{
       }
 };
 
-
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const middleware = [thunk,logger];
 const store = createStore(
   rootReducer,
   initialState,
-  compose(
-    applyMiddleware(...middleware)
+  composeEnhancers(
+    applyMiddleware(thunk,logger)
   )
 );
 
