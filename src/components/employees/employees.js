@@ -134,7 +134,7 @@ export default class Employees extends Component {
               : null}
               aria-haspopup="true"
               onClick={this.handleToggle}>
-              <MoreVertIcon/>
+              <FilterListIcon />
             </Button>
             <Popper
               open={this.state.open}
@@ -160,12 +160,7 @@ export default class Employees extends Component {
                           onClick={(event) => {
                           this.handleClose(event);
                           this.handleToggle();
-                        }}>Profile</MenuItem>
-                        <MenuItem
-                          onClick={(event) => {
-                          this.handleClose(event);
-                          this.handleToggle();
-                        }}>Logout</MenuItem>
+                        }}>Search</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
