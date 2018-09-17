@@ -33,6 +33,10 @@ export default class Account extends Component {
         }
         // this.handleChange = this.handleChange.bind(this);
     }
+    componentWillMount() {
+        this.setState({ accountDetails: JSON.parse(localStorage.getItem('accountData')) });
+
+    }
 
     editForm = (evt) => {
         // window.location.hash = '/account/edit/1';
@@ -69,7 +73,7 @@ export default class Account extends Component {
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} className="formBlock" >
                     <div className="formTitle" > Phone </div>
-                    <div className="formDescp" > (123) - 123 - 4123    {this.state.accountDetails.phone} </div>
+                    <div className="formDescp" > {this.state.accountDetails.phone} </div>
                 </Grid>
                 <Grid item xs={12} sm={6} md={6} className="formBlock" >
                     <div className="formTitle" > Email </div>
