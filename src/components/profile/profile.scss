@@ -1,0 +1,13 @@
+.profilePic {
+    width: 150px;
+    height: 150px;
+    box-shadow: 0 0 0 3px #fff,
+        0 0 0 8px #47b16f;
+    overflow: hidden;
+    text-align: center;
+
+    >img {
+        height: 150px;
+        margin-left: -20px;
+    }
+}

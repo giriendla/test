@@ -1,6 +1,6 @@
 const Config = {
     "baseUrl": "https://jsonplaceholder.typicode.com",
-    "images": "./assets/images/",
+    "images": "/assets/images/",
     "isRoute": false,
     "mainnav": [
         { name: "Dashboard", link: "/dashboard", icon: "dashboard.png", isLogin: true, template: "user" },
@@ -18,6 +18,10 @@ const Config = {
         "users": {
             "url": "/users",
             "type": "post"
+        },
+        "posts": {
+            "url": "/posts",
+            "type": "get"
         }
     }
 }
