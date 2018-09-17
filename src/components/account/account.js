@@ -34,7 +34,7 @@ export default class Account extends Component {
         // this.handleChange = this.handleChange.bind(this);
     }
     componentWillMount() {
-        this.setState({ accountDetails: JSON.parse(localStorage.getItem('accountData')) });
+        // this.setState({ accountDetails: JSON.parse(localStorage.getItem('accountData')) });
 
     }
 

@@ -40,22 +40,50 @@ export default class AccountForm extends Component {
             firstname: "",
             firstname_error: false,
             showLabel: false,
-            id: null
+            id: null,
+            accountData: {
+                firstname: 'Florida Best Hearing',
+                lastname: 'New Port RicheyName',
+                sugar_id: '82f72939-735e-53a2-0944-5418c4edae2a',
+                phone: '1231234123',
+                email_id: 'newportrichey@accushield.com',
+                state: 'Florida, New Jersey, New York',
+                billingAddress: 'P.O. Box 942873 Sacramento, CA 94273-0001',
+                shippingAddress: 'District 2 1657 Riverside Drive Redding 530-225-3426',
+            },
+            firstname: 'Florida Best Hearing',
+            lastname: 'New Port RicheyName',
+            sugar_id: '82f72939-735e-53a2-0944-5418c4edae2a',
+            phone: '1231234123',
+            email: 'newportrichey@accushield.com',
+            state: 'Florida, New Jersey, New York',
+            billingAddress: 'P.O. Box 942873 Sacramento, CA 94273-0001',
+            shippingAddress: 'District 2 1657 Riverside Drive Redding 530-225-3426',
         }
         // this.handleChange = this.handleChange.bind(this);
     }
+    componentDidMount() {
+
+    }
     componentWillMount() {
-        const accountData = JSON.parse(localStorage.getItem('accountData'));
-        this.state.accountData = accountData;
-        this.setState({
-            firstname: this.state.accountData.firstname,
-            lastname: this.state.accountData.lastname,
-            email: this.state.accountData.email_id,
-            phone: this.state.accountData.phone,
-            state: this.state.accountData.state,
-            billingAddress: this.state.accountData.billingAddress,
-            shippingAddress: this.state.accountData.shippingAddress,
-        })
+        // 
+        // const accountData = JSON.parse(localStorage.getItem('accountData'));
+        // this.state.accountData = accountData;
+        // this.setState({
+        //     firstname: this.state.accountData.firstname,
+        //     lastname: this.state.accountData.lastname,
+        //     email: this.state.accountData.email_id,
+        //     phone: this.state.accountData.phone,
+        //     state: this.state.accountData.state,
+        //     billingAddress: this.state.accountData.billingAddress,
+        //     shippingAddress: this.state.accountData.shippingAddress,
+        // });
+    
+        if (this.state.phone && this.state.phone.length === 0) {
+            this.setState({ showLabel: false });
+        } else {
+            this.setState({ showLabel: true });
+        }
     }
     handleChange = name => event => {
         console.log(name,
@@ -224,7 +252,7 @@ export default class AccountForm extends Component {
                     <div className="MuiGrid-item-2 MuiGrid-grid-xs-12-41 MuiGrid-grid-sm-6-49 MuiGrid-grid-md-6-63">
                         <div className="MuiFormControl-root-159 MuiFormControl-marginNormal-160 formFont" style={{ height: '48px' }} >
                             {/* <InputLabel htmlFor="formatted-text-mask-input">Phone</InputLabel> */}
-                            {this.state.showLabel && <label className="MuiFormLabel-root-168 MuiFormLabel-filled-172 MuiInputLabel-root-163 MuiInputLabel-formControl-164 MuiInputLabel-animated-167 MuiInputLabel-shrink-166" data-shrink="true" >Phone</label>}
+                            {this.state.showLabel && <label className="MuiFormLabel-root-168 MuiFormLabel-filled-172 MuiInputLabel-root-163 MuiInputLabel-formControl-164 MuiInputLabel-animated-167 MuiInputLabel-shrink-166 phoneLabel" data-shrink="true" >Phone</label>}
                             <div className="MuiInput-root-175 MuiInput-formControl-176 MuiInput-underline-179">
                                 <Input
                                     name="Phone"
