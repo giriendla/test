@@ -142,6 +142,7 @@ export default class AccountForm extends Component {
             this.state.accountData.shippingAddress = this.state.shippingAddress;
             console.log('handleUpdate', this.state.accountData);
             localStorage.setItem('accountData', JSON.stringify(this.state.accountData));
+            this.props.history.push('/account');
         }
     }
     componentDidMount() {
