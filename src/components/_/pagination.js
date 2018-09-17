@@ -16,7 +16,7 @@ export default class ListComponent extends Component {
     console.log("props", props);
     this.state = {
       pgCurrent: 1,
-      pgPerPage: 2
+      pgPerPage: 10
     };
     const totalData = [];
 
@@ -53,23 +53,7 @@ export default class ListComponent extends Component {
   render() {
     return (
       <Fragment>
-        <Table className="listTable">
-          <TableHead>
-            <TableRow>
-              {this
-                .props
-                .header
-                .map((n, i) => {
-                  return (
-                    <TableCell key={i}>{n}</TableCell>
-                  )
-                })}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <RenderPageItems data={this.showPaginate()} header={this.props.header}/>
-          </TableBody>
-        </Table>
+        <RenderPageItems data={this.showPaginate()} header={this.props.header}/>
         <Pagination
           defaultCurrent={1}
           onChange={this.onPaginationChange}
@@ -86,40 +70,57 @@ const RenderPageItems = (props) => {
   const doPaginate = (props) => {
     console.log("At Render Page Items", props);
   }
-
   doPaginate(props);
+  const showOptions = () => {
+    
+  }
+
   const rowsRender = () => {
     console.log("All Props at child", props);
     if (props.data.length > 0) {
       return (
         <Fragment>
-          {props
-            .data
-            .map((n, i) => {
-              console.log(n)
-              return (
-                <TableRow key={i}>
-                  {props.header.map((k, l) => {
+          <Table className="listTable">
+            <TableHead>
+              <TableRow>
+                {props
+                  .header
+                  .map((n, i) => {
                     return (
-                      <TableCell key={l}>{n[k]}</TableCell>
+                      <TableCell key={i}>{n}</TableCell>
                     )
                   })}
-                </TableRow>
-              )
-            })
-}
-
+                  <TableCell>Options</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {props
+                .data
+                .map((n, i) => {
+                  console.log(n)
+                  return (
+                    <TableRow key={i}>
+                      {props
+                        .header
+                        .map((k, l) => {
+                          return (
+                            <TableCell key={l}>{n[k]}</TableCell>
+                          )
+                        })}
+                        <TableCell>Options</TableCell>
+                    </TableRow>
+                  )
+                })
+              }
+              </TableBody>
+          </Table>
         </Fragment>
       )
     } else {
       return (
-        <TableRow>
-          <TableCell>{props.data.length}</TableCell>
-          <TableCell>5</TableCell>
-          <TableCell>6</TableCell>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-        </TableRow>
+        <div>
+          <h3>No Records to show</h3>
+        </div>
       )
     }
   }
