@@ -6,8 +6,21 @@ const initialState = {
     users: []
 };
 
-const middleware = [thunk];
 
+let logger = store =>{
+      return next =>{
+         return action =>{
+             console.log("middle ware logger ",action )
+              const result = next(action);
+              console.log("current state",store.getState());
+             return result
+         }
+      }
+};
+
+
+
+const middleware = [thunk,logger];
 const store = createStore(
   rootReducer,
   initialState,
