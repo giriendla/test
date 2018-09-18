@@ -7,6 +7,7 @@ import MainNav from '../components/_/navigation';
 import Dummy from '../components/_/dummyText';
 import Header from '../components/_/header';
 import { Footer } from "../components/_/elements";
+import "../scss/userStyles.scss";
 
 import Dashboard from '../components/dashboard/dashboard';
 import Visit from '../components/visits/visit';

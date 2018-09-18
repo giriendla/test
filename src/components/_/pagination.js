@@ -13,7 +13,7 @@ import Pagination from 'rc-pagination';
 export default class ListComponent extends Component {
   constructor(props) {
     super(props);
-    console.log("props", props);
+    /* console.log("props", props); */
     this.state = {
       pgCurrent: 1,
       pgPerPage: 10
@@ -25,7 +25,7 @@ export default class ListComponent extends Component {
       .bind(this);
   }
   onPaginationChange = (page) => {
-    console.log(page);
+    /* console.log(page); */
     this.setState({pgCurrent: page});
   }
   doPaginate(data) {
@@ -40,7 +40,7 @@ export default class ListComponent extends Component {
     }
     this.totalData = actualData;
     // this.doPaginate(actualData);
-    console.log("Show Total Rows", data, arr);
+    /* console.log("Show Total Rows", data, arr); */
   }
   showPaginate() {
     let array = this.props.data;
@@ -71,12 +71,17 @@ const RenderPageItems = (props) => {
     console.log("At Render Page Items", props);
   }
   doPaginate(props);
-  const showOptions = () => {
-    
+  const showOptions = () => {}
+  const renderImage = (key, data) => {
+    if (key == 0 && data.hasOwnProperty('image')) {
+      return (
+        <div className="profileImage"><img src={data.image}/></div>
+      );
+    }
   }
 
   const rowsRender = () => {
-    console.log("All Props at child", props);
+    /* console.log("All Props at child", props); */
     if (props.data.length > 0) {
       return (
         <Fragment>
@@ -90,29 +95,34 @@ const RenderPageItems = (props) => {
                       <TableCell key={i}>{n}</TableCell>
                     )
                   })}
-                  <TableCell>Options</TableCell>
+                <TableCell>Options</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {props
                 .data
                 .map((n, i) => {
-                  console.log(n)
+                  /* console.log(n) */
                   return (
                     <TableRow key={i}>
                       {props
                         .header
                         .map((k, l) => {
                           return (
-                            <TableCell key={l}>{n[k]}</TableCell>
+                            <TableCell key={l}>
+                              {renderImage(l, n)}
+                              <span>
+                                {n[k]}
+                              </span>
+                            </TableCell>
                           )
                         })}
-                        <TableCell>Options</TableCell>
+                      <TableCell>Options</TableCell>
                     </TableRow>
                   )
                 })
-              }
-              </TableBody>
+}
+            </TableBody>
           </Table>
         </Fragment>
       )

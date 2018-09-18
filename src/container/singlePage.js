@@ -5,6 +5,7 @@ import MainNav from '../components/_/navigation';
 import Dummy from '../components/_/dummyText';
 import Header from '../components/_/header';
 import { Footer } from "../components/_/elements";
+import "../scss/singlePage.scss";
 
 import Forgotpassword from '../components/forgotpassword/forgotpassword';
 import Resetpassword from '../components/forgotpassword/resetPassword';
