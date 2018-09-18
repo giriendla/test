@@ -132,7 +132,7 @@ export default class RegisterForm extends Component {
                         </Typography>
                     </Grid>
                     {/* <Grid item sm={12} md={12} lg={12} xs={12} xl={12}></Grid> */}
-                    <Scrollbars style={{ height: '350px' }}>
+                    <Scrollbars style={{ height: '350px' }} className="semiScroll">
                         <Grid container className="registrationForm" >
                             {/* Sign Up Section */}
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
@@ -267,7 +267,7 @@ export default class RegisterForm extends Component {
                         </Button>
                         {/* </Grid>
                     <Grid item xs={12} sm={6} md={6} className=""> */}
-                        <Button variant="outlined" className="loginButton" >
+                        <Button href="./login" variant="outlined" className="loginButton" >
                             Cancel
                         </Button>
                         {/* </Grid> */}

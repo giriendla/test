@@ -68,6 +68,7 @@ export default class ResetPassword extends Component {
                         // onChange={(event, newValue) => this.setState({ newpassword: newValue, newpassword_error: false })}
                         margin="normal"
                         maxLength="10"
+                        type="password"
                         error={this.state.newpassword_error}
                     />
                     <div>
@@ -82,6 +83,7 @@ export default class ResetPassword extends Component {
                         // onChange={(event, newValue) => this.setState({ confirmpassword: newValue, confirmpassword_error: false })}
                         margin="normal"
                         maxLength="10"
+                        type="password"
                         error={this.state.confirmpassword_error}
                     />
                     <div>

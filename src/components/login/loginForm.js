@@ -106,7 +106,7 @@ class LoginForm extends Component {
                           Login
                         </Button>
                         <div>
-                            <Button color="secondary" className="forgotButton">Forgot password</Button>
+                            <Button href="./forgotpassword" color="secondary" className="forgotButton">Forgot password</Button>
                         </div>
                     </MuiThemeProvider>
                 </Grid>

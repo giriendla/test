@@ -124,12 +124,6 @@ export default class Visit extends Component {
                         <Typography className="pageTitle titleSection" variant="title" gutterBottom>
                             Visits Page
                         </Typography>
-                        {/* <CSVLink data={this.state.visitors}
-                            filename={"my-file.csv"}
-                            className="btn btn-primary"
-                            target="_blank">
-                            Download me
-                        </CSVLink> */}
                     </Grid>
                     <Grid item sm={6} align="right">
                         <Button

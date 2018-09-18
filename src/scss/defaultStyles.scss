@@ -13,6 +13,15 @@ body {
             transition: all 50ms;
         }
     }
+    .semiScroll{
+        >div{
+            &:nth-child(3){
+                >div{
+                    background-color: #47b16f !important;
+                }
+            }
+        }
+    }
 
     .pageTitle {
         color: #47b16f;
