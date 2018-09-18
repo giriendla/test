@@ -85,7 +85,7 @@ export default class Profile extends Component {
             </Typography>
           </Grid>
           <Grid item sm={1} md={1} lg={1} xs={1} xl={1} className="EditGrid" >
-            <Button variant="fab" aria-label="Edit" className="editBtn" >
+            <Button href="/profile/edit" variant="fab" aria-label="Edit" className="editBtn" >
               <Icon>edit_icon</Icon>
             </Button>
           </Grid>
@@ -98,9 +98,9 @@ export default class Profile extends Component {
           </Grid>
           <Grid item sm={9} md={9} lg={9} xs={12} xl={9}>
             <div className="title"> Angelina </div>
-            <div className="subTitle">Software engineer</div>
+            <div className="subTitle">Software Engineer</div>
 
-            <Grid style={{paddingTop: '10px', paddingBottom: '10px',}} >
+            <Grid style={{paddingTop: '30px', paddingBottom: '10px',}} >
               <div className="title1" > Sugar ID :</div>
               <div className="subTitle1" > 82f72939-735e-53a2-0944-5418c4edae2a </div>
             </Grid>
