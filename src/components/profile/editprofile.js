@@ -211,11 +211,10 @@ export default class EditProfile extends Component {
                         <Button variant="contained" color="primary" className="loginButton"
                             onClick={this.handleSubmit} style={{
                                 marginRight: '20px', backgroundColor: '#4caf50',
-                                color: '#000'
                             }} >
                             Update
                         </Button>
-                        <Button href="./profile" variant="outlined" className="loginButton" >
+                        <Button href="./profile" variant="outlined" style={{ color: '#4caf50'}} className="loginButton" >
                             Cancel
                         </Button>
                     </Grid>
