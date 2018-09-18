@@ -18,6 +18,9 @@ export default class Profile extends Component {
       confirmpassword: '',
       confirmpassword_error: false,
       showPwdResetBlock: false,
+      profileData : {
+        
+      }
     }
     // this.handleChange = this.handleChange.bind(this);
   }
@@ -100,7 +103,7 @@ export default class Profile extends Component {
             <div className="title"> Angelina </div>
             <div className="subTitle">Software Engineer</div>
 
-            <Grid style={{paddingTop: '30px', paddingBottom: '10px',}} >
+            <Grid style={{paddingTop: '10px', paddingBottom: '10px',}} >
               <div className="title1" > Sugar ID :</div>
               <div className="subTitle1" > 82f72939-735e-53a2-0944-5418c4edae2a </div>
             </Grid>
@@ -193,7 +196,7 @@ export default class Profile extends Component {
                 {this.state.confirmpassword_error && <span className="errorText" >{this.state.confirmpassword_error} Confirm password </span>}
               </div>
               <Button variant="contained" color="primary" className="loginButton"
-                onClick={this.resetPwd} style={{ backgroundColor: '#4caf50', color: '#000' }} >
+                onClick={this.resetPwd} style={{ backgroundColor: '#4caf50' }} >
                 Submit
               </Button>
             </Grid>
