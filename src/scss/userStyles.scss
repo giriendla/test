@@ -2,5 +2,29 @@
 @import "./defaultStyles.scss";
 
 body{
+
+    .profileImage{
+        width: 32px;
+        height: 32px;
+        display: inline-block;
+        vertical-align: middle;
+        border-radius: 50%;
+        overflow: hidden;
+        text-align: center;
+        position: relative;
+        margin-right: 8px;
+        >img{
+            display: block;
+            height: 100%; 
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);     
+        }
+        +span{
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
     
 }

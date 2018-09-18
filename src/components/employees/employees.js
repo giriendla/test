@@ -76,12 +76,23 @@ export default class Employees extends Component {
     this.getEmpoyeesList();
   }
 
+  addProfilePic(data) {
+    // console.log("Add Profile", data);
+    for(let i = 0; i< data.length; i++){
+      let item = data[i];
+      let id = i % 10;
+      item.image = Config.images + "profiles/" + (id+1) + ".jpeg";      
+    }
+    console.log("Data", data);
+    return data;
+  }
+
   getEmpoyeesList() {
     axios
       .get(axios.getEmployees())
       .then((response) => {
         // console.log("Employee Response", response);
-        this.setState({employees: response.data});
+        this.setState({employees: this.addProfilePic(response.data)});
         // console.log("At First Response", this.state.employees);
         store.dispatch(getAllUsers(response.data));
       })
@@ -173,7 +184,7 @@ export default class Employees extends Component {
           <ListComponent
             {...this.props}
             data={this.state.employees}
-            header={["id", "name", "username", "email", "phone"]}/>
+            header={["name", "username", "email", "phone"]}/>
         </Grid>
       </Grid>
     );
