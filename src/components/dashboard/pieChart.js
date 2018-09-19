@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import * as d3 from "d3";
 import {select} from 'd3-selection';
 import pieData from './data.json';
-import pieChartData from './data.csv';
 
 export default class PieChart extends Component {
   constructor(props) {
@@ -63,7 +62,7 @@ export default class PieChart extends Component {
       .outerRadius(radius - 40)
       .innerRadius(radius - 40);
 
-    d3.csv("./data.csv", function (d) {
+    d3.json("./data.json", function (d) {
       d.population = +d.population;
       return d;
     }, function (data, error) {

@@ -8,9 +8,6 @@ import Dummy from '../_/dummyText';
 import {callUsers} from '../../actions';
 import store from '../../store';
 import {getAllUsers} from '../../actions';
-import pieData from './data.json';
-import pieDataSeries from './dataSeries.json';
-import PieChart from './pieChart';
 import DonutChart from './doNutChart';
 
 export default class Dashboard extends Component {
@@ -32,7 +29,6 @@ export default class Dashboard extends Component {
         <Grid container justify="stretch">
           <Grid container align="center" className="countSection">
             <Grid item sm={12} xs={12} md={4} lg={4}>
-              {/* <PieChart data={pieData} series={pieDataSeries} /> */}
               <DonutChart data={10} label={"Total Employees"}/>
             </Grid>
             <Grid item sm={12} xs={12} md={4} lg={4}>
