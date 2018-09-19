@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Button,
   Grid,
@@ -11,7 +11,7 @@ import {
   Popper,
   Paper
 } from '@material-ui/core';
-import {Scrollbars} from 'react-custom-scrollbars';
+import { Scrollbars } from 'react-custom-scrollbars';
 import MainNav from './navigation';
 import Config from '../../container/config';
 
@@ -28,7 +28,7 @@ export default class Appheader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        open: false
+      open: false
     }
   }
 
@@ -43,8 +43,11 @@ export default class Appheader extends Component {
       return;
     }
 
-    this.setState({open: false});
+    this.setState({ open: false });
   };
+  handleProfile = event => {
+    window.location.pathname = "/profile";
+  }
   logoutUser() {
     setTimeout(() => {
       window.location.pathname = "/login";
@@ -52,9 +55,9 @@ export default class Appheader extends Component {
   }
 
   checkProfile() {
-    const {classes} = this.props;
-    const {open} = this.state;
-    const {anchorEl} = this.state;
+    const { classes } = this.props;
+    const { open } = this.state;
+    const { anchorEl } = this.state;
     let showProfile;
     if (this.props != undefined && this.props.showProfile !== undefined) {
       showProfile = <div></div>
@@ -62,14 +65,14 @@ export default class Appheader extends Component {
       showProfile = <div className="profileSection">
         <Button
           buttonRef={node => {
-          this.anchorEl = node;
-        }}
+            this.anchorEl = node;
+          }}
           aria-owns={open
-          ? 'menu-list-grow'
-          : null}
+            ? 'menu-list-grow'
+            : null}
           aria-haspopup="true"
           onClick={this.handleToggle}>
-          <img src={Config.images + "icons/green/user.png"} width="36"/>
+          <img src={Config.images + "icons/green/user.png"} width="36" />
         </Button>
         <Popper
           open={open}
@@ -78,26 +81,29 @@ export default class Appheader extends Component {
           disablePortal
           className="profileDropdown"
           style={{
-          zIndex: 9999
-        }}>
-          {({TransitionProps, placement}) => (
+            zIndex: 9999
+          }}>
+          {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
               id="menu-list-grow"
               style={{
-              transformOrigin: placement === 'bottom'
-                ? 'center top'
-                : 'center bottom'
-            }}>
+                transformOrigin: placement === 'bottom'
+                  ? 'center top'
+                  : 'center bottom'
+              }}>
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList>
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                    <MenuItem 
+                      onClick={(event) => {this.handleProfile(); 
+                      this.handleClose(event);
+                      }}>Profile</MenuItem>
                     <MenuItem
                       onClick={(event) => {
-                      this.handleClose(event);
-                      this.logoutUser()
-                    }}>Logout</MenuItem>
+                        this.handleClose(event);
+                        this.logoutUser()
+                      }}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -113,7 +119,7 @@ export default class Appheader extends Component {
       <Grid container className="headerContainer">
         <Grid className="headerLeftSection" item lg={2} md={2} sm={3} xs={12}>
           <a href="/">
-            <img src={Config.images + "logo.png"}/>
+            <img src={Config.images + "logo.png"} />
           </a>
         </Grid>
         <Grid className="headerRightSection" item lg={10} md={10} sm={9} xs={12}>
