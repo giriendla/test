@@ -9,6 +9,7 @@ import {callUsers} from '../../actions';
 import store from '../../store';
 import {getAllUsers} from '../../actions';
 import DonutChart from './doNutChart';
+import BarGraph from './barGraph';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ export default class Dashboard extends Component {
   render() {
     return (
       <Fragment>
-        <Grid container justify="stretch">
+        < Grid container justify="space-between" >
           <Grid container align="center" className="countSection">
             <Grid item sm={12} xs={12} md={4} lg={4}>
               <DonutChart data={10} label={"Total Employees"}/>
@@ -39,10 +40,14 @@ export default class Dashboard extends Component {
             </Grid>
           </Grid>
           <Grid container>
-            <Grid item>
-              <Typography variant="title">
+            < Grid container >
+              <Typography variant = "title"
+              className = "pageTitle titleSection margin-top-20" >
                 Visits By Service Type
               </Typography>
+            </Grid>
+            < Grid container >
+              <BarGraph />
             </Grid>
           </Grid>
         </Grid>
