@@ -35,7 +35,7 @@ const Root = () => {
                     }
                 })
             } 
-            <Route path="/" exact component={UserPage} />           
+            <Route path="/" exact component={BeforeLoginPage} />           
         </div>
     );
 };

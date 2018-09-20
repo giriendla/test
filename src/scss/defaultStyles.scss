@@ -2,7 +2,7 @@
 @import './reset.scss';
 
 body {
-    
+
     .track-vertical {
         /* background-color: darkred; */
         height: 100%;
@@ -146,6 +146,53 @@ body {
                 -moz-user-select: none;
                 -ms-user-select: none;
                 user-select: none;
+            }
+        }
+    }
+
+    .preLoginHeading {
+        font-family: "Segoeui-regular";
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 20px;
+    }
+
+    .preLoginLink {
+        letter-spacing: 1px;
+        text-transform: none;
+        font-weight: normal;
+    }
+
+    .btn {
+        font-family: "Segoeui-regular";
+        text-transform: none;
+        padding: 8px 15px;
+        letter-spacing: 1px;
+        font-size: 16px;
+        border-radius: 0px;
+        font-weight: bold;
+        min-width: 100px;
+        text-align: center;
+        min-height: 0px;
+        line-height: normal;
+
+        &.btn-primary {
+            background-color: #47b16f;
+            color: #fff;
+        }
+
+        &.btn-secondary {
+            border: #47b16f 1px solid;
+            color: #000;
+        }
+
+        &.btn-link {
+            letter-spacing: 1px;
+            text-transform: none;
+            font-weight: normal;
+            color: #000;
+            &:hover{
+                background: transparent;
             }
         }
     }

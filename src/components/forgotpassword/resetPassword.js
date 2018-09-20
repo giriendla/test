@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 import { Grid, Menu, MenuItem, TextField, Button, Typography } from '@material-ui/core';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Scrollbars } from 'react-custom-scrollbars';
 import MainNav from '../_/navigation';
 import Config from '../../container/config';
+import green from '@material-ui/core/colors/green';
+import blue from '@material-ui/core/colors/blue';
 
 import './forgotpassword.scss';
-
+const styles = theme => ({
+    button: {
+        color: "#ffffff"   
+    },
+    input: {
+      display: 'none',
+    },
+  });
+const theme = createMuiTheme({
+    palette: {
+      primary: green,
+      secondary: {
+        main: '#673ab7',
+      },
+    },
+  });
 export default class ResetPassword extends Component {
     constructor(props) {
         super(props);
@@ -49,52 +67,56 @@ export default class ResetPassword extends Component {
         }
         if (formValid) {
             console.log('resetPwd');
+            window.location.pathname = "/login";
         }
+
     }
 
     render() {
         return (
             <Grid container className="forgotPwdBlock1" >
-                <Typography className="loginHeading" variant="title" gutterBottom align="center">
-                    Reset Password
+                <Grid container justify="center">
+                    <Typography className="preLoginHeading" variant="title" gutterBottom align="center">
+                        Reset Password
                     </Typography>
-                <Grid item sm={12} md={12} lg={12} xs={12} xl={12} className="forgotPwdBlock2" >
+                </Grid>
+                <Grid className="section" 
+                        item>
                     <TextField
                         id="newpassword"
                         label="New Password"
-                        className=""
+                        className="newpassword"
                         value={this.state.newpassword}
                         onChange={this.handleChange('newpassword')}
-                        // onChange={(event, newValue) => this.setState({ newpassword: newValue, newpassword_error: false })}
                         margin="normal"
-                        maxLength="10"
                         type="password"
-                        error={this.state.newpassword_error}
-                    />
-                    <div>
-                        {this.state.newpassword_error && <span className="errorText" >{this.state.email_error} Enter new password</span>}
-                    </div>
+                        helperText={this.state.newpassword_error}
+                        error={(this.state.newpassword_error == "") ? false : true}
+                        fullWidth
+                        />
+
                     <TextField
                         id="confirmpassword"
                         label="Confirm Password"
-                        className=""
                         value={this.state.confirmpassword}
                         onChange={this.handleChange('confirmpassword')}
-                        // onChange={(event, newValue) => this.setState({ confirmpassword: newValue, confirmpassword_error: false })}
-                        margin="normal"
-                        maxLength="10"
+                        placeholder="confirm password"
+                        type="confirmpassword"
                         type="password"
-                        error={this.state.confirmpassword_error}
-                    />
-                    <div>
-                        {this.state.confirmpassword_error && <span className="errorText" >{this.state.email_error} Confirm password </span>}
-                    </div>
-
-                    <div className="errorText" >{this.state.email_error}</div>
-                    <Button variant="contained" color="primary" className="loginButton"
-                        onClick={this.resetPwd} style={{ backgroundColor: '#4caf50', color: '#000' }} >
-                        Submit
-                    </Button>
+                        fullWidth
+                        margin="normal"
+                        helperText={this.state.confirmpassword_error}
+                        error={(this.state.confirmpassword_error == "") ? false : true}
+                        />
+                    <MuiThemeProvider theme={theme}>
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            className="btn btn-primary loginButton"
+                            onClick={this.resetPwd} >
+                            Submit
+                        </Button>
+                    </MuiThemeProvider>
                 </Grid>
             </Grid>
         );

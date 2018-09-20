@@ -5,8 +5,6 @@ import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Config from '../../container/config';
 import { Scrollbars } from 'react-custom-scrollbars';
-import green from '@material-ui/core/colors/green';
-import blue from '@material-ui/core/colors/blue';
 
 import './register.scss';
 
@@ -114,6 +112,7 @@ export default class RegisterForm extends Component {
         }
         if (formValid) {
             this.saveForm();
+            window.location.pathname = "/login";
         }
     }
     saveForm = (event) => {
@@ -127,7 +126,7 @@ export default class RegisterForm extends Component {
             <MuiThemeProvider>
                 <Grid container className="registrationSection" >
                     <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
-                        <Typography className="loginHeading" variant="title" gutterBottom align="center">
+                        <Typography className="loginHeading preLoginHeading" variant="title" gutterBottom align="center">
                             Vendor Registration
                         </Typography>
                     </Grid>
@@ -144,9 +143,9 @@ export default class RegisterForm extends Component {
                                     value={this.state.firstname}
                                     onChange={this.handleChange('firstname')}
                                     margin="normal"
-                                // errorText={this.state.firstname_error}
+                                    helperText={this.state.firstname_error}
+                                    error={(this.state.firstname_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.firstname_error}</div>
                             </Grid>
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
@@ -157,9 +156,9 @@ export default class RegisterForm extends Component {
                                     value={this.state.lastname}
                                     onChange={this.handleChange('lastname')}
                                     margin="normal"
-                                // errorText={this.state.lastname_error}
+                                    helperText={this.state.lastname_error}
+                                    error={(this.state.lastname_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.lastname_error}</div>
                             </Grid>
                             <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                                 <TextField
@@ -172,9 +171,9 @@ export default class RegisterForm extends Component {
                                     margin="normal"
                                     maxLength="10"
                                     style={styles.fullWidth}
-                                // errorText={this.state.lastname_error}
+                                    helperText={this.state.phone_error}
+                                    error={(this.state.phone_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.phone_error}</div>
                             </Grid>
                             <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                                 <TextField
@@ -185,9 +184,9 @@ export default class RegisterForm extends Component {
                                     value={this.state.email}
                                     onChange={this.handleChange('email')}
                                     margin="normal"
-                                // errorText={this.state.email_error}
+                                    helperText={this.state.email_error}
+                                    error={(this.state.email_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.email_error}</div>
                             </Grid>
                             {/* <Grid container> */}
                             <div style={{ paddingLeft: '15px', paddingTop: '20px' }} >Address</div>
@@ -200,8 +199,9 @@ export default class RegisterForm extends Component {
                                     value={this.state.street}
                                     onChange={this.handleChange('street')}
                                     margin="normal"
+                                    helperText={this.state.state_error}
+                                    error={(this.state.state_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.street_error}</div>
                             </Grid>
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
@@ -212,8 +212,9 @@ export default class RegisterForm extends Component {
                                     value={this.state.city}
                                     onChange={this.handleChange('city')}
                                     margin="normal"
+                                    helperText={this.state.city_error}
+                                    error={(this.state.city_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.city_error}</div>
                             </Grid>
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
@@ -224,8 +225,9 @@ export default class RegisterForm extends Component {
                                     value={this.state.state}
                                     onChange={this.handleChange('state')}
                                     margin="normal"
+                                    helperText={this.state.state_error}
+                                    error={(this.state.state_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.state_error}</div>
                             </Grid>
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
@@ -236,8 +238,9 @@ export default class RegisterForm extends Component {
                                     value={this.state.country}
                                     onChange={this.handleChange('country')}
                                     margin="normal"
+                                    helperText={this.state.country_error}
+                                    error={(this.state.country_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.country_error}</div>
                             </Grid>
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
@@ -249,28 +252,22 @@ export default class RegisterForm extends Component {
                                     maxLength="6"
                                     onChange={this.handleChange('pin')}
                                     margin="normal"
+                                    helperText={this.state.pin_error}
+                                    error={(this.state.pin_error == "") ? false : true}
                                 />
-                                <div className="errorText" >{this.state.pin_error}</div>
                             </Grid>
                             {/* </Grid> */}
 
                         </Grid>
                     </Scrollbars>
-                    <Grid container className="buttonsHolder" justify="center" >
+                    <Grid container className="buttonsHolder1" justify="center" >
                         {/* <Grid item xs={12} sm={6} md={6} className="">  */}
-                        <Button variant="contained" color="primary" className="loginButton"
-                            onClick={this.handleSubmit} style={{
-                                marginRight: '20px', backgroundColor: '#4caf50',
-                                color: '#000'
-                            }} >
+                        <Button href="./register" style={{marginRight: '20px'}} className="btn btn-primary signupButton" onClick={this.handleSubmit}>
                             Register
                         </Button>
-                        {/* </Grid>
-                    <Grid item xs={12} sm={6} md={6} className=""> */}
-                        <Button href="./login" variant="outlined" className="loginButton" >
+                        <Button href="./login" className="btn btn-secondary signupButton">
                             Cancel
                         </Button>
-                        {/* </Grid> */}
                     </Grid>
 
                 </Grid>

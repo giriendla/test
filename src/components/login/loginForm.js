@@ -67,7 +67,7 @@ class LoginForm extends Component {
         return (
             <Grid container>
                 <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
-                    <Typography className="loginHeading" variant="title" gutterBottom align="center">
+                    <Typography className="loginHeading preLoginHeading" variant="title" gutterBottom align="center">
                         Vendor Login
                     </Typography>
                 </Grid>
@@ -101,19 +101,19 @@ class LoginForm extends Component {
                         <Button 
                             variant="contained" 
                             color="primary" 
-                            className="loginButton"
+                            className="btn btn-primary loginButton"
                             onClick={this.loginUser}>
                           Login
                         </Button>
                         <div>
-                            <Button href="./forgotpassword" color="secondary" className="forgotButton">Forgot password</Button>
+                            <Button href="./forgotpassword" color="secondary" className="btn btn-link">Forgot password</Button>
                         </div>
                     </MuiThemeProvider>
                 </Grid>
                 <Grid className="section signupSection" item sm={12} md={12} lg={12} xs={12} xl={12}>
                     <MuiThemeProvider theme={theme}>
                         <div className="signupText">Still not registered</div>
-                        <Button href="./register" variant="outlined" color="primary" className="signupButton">
+                        <Button href="./register" variant="outlined" color="primary" className="btn btn-secondary signupButton">
                             Sign Up
                         </Button>
                     </MuiThemeProvider>

@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
 import { Grid, Menu, MenuItem, TextField, Button, Typography } from '@material-ui/core';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Scrollbars } from 'react-custom-scrollbars';
 import MainNav from '../_/navigation';
 import Config from '../../container/config';
+import green from '@material-ui/core/colors/green';
+import blue from '@material-ui/core/colors/blue';
 
 import './forgotpassword.scss';
 
-export default class Forgotpassword extends Component {
+const styles = theme => ({
+    button: {
+        color: "#ffffff"   
+    },
+    input: {
+      display: 'none',
+    },
+  });
+  const theme = createMuiTheme({
+    palette: {
+      primary: green,
+      secondary: {
+        main: '#673ab7',
+      },
+    },
+  });
+
+  export default class Forgotpassword extends Component {
     constructor(props) {
         super(props);
         console.log("Register form", props);
@@ -37,38 +57,53 @@ export default class Forgotpassword extends Component {
         if (!this.state.email) {
             this.setState({ email_error: true });
             formValid = false;
-        } else {
+        }
+        let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let result = re.test(this.state.email);
+        console.log('result', result)
+        if (!result) {
+            this.setState({ email_error: "Valid email is required" });
+            formValid = false;
+        }
+
+        if(formValid){
+            window.location.pathname = "/resetpassword";
             console.log('submitMail');
         }
     }
     render() {
 
         return (
-            <Grid container className="forgotPwdBlock1" >
-                <Grid item sm={12} md={12} lg={12} xs={12} xl={12} className='forgotPwdBlock2' >
-                    <Typography className="loginHeading" variant="title" gutterBottom align="center">
+            <Grid container>
+                <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
+                    <Typography className="loginHeading preLoginHeading" variant="title" gutterBottom align="center">
                         Forgot Password
                     </Typography>
+                </Grid>
+                <Grid className="section" item>
                     <TextField
                         id="email"
                         label="Email"
-                        className=""
                         value={this.state.email}
                         onChange={this.handleChange('email')}
-                        // onChange={(event, newValue) => this.setState({ email: newValue, email_error: false })}
+                        placeholder="Enter your email"
+                        type="email"
+                        fullWidth
                         margin="normal"
                         maxLength="10"
-                        error={this.state.email_error}
-                    />
-                    <div>
-                        {this.state.email_error && <span className="errorText" >{this.state.email_error} Mail is required</span>}
-                    </div>
-                    <Button variant="contained" color="primary" className="loginButton"
-                        onClick={this.submitMail} style={{ backgroundColor: '#4caf50', color: '#000' }} >
-                        Submit
-                    </Button>
-                </Grid>
-            </Grid>
+                        helperText={this.state.email_error}
+                        error={(this.state.email_error == "") ? false : true}
+                        />
+                    <MuiThemeProvider theme={theme}>
+                        <Button style={{marginRight: '20px'}} className="btn btn-primary signupButton" onClick={this.submitMail}>
+                            Submit
+                        </Button>
+                        <Button href="./login" className="btn btn-secondary signupButton">
+                            Cancel
+                        </Button>
+                    </MuiThemeProvider>
+                </Grid>                  
+            </Grid>            
         );
     };
 }
