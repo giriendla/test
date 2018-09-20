@@ -1,27 +1,11 @@
-export default `letter	frequency
-A	.08167
-B	.01492
-C	.02782
-D	.04253
-E	.12702
-F	.02288
-G	.02015
-H	.06094
-I	.06966
-J	.00153
-K	.00772
-L	.04025
-M	.02406
-N	.06749
-O	.07507
-P	.01929
-Q	.00095
-R	.05987
-S	.06327
-T	.09056
-U	.02758
-V	.00978
-W	.02360
-X	.00150
-Y	.01974
-Z	.00074`;
+export default `label	frequency	color
+Home Health	50	#e28699
+Home Care	80	#dde269
+Doctor	200	#dd6868
+Durable Medical Equipment	500	#57a396
+Private Duty Provider / Slitter	100	#4d3193
+Nurse / PA	800	#d35ea4
+Marketer	300	#bf5585
+Hospice	600	#e55597
+Other Healthcare	400	#39a851
+Other Non-Healthcare	700	#6c5e8e`;

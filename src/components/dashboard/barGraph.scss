@@ -1,11 +1,28 @@
-.bar {
-    fill: #47b16f;
+.axis--x{
+    >.tick{
+        >text{
+            border: 1px solid #c00;
+        }
+    }
 }
-
-.bar:hover {
-   /*  fill: brown; */
-}
-
 .axis--x path {
-    display: none;
+    /* display: none; */
+    stroke: #000;
+}
+
+.colorBar{
+    display: block;
+    font-size: 0.8em;
+    .colorBarItem{
+        padding: 8px 15px;
+        >i, >span{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        >i{
+            width: 12px;
+            height: 12px;
+            margin-right: 10px;
+        }
+    }
 }
