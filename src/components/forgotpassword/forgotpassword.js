@@ -95,10 +95,10 @@ const styles = theme => ({
                         error={(this.state.email_error == "") ? false : true}
                         />
                     <MuiThemeProvider theme={theme}>
-                        <Button style={{marginRight: '20px'}} className="btn btn-primary signupButton" onClick={this.submitMail}>
+                        <Button style={{marginRight: '20px'}} className="btn btn-primary  mar-large-top" onClick={this.submitMail}>
                             Submit
                         </Button>
-                        <Button href="./login" className="btn btn-secondary signupButton">
+                        <Button href="./login" className="btn btn-secondary  mar-large-top">
                             Cancel
                         </Button>
                     </MuiThemeProvider>

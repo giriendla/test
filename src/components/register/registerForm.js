@@ -262,10 +262,10 @@ export default class RegisterForm extends Component {
                     </Scrollbars>
                     <Grid container className="buttonsHolder1" justify="center" >
                         {/* <Grid item xs={12} sm={6} md={6} className="">  */}
-                        <Button href="./register" style={{marginRight: '20px'}} className="btn btn-primary signupButton" onClick={this.handleSubmit}>
+                        <Button href="./register" style={{marginRight: '20px'}} className="btn btn-primary  mar-large-top" onClick={this.handleSubmit}>
                             Register
                         </Button>
-                        <Button href="./login" className="btn btn-secondary signupButton">
+                        <Button href="./login" className="btn btn-secondary  mar-large-top">
                             Cancel
                         </Button>
                     </Grid>
