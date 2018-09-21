@@ -253,12 +253,13 @@ export default class EditProfile extends Component {
 
                     </Grid>
                     <Grid container className="buttonsHolder" justify="center" >
-                        {/* <Grid item xs={12} sm={6} md={6} className="">  */}
-                        <Button className="btn btn-primary"
-                            onClick={this.handleSubmit} style={{marginRight: '20px'}} >
+                        <Button className="greenBtn"
+                            onClick={this.handleSubmit} style={{
+                                marginRight: '45px',
+                            }} >
                             Update
                         </Button>
-                        <Button href="./profile"  className="btn btn-secondary" >
+                        <Button href="./profile" variant="outlined" className="outlinedBtn" >
                             Cancel
                         </Button>
                     </Grid>
