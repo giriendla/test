@@ -78,7 +78,7 @@ export default class Visit extends Component {
 
     getVisitorsList() {
         axios
-            .get(axios.getEmployees())
+            .get(axios.getPosts())
             .then((response) => {
                 // console.log("Employee Response", response);
                 this.setState({ visitors: response.data });
@@ -173,7 +173,7 @@ export default class Visit extends Component {
                     <ListComponent
                         {...this.props}
                         data={this.state.visitors}
-                        header={["id", "name", "username", "email", "phone"]} />
+                        header={["id", "title", "body", "userId"]} />
                 </Grid>
             </Grid>
         );

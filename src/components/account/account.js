@@ -51,7 +51,7 @@ export default class Account extends Component {
                 <Grid container className="header" justify="space-between" >
                     {/* <Grid item xs={12} sm={6} md={6} > */}
                     <Grid item>
-                        <Typography className="Heading" variant="title" gutterBottom align="center">
+                        <Typography className="pageTitle titleSection" variant="title" gutterBottom align="center">
                             Account
                         </Typography>
                     </Grid>

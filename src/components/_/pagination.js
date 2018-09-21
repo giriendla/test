@@ -9,6 +9,8 @@ import {
   TableSortLabel
 } from '@material-ui/core';
 import Pagination from 'rc-pagination';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 export default class ListComponent extends Component {
   constructor(props) {
@@ -58,6 +60,7 @@ export default class ListComponent extends Component {
           defaultCurrent={1}
           onChange={this.onPaginationChange}
           current={this.state.pgCurrent}
+          hideOnSinglePage={true}
           total={this.props.data.length}
           pageSize={this.state.pgPerPage}/>
       </Fragment>
@@ -117,7 +120,10 @@ const RenderPageItems = (props) => {
                             </TableCell>
                           )
                         })}
-                      <TableCell>Options</TableCell>
+                      <TableCell>
+                        <a href="javascript:void(0)"><EditIcon class="icon icon-edit" /></a>
+                        <a href="javascript:void(0)"><DeleteIcon class="icon icon-delete" /></a>
+                      </TableCell>
                     </TableRow>
                   )
                 })
@@ -129,7 +135,7 @@ const RenderPageItems = (props) => {
     } else {
       return (
         <div>
-          <h3>No Records to show</h3>
+          {/* <h3>No Records to show</h3> */}
         </div>
       )
     }

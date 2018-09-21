@@ -22,6 +22,7 @@ import Login from "../login/login";
 import Forgotpassword from "../forgotpassword/forgotpassword";
 import ResetPassword from "../forgotpassword/resetPassword";
 import Profile from '../profile/profile';
+import ChangePassword from "../profile/changePassword";
 import EditProfile from '../profile/editprofile';
 import Register from '../register/register';
 import Visit from '../visits/visit';
@@ -65,6 +66,7 @@ export default class Approute extends Component {
                             <Route path="/resetpassword" component={ResetPassword} />
                             <Route path="/profile" component={Profile} />
                             <Route path="/profile/edit" component={EditProfile} />
+                            <Route path="/profile/changepassword" component={ChangePassword} />
                             <Route path="/register" component={Register} />
                             <Route path="/visit" component={Visit} />
                         </div>

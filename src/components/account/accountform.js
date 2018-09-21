@@ -191,8 +191,8 @@ export default class AccountForm extends Component {
                 <Grid container className="header" justify="flex-start" >
                     {/* <Grid item xs={12} sm={6} md={6} > */}
                     <Grid item>
-                        <Typography className="Heading" variant="title" gutterBottom align="center">
-                            Account Edit Form - {this.state.id}
+                        <Typography className="pageTitle titleSection" variant="title" gutterBottom align="center">
+                            Account Edit Form
                         </Typography>
                     </Grid>
 
@@ -249,11 +249,11 @@ export default class AccountForm extends Component {
                         placeholderChar={'\u2000'}
                         showMask
                     /> */}
-                    <div className="MuiGrid-item-2">
-                        {this.state.showLabel && <div className="MuiFormControl-root-159 MuiFormControl-marginNormal-160 formFont" style={{ height: '48px', width: '100%', paddingTop: '11px' }} >
+                    <div className="">
+                        {this.state.showLabel && <div className="formFont" style={{ height: '48px', width: '100%', paddingTop: '11px' }} >
                             {/* <InputLabel htmlFor="formatted-text-mask-input">Phone</InputLabel> */}
-                            {this.state.showLabel && <label className="MuiFormLabel-root-168 MuiFormLabel-filled-172 MuiInputLabel-root-163 MuiInputLabel-formControl-164 MuiInputLabel-animated-167 MuiInputLabel-shrink-166 phoneLabel" data-shrink="true" >Phone</label>}
-                            <div className="MuiInput-root-175 MuiInput-formControl-176 MuiInput-underline-179">
+                            {this.state.showLabel && 
+                                <label className="phoneLabel" data-shrink="true" style={{ fontSize: '0.8rem'}}>Phone</label>}
                                 <Input
                                     name="Phone"
                                     // label="Phone"
@@ -265,7 +265,6 @@ export default class AccountForm extends Component {
                                     inputComponent={TextMaskCustom}
                                     error={this.state.phone_error}
                                 />
-                            </div>
                             {/* <div>
                                 {this.state.phone_error && <span className="errorText" > Phone number is required</span>}
                             </div> */}

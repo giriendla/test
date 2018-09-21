@@ -24,6 +24,7 @@ import Employees from '../components/employees/employees';
 import Account from '../components/account/account';
 import AccountForm from '../components/account/accountform';
 import Profile from '../components/profile/profile';
+import ChangePassword from '../components/profile/changePassword';
 import EditProfile from '../components/profile/editprofile';
 import Communites from '../components/communities/communities';
 
@@ -81,6 +82,10 @@ class userPage extends Component {
     } else if (path.indexOf('/profile/edit') !== -1) {
       return (
         <div><EditProfile {...this.props}/></div>
+      );
+    } else if (path.indexOf('/profile/changepassword') !== -1) {
+      return (
+        <div><ChangePassword {...this.props}/></div>
       );
     } else if (path.indexOf('/profile') !== -1) {
       return (

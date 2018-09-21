@@ -53,7 +53,6 @@ export default class EditProfile extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange = name => event => {
-
         this.setState({
             [name]: event.target.value,
         });
@@ -255,13 +254,11 @@ export default class EditProfile extends Component {
                     </Grid>
                     <Grid container className="buttonsHolder" justify="center" >
                         {/* <Grid item xs={12} sm={6} md={6} className="">  */}
-                        <Button variant="contained" color="primary" className="loginButton"
-                            onClick={this.handleSubmit} style={{
-                                marginRight: '20px', backgroundColor: '#4caf50',
-                            }} >
+                        <Button className="btn btn-primary"
+                            onClick={this.handleSubmit} style={{marginRight: '20px'}} >
                             Update
                         </Button>
-                        <Button href="./profile" variant="outlined" style={{ color: '#4caf50' }} className="loginButton" >
+                        <Button href="./profile"  className="btn btn-secondary" >
                             Cancel
                         </Button>
                     </Grid>

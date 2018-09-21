@@ -197,6 +197,19 @@ body {
         }
     }
 
+
+    .icon{
+        color: #47b16f;
+        width: 24px;
+        height: 24px;
+        &.icon-delete{
+            fill: #3f4a80;
+        }
+        &.icon-edit{
+            fill: #47b16f;
+        }
+    }
+
     .arc text {
         font: 10px sans-serif;
         text-anchor: middle;

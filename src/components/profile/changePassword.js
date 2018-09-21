@@ -6,7 +6,7 @@ import MainNav from '../_/navigation';
 import Config from '../../container/config';
 import './profile.scss';
 
-export default class Profile extends Component {
+export default class ChangePassword extends Component {
   constructor(props) {
     super(props);
     // console.log("Register form", props);
@@ -64,6 +64,7 @@ export default class Profile extends Component {
     }
     if (formValid) {
       console.log('resetPwd');
+      window.location.pathname = '/profile';
       // Service call
       this.setState({
         showPwdResetBlock: false,
@@ -84,73 +85,12 @@ export default class Profile extends Component {
         <Grid container>
           <Grid item sm={11} md={11} lg={11} xs={11} xl={11}>
             <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-              Profile
+              Change Password
             </Typography>
-          </Grid>
-          <Grid item sm={1} md={1} lg={1} xs={1} xl={1} className="EditGrid" >
-            <Button href="/profile/edit" variant="fab" aria-label="Edit" className="editBtn" >
-              <Icon>edit_icon</Icon>
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item sm={3} md={3} lg={3} xs={12} xl={3}>
-            <div className="profilePic imgRound">
-              <img src={Config.images + "profilePic.jpg"} />
-            </div>
-          </Grid>
-          <Grid item sm={9} md={9} lg={9} xs={12} xl={9}>
-            <div className="title"> Angelina </div>
-            <div className="subTitle">Software Engineer</div>
-
-            <Grid style={{paddingTop: '10px', paddingBottom: '10px',}} >
-              <div className="title1" > Sugar ID :</div>
-              <div className="subTitle1" > 82f72939-735e-53a2-0944-5418c4edae2a </div>
-            </Grid>
           </Grid>
         </Grid>
         <Grid container className="block">
-          <Grid item sm={3} md={3} lg={3} xs={12} xl={3}>
-
-          </Grid>
-          <Grid item sm={9} md={9} lg={9} xs={12} xl={9}>
-            {/* <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-              Details
-            </Typography> */}
-            <Grid>
-              <Grid item xs={12} sm={6} md={6} className="formBlock" >
-                <div className="formTitle" > Phone : </div>
-                <div className="formDescp" > (123) - 123 - 4123 </div>
-              </Grid>
-              <Grid item xs={12} sm={6} md={6} className="formBlock" >
-                <div className="formTitle" > Email : </div>
-                <div className="formDescp" > newportrichey@accushield.com </div>
-              </Grid>
-              <Grid item xs={12} sm={12} md={12} className="formBlock" >
-                <div className="formTitle" > US State : </div>
-                <div className="formDescp" > Florida, New Jersey, New York </div>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-        <hr />
-        <Grid container className="block" >
-          <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-            Settings
-          </Typography>
-          {/* <h3>Settings</h3> */}
-          {!this.state.showPwdResetBlock && <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
-            {/* <div> */}
-            <Button 
-              href="/profile/changepassword"
-              className="greenBtn"
-              onClick={this.handleChangePassword}>
-              Change Password
-              </Button>
-            {/* </div> */}
-          </Grid>}
-          {this.state.showPwdResetBlock &&
-            <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
+          <Grid item sm={6} md={4} lg={4} xs={12} xl={4}>
               <TextField
                 id="oldpassword"
                 label="Old Password"
@@ -161,6 +101,7 @@ export default class Profile extends Component {
                 maxLength="10"
                 type="password"
                 error={this.state.oldpassword_error}
+                fullWidth
               />
               <div>
                 {this.state.oldpassword_error && <span className="errorText" >{this.state.oldpassword} Enter old password</span>}
@@ -176,6 +117,7 @@ export default class Profile extends Component {
                 maxLength="10"
                 type="password"
                 error={this.state.newpassword_error}
+                fullWidth
               />
               <div>
                 {this.state.newpassword_error && <span className="errorText" >{this.state.newpassword_error} Enter new password</span>}
@@ -191,6 +133,7 @@ export default class Profile extends Component {
                 maxLength="10"
                 type="password"
                 error={this.state.confirmpassword_error}
+                fullWidth
               />
               <div>
                 {this.state.confirmpassword_error && <span className="errorText" >{this.state.confirmpassword_error} Confirm password </span>}
@@ -200,7 +143,6 @@ export default class Profile extends Component {
                 Submit
               </Button>
             </Grid>
-          }
         </Grid>
       </Grid>
     );
