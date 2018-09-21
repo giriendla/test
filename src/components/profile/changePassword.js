@@ -138,9 +138,12 @@ export default class ChangePassword extends Component {
               <div>
                 {this.state.confirmpassword_error && <span className="errorText" >{this.state.confirmpassword_error} Confirm password </span>}
               </div>
-              <Button variant="contained" color="primary" className="loginButton"
-                onClick={this.resetPwd} style={{ backgroundColor: '#4caf50' }} >
+              <Button className="btn btn-primary mar-large-top"
+                onClick={this.resetPwd} style={{marginRight: "20px"}}>
                 Submit
+              </Button>
+              <Button href="/profile" className="btn btn-secondary mar-large-top ">
+                Cancel
               </Button>
             </Grid>
         </Grid>
