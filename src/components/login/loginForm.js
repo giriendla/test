@@ -49,15 +49,27 @@ class LoginForm extends Component {
       };
 
     loginUser() {
-        if(this.state.username && this.state.password){
+        let formValid = true;
+        debugger;
+        if(!this.state.username){
+            this.setState({"username_error": "username is required!"});
+            formValid = false;
+        }
+        let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let result = re.test(this.state.username);
+        console.log('result', result)
+        if (!result) {
+            this.setState({ username_error: "Valid email is required" });
+            formValid = false;
+        }
+        if(!this.state.password){
+            this.setState({"password_error": "password is required!"});
+            formValid = false;
+        }
+
+
+        if(formValid){
             window.location.pathname = "./dashboard";
-        }else{
-            if(!this.state.username){
-                this.setState({"username_error": "username is required!"});
-            }
-            if(!this.state.password){
-                this.setState({"password_error": "password is required!"});
-            }
         }
     }
     
@@ -75,7 +87,8 @@ class LoginForm extends Component {
                         item>
                     <TextField
                         id="username"
-                        label="Username"
+                        label="Email"
+                        type="email"
                         className="username"
                         value={this.state.username}
                         onChange={this.handleChange('username')}
@@ -106,7 +119,7 @@ class LoginForm extends Component {
                           Login
                         </Button>
                         <div>
-                            <Button href="./forgotpassword" color="secondary" className="btn btn-link">Forgot password</Button>
+                            <Button href="./forgotpassword" color="secondary" className="btn btn-link">Forgot Password</Button>
                         </div>
                     </MuiThemeProvider>
                 </Grid>

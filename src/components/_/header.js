@@ -51,6 +51,13 @@ class Appheader extends Component {
   handleProfile = event => {
     window.location.pathname = "/profile";
   }
+  redirectTo = event => {
+    if(event){
+      window.location.pathname = event;
+    }else{
+      return;
+    }
+  }
   logoutUser() {
     setTimeout(() => {
       window.location.pathname = "/login";
@@ -100,9 +107,14 @@ class Appheader extends Component {
                   <MenuList>
                     <MenuItem
                       onClick={(event) => {
-                      this.handleProfile();
+                        this.redirectTo('/profile');
                       this.handleClose(event);
                     }}>Profile</MenuItem>
+                    <MenuItem
+                      onClick={(event) => {
+                      this.redirectTo('/profile/changepassword');
+                      this.handleClose(event);
+                    }}>Changepassword</MenuItem>
                     <MenuItem
                       onClick={(event) => {
                       this.handleClose(event);

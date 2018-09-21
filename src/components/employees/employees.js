@@ -72,7 +72,7 @@ export default class Employees extends Component {
   }
   componentWillMount() {}
   componentDidMount() {
-    console.log("All Props", this.props);
+    console.log("Al                                                                                                                                                               l Props", this.props);
     this.getEmpoyeesList();
   }
 
