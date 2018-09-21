@@ -118,12 +118,26 @@
 
 .ProfileForm {
         padding: 0px 20px;
+
+        .phoneLabel {
+            color: rgba(0, 0, 0, 0.54);
+            padding: 0;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            line-height: 1;
+            font-size: 12px;
+        }
         
         .halfWidth {
             margin-top: 16px;
             margin-bottom: 8px;
             width: 90% !important;
             text-align: left;
+        }
+        .leftCol {
+            padding-right: 10px;
+        }
+        .rightCol {
+            padding-left: 10px;
         }
         .fullWidth {
             margin-top: 16px;

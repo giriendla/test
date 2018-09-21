@@ -203,7 +203,7 @@ export default class AccountForm extends Component {
                         <span className="formDescp"> 82f72939-735e-53a2-0944-5418c4edae2a</span>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} className="singleForm" >
+                <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
                     {/* <div className="formDescp" > */}
                     <TextField
                         id="firstname"
@@ -221,7 +221,7 @@ export default class AccountForm extends Component {
                     </div> */}
                     {/* </div> */}
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} className="singleForm" >
+                <Grid item xs={12} sm={6} md={6} className="singleFormRight" >
                     {/* <div className="formDescp" > */}
                     <TextField
                         id="lastname"
@@ -240,7 +240,7 @@ export default class AccountForm extends Component {
                     </div> */}
                     {/* </div> */}
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} className="singleForm" >
+                <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
                     {/* <MaskedInput
                         // {...other}
                         // ref={inputRef}
@@ -250,7 +250,7 @@ export default class AccountForm extends Component {
                         showMask
                     /> */}
                     <div className="MuiGrid-item-2">
-                        {this.state.showLabel && <div className="MuiFormControl-root-159 MuiFormControl-marginNormal-160 formFont" style={{ height: '48px', width: '100%' }} >
+                        {this.state.showLabel && <div className="MuiFormControl-root-159 MuiFormControl-marginNormal-160 formFont" style={{ height: '48px', width: '100%', paddingTop: '11px' }} >
                             {/* <InputLabel htmlFor="formatted-text-mask-input">Phone</InputLabel> */}
                             {this.state.showLabel && <label className="MuiFormLabel-root-168 MuiFormLabel-filled-172 MuiInputLabel-root-163 MuiInputLabel-formControl-164 MuiInputLabel-animated-167 MuiInputLabel-shrink-166 phoneLabel" data-shrink="true" >Phone</label>}
                             <div className="MuiInput-root-175 MuiInput-formControl-176 MuiInput-underline-179">
@@ -277,7 +277,7 @@ export default class AccountForm extends Component {
                                 label="Phone"
                                 className="formFont"
                                 // value={this.state.phone}
-                                onChange={(evt) => { this.setState({showLabel: true})}}
+                            onChange={(evt) => { this.handlePhoneNo('phone'); this.setState({showLabel: true})}}
                                 // onChange={(event, newValue) => this.setState({ phone: newValue, phone_error: false })}
                                 margin="normal"
                                 maxLength="20"
@@ -286,7 +286,7 @@ export default class AccountForm extends Component {
                         }
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} className="singleForm" >
+                <Grid item xs={12} sm={6} md={6} className="singleFormRight" >
                     {/* <div className="formDescp" > */}
                     <TextField
                         id="email"
@@ -305,7 +305,7 @@ export default class AccountForm extends Component {
                     </div> */}
                     {/* </div> */}
                 </Grid>
-                <Grid item xs={12} sm={6} md={6} className="singleForm" >
+                <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
                     <TextField
                         id="state"
                         fullWidth
@@ -327,7 +327,7 @@ export default class AccountForm extends Component {
                     <Grid item xs={12} sm={12} md={12} className="formTitle">
                         Address
                     </Grid>
-                    <Grid item xs={12} sm={6} md={6} className="singleForm" >
+                    <Grid item xs={12} sm={6} md={6} className="singleFormLeft" >
                         <div className="formDescp" >
                             <TextField
                                 id="billingAddress"

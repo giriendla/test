@@ -22,15 +22,29 @@
             font-weight: bold;
         }
     }
-    .singleForm {
-        padding-right: 10px;
+    .singleFormLeft {
+        padding-right: 45px;
+        // width: 93%;
 
         .phoneLabel {
             color: rgba(0, 0, 0, 0.54);
             padding: 0;
             font-family: "Roboto", "Helvetica", "Arial", sans-serif;
             line-height: 1;
-            font-size: 16px;
+            font-size: 12px;
+        }
+    }
+    .singleFormRight {
+        padding-right: 10px;
+        padding-left: 5px;
+        // width: 93%;
+
+        .phoneLabel {
+            color: rgba(0, 0, 0, 0.54);
+            padding: 0;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            line-height: 1;
+            font-size: 12px;
         }
     }
     .formTitle {

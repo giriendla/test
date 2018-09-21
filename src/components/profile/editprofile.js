@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import InputLabel from '@material-ui/core/InputLabel';
+import MaskedInput from 'react-text-mask';
+import Input from '@material-ui/core/Input';
 import { Button, Grid, Menu, MenuItem, TextField, Typography } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -6,11 +10,31 @@ import MainNav from '../_/navigation';
 import Config from '../../container/config';
 import './profile.scss';
 
+function TextMaskCustom(props) {
+    const { inputRef, ...other } = props;
+
+    return (
+        <MaskedInput
+            {...other}
+            ref={inputRef}
+            mask={['(', /[1-9]/, /\d/, /\d/, ')', '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+            placeholderChar={'\u2000'}
+            placeholder="Phone"
+            showMask={false}
+        />
+    );
+}
+
+TextMaskCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+};
+
 export default class EditProfile extends Component {
     constructor(props) {
         super(props);
         console.log("Register form", props);
         this.state = {
+            showLabel: false,
             firstname: "Angelina",
             firstname_error: false,
             lastname: 'Gomes',
@@ -122,7 +146,7 @@ export default class EditProfile extends Component {
                     </Grid> */}
                     <Grid container className="ProfileForm" >
                         {/* Sign Up Section */}
-                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
+                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6} className='leftCol' >
                             <TextField
                                 id="firstname"
                                 label="First Name"
@@ -135,7 +159,7 @@ export default class EditProfile extends Component {
                             />
                             {/* {this.state.firstname_error && <div className="errorText" >First Name is required</div>} */}
                         </Grid>
-                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
+                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6} className='rightCol'>
                             <TextField
                                 id="lastname"
                                 label="Last Name"
@@ -148,21 +172,44 @@ export default class EditProfile extends Component {
                             />
                             {/* {this.state.lastname_error && <div className="errorText" >Last Name is required</div>} */}
                         </Grid>
-                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
-                            <TextField
-                                id="phone"
-                                label="Phone"
-                                // floatingLabelText="Phone"
-                                className="fullWidth"
-                                value={this.state.phone}
-                                onChange={this.handleChange('phone')}
-                                margin="normal"
-                                maxLength="10"
-                                error={this.state.lastname_error}
-                            />
+                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6} className='leftCol'>
+                            {this.state.showLabel && <div className="MuiFormControl-root-159 MuiFormControl-marginNormal-160 formFont" style={{ height: '45px', width: '100%'}} >
+                                {/* <InputLabel htmlFor="formatted-text-mask-input">Phone</InputLabel> */}
+                                {this.state.showLabel && <label className="MuiFormLabel-root-168 MuiFormLabel-filled-172 MuiInputLabel-root-163 MuiInputLabel-formControl-164 MuiInputLabel-animated-167 MuiInputLabel-shrink-166 phoneLabel" data-shrink="true" >Phone</label>}
+                                <div className="MuiInput-root-175 MuiInput-formControl-176 MuiInput-underline-179">
+                                    <Input
+                                        name="Phone"
+                                        // label="Phone"
+                                        required={this.state.phone_error}
+                                        value={this.state.phone}
+                                        // onChange={this.handlePhoneNo('phone')}
+                                        onChange={this.handleChange('phone')}
+                                        id="formatted-text-mask-input"
+                                        className="fullWidth"
+                                        inputComponent={TextMaskCustom}
+                                        error={this.state.phone_error}
+                                    />
+                                </div>
+                                {/* <div>
+                                {this.state.phone_error && <span className="errorText" > Phone number is required</span>}
+                            </div> */}
+                            </div>}
+                            {!this.state.showLabel &&
+                                <TextField
+                                    id="phone"
+                                    label="Phone"
+                                    className="fullWidth"
+                                    value={this.state.phone}
+                                onChange={(evt) => { this.handleChange('phone'); this.setState({ showLabel: true }) }}
+                                    // onChange={this.handleChange('phone')}
+                                    margin="normal"
+                                    maxLength="10"
+                                    error={this.state.phone_error}
+                                />
+                            }
                             {/* {this.state.lastname_error && <div className="errorText" >Phone number is required</div>} */}
                         </Grid>
-                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
+                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6} className='rightCol'>
                             <TextField
                                 id="email"
                                 label="Email"
@@ -179,7 +226,7 @@ export default class EditProfile extends Component {
                         <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                             <div style={{ paddingTop: '20px' }} >Address</div>
                         </Grid>
-                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
+                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6} className='leftCol'>
                             <TextField
                                 id="street"
                                 label="Street"
@@ -191,7 +238,7 @@ export default class EditProfile extends Component {
                             />
                             {/* {this.state.street_error && <div className="errorText" >Street Name is required</div>} */}
                         </Grid>
-                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
+                        <Grid item sm={6} md={6} lg={6} xs={12} xl={6} className='rightCol'>
                             <TextField
                                 id="state"
                                 label="State"
@@ -214,11 +261,11 @@ export default class EditProfile extends Component {
                             }} >
                             Update
                         </Button>
-                        <Button href="./profile" variant="outlined" style={{ color: '#4caf50'}} className="loginButton" >
+                        <Button href="./profile" variant="outlined" style={{ color: '#4caf50' }} className="loginButton" >
                             Cancel
                         </Button>
                     </Grid>
-                    
+
                 </Grid>
             </Grid>
         );
