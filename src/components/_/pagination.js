@@ -11,6 +11,7 @@ import {
 import Pagination from 'rc-pagination';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import localeInfo from 'rc-pagination/lib/locale/en_US';
 
 export default class ListComponent extends Component {
   constructor(props) {
@@ -61,6 +62,7 @@ export default class ListComponent extends Component {
           onChange={this.onPaginationChange}
           current={this.state.pgCurrent}
           hideOnSinglePage={true}
+          locale={localeInfo}
           total={this.props.data.length}
           pageSize={this.state.pgPerPage}/>
       </Fragment>
@@ -121,8 +123,8 @@ const RenderPageItems = (props) => {
                           )
                         })}
                       <TableCell>
-                        <a href="javascript:void(0)"><EditIcon class="icon icon-edit" /></a>
-                        <a href="javascript:void(0)"><DeleteIcon class="icon icon-delete" /></a>
+                        <a href="javascript:void(0)"><EditIcon className="icon icon-edit" /></a>
+                        <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete" /></a>
                       </TableCell>
                     </TableRow>
                   )
@@ -147,3 +149,4 @@ const RenderPageItems = (props) => {
     </Fragment>
   )
 }
+

@@ -132,7 +132,7 @@ export default class RegisterForm extends Component {
                     </Grid>
                     {/* <Grid item sm={12} md={12} lg={12} xs={12} xl={12}></Grid> */}
                     <Scrollbars style={{ height: '350px' }} className="semiScroll">
-                        <Grid container className="registrationForm" >
+                        <Grid container className="registrationForm" spacing={32}>
                             {/* Sign Up Section */}
                             <Grid item sm={6} md={6} lg={6} xs={12} xl={6}>
                                 <TextField
@@ -143,6 +143,7 @@ export default class RegisterForm extends Component {
                                     value={this.state.firstname}
                                     onChange={this.handleChange('firstname')}
                                     margin="normal"
+                                    fullWidth
                                     helperText={this.state.firstname_error}
                                     error={(this.state.firstname_error == "") ? false : true}
                                 />
@@ -156,6 +157,7 @@ export default class RegisterForm extends Component {
                                     value={this.state.lastname}
                                     onChange={this.handleChange('lastname')}
                                     margin="normal"
+                                    fullWidth
                                     helperText={this.state.lastname_error}
                                     error={(this.state.lastname_error == "") ? false : true}
                                 />
@@ -170,6 +172,7 @@ export default class RegisterForm extends Component {
                                     onChange={this.handleChange('phone')}
                                     margin="normal"
                                     maxLength="10"
+                                    fullWidth
                                     style={styles.fullWidth}
                                     helperText={this.state.phone_error}
                                     error={(this.state.phone_error == "") ? false : true}
@@ -184,12 +187,14 @@ export default class RegisterForm extends Component {
                                     value={this.state.email}
                                     onChange={this.handleChange('email')}
                                     margin="normal"
+                                    fullWidth
                                     helperText={this.state.email_error}
                                     error={(this.state.email_error == "") ? false : true}
                                 />
                             </Grid>
                             {/* <Grid container> */}
                             <div style={{ paddingLeft: '15px', paddingTop: '20px' }} >Address</div>
+                            
                             <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                                 <TextField
                                     id="street"
@@ -199,6 +204,7 @@ export default class RegisterForm extends Component {
                                     value={this.state.street}
                                     onChange={this.handleChange('street')}
                                     margin="normal"
+                                    fullWidth
                                     helperText={this.state.state_error}
                                     error={(this.state.state_error == "") ? false : true}
                                 />
@@ -212,6 +218,7 @@ export default class RegisterForm extends Component {
                                     value={this.state.city}
                                     onChange={this.handleChange('city')}
                                     margin="normal"
+                                    fullWidth
                                     helperText={this.state.city_error}
                                     error={(this.state.city_error == "") ? false : true}
                                 />
@@ -225,6 +232,7 @@ export default class RegisterForm extends Component {
                                     value={this.state.state}
                                     onChange={this.handleChange('state')}
                                     margin="normal"
+                                    fullWidth
                                     helperText={this.state.state_error}
                                     error={(this.state.state_error == "") ? false : true}
                                 />
@@ -238,6 +246,7 @@ export default class RegisterForm extends Component {
                                     value={this.state.country}
                                     onChange={this.handleChange('country')}
                                     margin="normal"
+                                    fullWidth
                                     helperText={this.state.country_error}
                                     error={(this.state.country_error == "") ? false : true}
                                 />
@@ -252,6 +261,7 @@ export default class RegisterForm extends Component {
                                     maxLength="6"
                                     onChange={this.handleChange('pin')}
                                     margin="normal"
+                                    fullWidth
                                     helperText={this.state.pin_error}
                                     error={(this.state.pin_error == "") ? false : true}
                                 />

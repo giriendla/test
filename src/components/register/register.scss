@@ -1,17 +1,18 @@
 .registrationSection {
     .registrationForm {
         padding: 0px 20px;
+        margin:0px -16px;
         
         .halfWidth {
             margin-top: 16px;
             margin-bottom: 8px;
-            width: 90% !important;
+            /* width: 90% !important; */
             text-align: left;
         }
         .fullWidth {
             margin-top: 16px;
             margin-bottom: 8px;
-            width: 95% !important;
+            /* width: 95% !important; */
             text-align: left;
         }
         .errorText {
