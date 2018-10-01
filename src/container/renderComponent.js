@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Button,Grid, Menu, MenuItem } from '@material-ui/core';
 import { Scrollbars } from 'react-custom-scrollbars';
 import MainNav from '../components/_/navigation';
-import Dummy from '../components/_/dummyText';
 import Header from '../components/_/header';
 import { Footer } from "../components/_/elements";
 

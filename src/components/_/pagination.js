@@ -6,7 +6,9 @@ import {
   TableFooter,
   TableRow,
   TableCell,
-  TableSortLabel
+  TableSortLabel,
+  Hidden,
+  Grid
 } from '@material-ui/core';
 import Pagination from 'rc-pagination';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -22,10 +24,13 @@ export default class ListComponent extends Component {
       pgPerPage: 10
     };
     const totalData = [];
-
     this.onPaginationChange = this
       .onPaginationChange
       .bind(this);
+  }
+  componentDidMount() {
+    /* this.mediaSize['mobile'] = ['xs'];
+    this.mediaSize['desktop'] = ['sm', 'md', 'lg', 'xl']; */
   }
   onPaginationChange = (page) => {
     /* console.log(page); */
@@ -87,51 +92,71 @@ const RenderPageItems = (props) => {
 
   const rowsRender = () => {
     /* console.log("All Props at child", props); */
+
+    const desktopMedia = ['xs'];
+    const mobileMedia = ['sm', 'md', 'lg', 'xl'];
+
     if (props.data.length > 0) {
       return (
         <Fragment>
-          <Table className="listTable">
-            <TableHead>
-              <TableRow>
-                {props
-                  .header
-                  .map((n, i) => {
-                    return (
-                      <TableCell key={i}>{n}</TableCell>
-                    )
-                  })}
-                <TableCell>Options</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+          <div className="paginationHolder">
+            <Hidden only={desktopMedia}>
+              <Table className="listTable">
+                <TableHead>
+                  <TableRow>
+                    {props
+                      .header
+                      .map((n, i) => {
+                        return (
+                          <TableCell key={i}>{n}</TableCell>
+                        )
+                      })}
+                    <TableCell>Options</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {props
+                    .data
+                    .map((n, i) => {
+                      /* console.log(n) */
+                      return (
+                        <TableRow key={i}>
+                          {props
+                            .header
+                            .map((k, l) => {
+                              return (
+                                <TableCell key={l}>
+                                  {renderImage(l, n)}
+                                  <span>
+                                    {n[k]}
+                                  </span>
+                                </TableCell>
+                              )
+                            })}
+                          <TableCell>
+                            <a href="javascript:void(0)"><EditIcon className="icon icon-edit"/></a>
+                            <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a>
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })
+}
+                </TableBody>
+              </Table>
+            </Hidden>
+            <Hidden only={mobileMedia}>
               {props
                 .data
                 .map((n, i) => {
-                  /* console.log(n) */
                   return (
-                    <TableRow key={i}>
-                      {props
-                        .header
-                        .map((k, l) => {
-                          return (
-                            <TableCell key={l}>
-                              {renderImage(l, n)}
-                              <span>
-                                {n[k]}
-                              </span>
-                            </TableCell>
-                          )
-                        })}
-                      <TableCell>
-                        <a href="javascript:void(0)"><EditIcon className="icon icon-edit" /></a>
-                        <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete" /></a>
-                      </TableCell>
-                    </TableRow>
+                    <div key={i} className="mobilePagitnationItem">
+                      <RenderRow data={n}/>
+                    </div>
                   )
                 })
 }
-            </TableBody>
-          </Table>
+            </Hidden>
+          </div>
         </Fragment>
       )
     } else {
@@ -150,3 +175,71 @@ const RenderPageItems = (props) => {
   )
 }
 
+const RenderRow = (props) => {
+  const view = window.location.pathname;
+  const render = () => {
+    if (view == "/employees") {
+      return (
+        <Fragment>
+          <Employees {...props.data}/>
+        </Fragment>
+      )
+    } else if (view == "/visit") {
+      return (
+        <div>Rendering Visit</div>
+      )
+    } else if (view == "/communities") {
+      return (
+        <div>Rendering Communities</div>
+      )
+    } else {
+      return (
+        <div>No View</div>
+      )
+    }
+  }
+  return (
+    <div>
+      {render()}
+      {/* JSON.stringify(props.data) */}
+    </div>
+  )
+}
+
+const Employees = (props) => {
+  console.log("At Employees", props);
+  return (
+    <Fragment>
+      <div className="itemRowHeading">
+        <h3>
+          <span><img src={props.image} className="employeeImage"/></span>
+          <span>{props.name}</span>
+        </h3>
+        <div className="itemRowOptions">
+          <a href="javascript:void(0)"><EditIcon className="icon icon-edit"/></a>
+          <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a>
+        </div>
+      </div>
+    <div className="itemRowBody">
+      <div>
+        <b>Phone</b> <span>{props.phone}</span>
+      </div>
+      <div>
+        <b>Email</b> <span>{props.email}</span>
+      </div>
+      <div>
+        <b>Company</b> <span>{props.company.name}</span>
+      </div>
+      <div>
+        <b>Company</b> <span>{props.company.name}</span>
+      </div>
+      <div>
+        <b>Address</b> 
+        <span>
+          {`${props.address.suite}, ${props.address.street}, ${props.address.city} - ${props.address.zipcode}`}
+        </span>
+      </div>
+    </div>
+    </Fragment>
+  )
+}

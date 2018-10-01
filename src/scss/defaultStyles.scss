@@ -157,6 +157,29 @@ body {
         font-size: 20px;
     }
 
+    .headerRightSection {
+        text-align: right;
+
+        >div {
+            display: inline-block;
+            vertical-align: middle;
+            padding: 8px;
+            margin: 0px;
+            line-height: 50%;
+
+            >button {
+                padding: 0px;
+                margin: 0px;
+                min-width: auto;
+            }
+
+            .mobileMenuIcon {
+                font-size: 40px;
+                color: #47b16f;
+            }
+        }
+    }
+
     .preLoginLink {
         letter-spacing: 1px;
         text-transform: none;
@@ -191,21 +214,24 @@ body {
             text-transform: none;
             font-weight: normal;
             color: #000;
-            &:hover{
+
+            &:hover {
                 background: transparent;
             }
         }
     }
 
 
-    .icon{
+    .icon {
         color: #47b16f;
         width: 24px;
         height: 24px;
-        &.icon-delete{
+
+        &.icon-delete {
             fill: #3f4a80;
         }
-        &.icon-edit{
+
+        &.icon-edit {
             fill: #47b16f;
         }
     }
@@ -217,6 +243,73 @@ body {
 
     .arc path {
         stroke: #fff;
+    }
+
+    .mobilePagitnationItem {
+        display: block;
+        border: 1px solid #ccc;
+        margin-bottom: -1px;
+        padding: 0px 15px;
+
+        .itemRowHeading {
+            position: relative;
+            min-height: 90px;
+
+            >.itemRowOptions,
+            >h3 {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            >h3 {
+                >span {
+                    display: inline-block;
+                    vertical-align: middle;
+
+                    &:first-child {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        text-align: center;
+                        margin-right: 8px;
+                        border: 1px solid #47b16f;
+                    }
+
+                    >img {
+                        height: 100%;
+                    }
+                }
+            }
+
+            .itemRowOptions {
+                position: absolute;
+                right: -10px;
+                top: 10px;
+                >a{
+                    display: block;
+                    padding: 5px 0px;
+                }
+            }
+            
+        }
+        .itemRowBody{
+            display: block;
+            padding-bottom: 8px;
+            >div{
+                display: block;
+                padding-bottom: 5px;
+                >b, >span{
+                    display: inline-block;
+                }
+                >b{
+                    position: relative;
+                    &:after{
+                        content: " : ";
+                    }
+                }
+            }
+        }
     }
 
 }

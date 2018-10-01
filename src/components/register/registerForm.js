@@ -1,21 +1,49 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import {withStyles, MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Config from '../../container/config';
 import { Scrollbars } from 'react-custom-scrollbars';
-
+import green from '@material-ui/core/colors/green';
 import './register.scss';
 
-// const theme = createMuiTheme({
-//     palette: {
-//       primary: green,
-//       secondary: {
-//         main: '#673ab7',
-//       },
-//     },
-//   });
+
+const styles = theme => ({
+    button: {
+        color: "#ffffff"
+    },
+    input: {
+        display: 'none',
+    },
+    fullWidth: {
+        width: '100%',
+    },
+    loginButton: {
+        paddingTop: "8px",
+        paddingBottom: "8px",
+        paddingLeft: "15px",
+        paddingRight: "15px",
+        fontFamily: "Segoeui-regular",
+        textTransform: "uppercase",
+        letterSpacing: "4px",
+        fontSize: "16px",
+        borderRadius: "0px",
+        marginTop: "35px",
+        fontWeight: "bold",
+    },
+    errorText: {
+        fontSize: '10px',
+        color: 'red',
+    }
+});
+const theme = createMuiTheme({
+    palette: {
+      secondary: {
+        main: '#673ab7',
+      },
+    },
+  });
+
 
 export default class RegisterForm extends Component {
 
@@ -123,7 +151,7 @@ export default class RegisterForm extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <MuiThemeProvider>
+            <MuiThemeProvider theme={theme}>
                 <Grid container className="registrationSection" >
                     <Grid item sm={12} md={12} lg={12} xs={12} xl={12}>
                         <Typography className="loginHeading preLoginHeading" variant="title" gutterBottom align="center">
@@ -287,32 +315,3 @@ export default class RegisterForm extends Component {
 }
 
 // export default withStyles(styles)(LoginForm);
-
-const styles = theme => ({
-    button: {
-        color: "#ffffff"
-    },
-    input: {
-        display: 'none',
-    },
-    fullWidth: {
-        width: '100%',
-    },
-    loginButton: {
-        paddingTop: "8px",
-        paddingBottom: "8px",
-        paddingLeft: "15px",
-        paddingRight: "15px",
-        fontFamily: "Segoeui-regular",
-        textTransform: "uppercase",
-        letterSpacing: "4px",
-        fontSize: "16px",
-        borderRadius: "0px",
-        marginTop: "35px",
-        fontWeight: "bold",
-    },
-    errorText: {
-        fontSize: '10px',
-        color: 'red',
-    }
-});

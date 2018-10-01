@@ -3,8 +3,8 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
 const initialState = {
-    users: []
-};
+
+};                          
 
 
 let logger = store =>{
@@ -23,7 +23,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middleware = [thunk,logger];
 const store = createStore(
   rootReducer,
-  initialState,
   composeEnhancers(
     applyMiddleware(thunk,logger)
   )

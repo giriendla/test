@@ -13,7 +13,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {Scrollbars} from 'react-custom-scrollbars';
 
 import MainNav from '../components/_/navigation';
-import Dummy from '../components/_/dummyText';
+import MobileNav from '../components/_/mobileNavigation';
 import Header from '../components/_/header';
 import {Footer} from "../components/_/elements";
 import "../scss/userStyles.scss";
@@ -54,7 +54,7 @@ class userPage extends Component {
       return (
         <div><Visit {...this.props}/></div>
       );
-    } else if (path.indexOf('/communites') !== -1) {
+    } else if (path.indexOf('/communities') !== -1) {
       return (
         <div><Communites {...this.props}/></div>
       );
@@ -97,18 +97,19 @@ class userPage extends Component {
       );
     }
   }
+
+
   render() {
     return (
       <div>
-        <Header/>
+        <Header {...this.props} />
         <Grid container className="bodyContainer">
-        {/*
+
           <Hidden only={['sm', 'md', 'lg', 'xl']}>
-            <Grid className="navContainer" item lg={12} md={12} sm={12} xs={12}>
-             <MainNav {...this.props}/> 
-             </Grid>
-             </Hidden>
-            */}
+            <Grid className="navMobileContainer" item lg={12} md={12} sm={12} xs={12}>
+              <MobileNav {...this.props} />
+            </Grid>
+          </Hidden>
           <Hidden only={['xs']}>
             <Grid className="navContainer" item lg={2} md={2} sm={3} xs={12}>
               <MainNav {...this.props}/>

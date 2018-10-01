@@ -4,7 +4,6 @@ import {Scrollbars} from 'react-custom-scrollbars';
 import axios from 'axios';
 import MainNav from '../_/navigation';
 import Config from '../../container/config';
-import Dummy from '../_/dummyText';
 import {callUsers} from '../../actions';
 import store from '../../store';
 import {getAllUsers} from '../../actions';
@@ -48,7 +47,7 @@ export default class Dashboard extends Component {
               </Typography>
             </Grid>
             <Grid container >
-              <BarGraph {...this.props} data={barGraphData} />
+              <BarGraph className="barGraph" {...this.props} width="100%" height="100%" data={barGraphData} />
             </Grid>
           </Grid>
         </Grid>

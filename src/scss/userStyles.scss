@@ -1,5 +1,6 @@
 /* Importing Default Styles */
 @import "./defaultStyles.scss";
+@import "./animations.scss";
 
 body {
     .countSection {
@@ -29,19 +30,22 @@ body {
                 -o-transform: translate(-50%, -50%);
             }
         }
-        .countTitle{
+
+        .countTitle {
             margin-top: 15px;
-            >*{
+
+            >* {
                 color: #47b16f;
             }
         }
     }
-    .profileDropdown{
+
+    .profileDropdown {
         min-width: 150px;
         padding: 0px;
         margin: 0px;
 
-        li{
+        li {
             /* text-align: center; */
             display: block;
             padding: 0px;
@@ -49,9 +53,10 @@ body {
             padding: 5px 15px;
             overflow: unset;
             font-family: "segoeui-regular";
-            &:hover{
+
+            &:hover {
                 background-color: transparent;
-                color:  #47b16f;
+                color: #47b16f;
             }
         }
     }
@@ -81,5 +86,124 @@ body {
             vertical-align: middle;
         }
     }
+
+    .navContainer {
+        background-color: #3f4b80;
+        height: 100%;
+
+    }
+
+    .mainMobileNavigation {
+        display: block;
+
+        .toggleMenu {
+            display: block;
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            background-color: #ccc;
+            padding: 15px;
+            width: 100px;
+            height: 50px;
+        }
+
+        >div {
+            display: block;
+            position: fixed;
+            z-index: 9999;
+            background-color: #3f4b80;
+            width: 60%;
+            min-width: 250px;
+            max-width: 300px;
+            height: 100%;
+            top: 0px;
+            transition: 1s left ease-in-out;
+            /* animation-name: mobileMenu;
+            animation-duration: 1s;
+            animation-direction: forwards;
+            animation-timing-function: ease-in-out;
+            animation-delay: 500ms; */
+
+            
+
+            &.menuHolder {
+                left: calc(-80% - 10px);
+                &.showMenu {
+                    left: 0px;
+                }
+            }
+
+            .menuControls {
+                display: block;
+                text-align: right;
+                padding: 12px 15px;
+
+                >a {
+                    display: inline-block;
+                    text-decoration: none;
+                    background-color: rgba(255, 255, 255, 0.3);
+                    box-shadow: 0 0 3px #fff;
+                    color: #fff;
+                    font-weight: bold;
+                    width: 32px;
+                    height: 32px;
+                    text-align: center;
+                    line-height: 32px;
+                }
+            }
+        }
+    }
+
+    .navContainer,
+    .mainMobileNavigation {
+        ul {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            margin-top: 15px;
+
+            >li {
+                display: block;
+                position: relative;
+
+                >a {
+                    display: block;
+                    color: #fff;
+                    padding: 8px 15px;
+                    text-decoration: none;
+                    outline: none;
+                    border: none;
+
+                    &.active {
+                        background-color: #cccccc33;
+                        position: relative;
+
+                        &::after {
+                            content: " ";
+                            position: absolute;
+                            right: -6px;
+                            width: 6px;
+                            top: 0px;
+                            height: 100%;
+                            background-color: #47b16f;
+                        }
+                    }
+
+                    >img,
+                    >span {
+                        display: inline-block;
+                        max-height: 22px;
+                        vertical-align: middle;
+                    }
+
+                    >img {
+                        margin-right: 8px;
+                        padding: 2px;
+                    }
+                }
+            }
+        }
+    }
+
 
 }

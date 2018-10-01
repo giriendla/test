@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button,Grid, Menu, MenuItem } from '@material-ui/core';
 import { Scrollbars } from 'react-custom-scrollbars';
 import MainNav from '../components/_/navigation';
-import Dummy from '../components/_/dummyText';
 import Header from '../components/_/header';
 import { Footer } from "../components/_/elements";
 import "../scss/singlePage.scss";
@@ -25,7 +24,7 @@ export default class LoadSinglePage extends Component{
     render() {
         return(
             <div>
-                <Header showProfile={false} />
+                <Header {...this.props} showProfile={false} />
                 <Grid container className="bodyContainer">                                
                     <Grid className="bodyContent forgotPassword" item lg={12} md={12} sm={12} xs={12}>
                         {this.checkView()}

@@ -87,58 +87,7 @@ body {
       }
     }
 
-    .navContainer {
-      background-color: #3f4b80;
-      height: 100%;
-
-      ul {
-        margin: 0px;
-        padding: 0px;
-        list-style: none;
-        margin-top: 15px;
-
-        >li {
-          display: block;
-          position: relative;
-
-          >a {
-            display: block;
-            color: #fff;
-            padding: 8px 15px;
-            text-decoration: none;
-            outline: none;
-            border: none;
-
-            &.active {
-              background-color: #cccccc33;
-              position: relative;
-
-              &::after {
-                content: " ";
-                position: absolute;
-                right: -6px;
-                width: 6px;
-                top: 0px;
-                height: 100%;
-                background-color: #47b16f;
-              }
-            }
-
-            >img,
-            >span {
-              display: inline-block;
-              max-height: 22px;
-              vertical-align: middle;
-            }
-
-            >img {
-              margin-right: 8px;
-              padding: 2px;
-            }
-          }
-        }
-      }
-    }
+    
   }
 
   .profileSection {

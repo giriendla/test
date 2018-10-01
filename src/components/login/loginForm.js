@@ -53,9 +53,12 @@ class LoginForm extends Component {
     });
   };
 
+  componentDidMount() {
+    
+  }
+
   loginUser() {
     let formValid = true;
-    debugger;
     if (!this.state.username) {
       this.setState({"username_error": "username is required!"});
       formValid = false;
@@ -74,6 +77,9 @@ class LoginForm extends Component {
 
     if (formValid) {
       window.location.pathname = "./dashboard";
+      window
+        .localStorage
+        .setItem('user', this.state.username);
     }
   }
 

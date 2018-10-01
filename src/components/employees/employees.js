@@ -23,7 +23,6 @@ import {Scrollbars} from 'react-custom-scrollbars';
 import axios from 'axios';
 import MainNav from '../_/navigation';
 import Config from '../../container/config';
-import Dummy from '../_/dummyText';
 import {callUsers} from '../../actions';
 import store from '../../store';
 import {getAllUsers} from '../../actions';
@@ -180,7 +179,7 @@ export default class Employees extends Component {
             </Popper>
           </Grid>
         </Grid>
-        <Grid item sm={12}>
+        <Grid item xs={12} sm={12}>
           <ListComponent
             {...this.props}
             data={this.state.employees}

@@ -52,7 +52,7 @@ export default (props) => {
 
   return(
     <Fragment>
-      <svg width={100+"%"} height={svgHeight}>
+      <svg width={width} height={height}>
         <g transform={`translate(${margin.left}, ${margin.top})`}>
           <g
             className="axis axis--x"

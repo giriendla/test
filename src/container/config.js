@@ -5,7 +5,7 @@ const Config = {
     "mainnav": [
         { name: "Dashboard", link: "/dashboard", icon: "dashboard.png", isLogin: true, template: "user" },
         { name: "Visit", link: "/visit", icon: "visitor.png", isLogin: true, template: "user" },
-        { name: "Communites", link: "/communites", icon: "communites.png", isLogin: true, template: "user" },
+        { name: "Communities", link: "/communities", icon: "communities.png", isLogin: true, template: "user" },
         { name: "Employees", link: "/employees", icon: "employees.png", isLogin: true, template: "user" },
         { name: "Account", link: "/account", icon: "account.png", isLogin: true, template: "user" },
         { name: "Profile", link: "/profile", icon: "profile.png", isLogin: true, template: "user" },

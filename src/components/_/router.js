@@ -12,7 +12,6 @@ import {
 import MainNav from './navigation';
 import Config from '../../container/config';
 
-import Dummy from './dummyText';
 import Dashboard from '../dashboard/dashboard';
 import Account from '../account/account';
 import AccountForm from '../account/accountform';
