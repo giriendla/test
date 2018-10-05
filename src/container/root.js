@@ -11,7 +11,8 @@ import LoadSinglePage from './singlePage';
 import BeforeLoginPage from './loginPage';
 import Config from './config';
 
-const Root = () => {
+const Root = (props) => {
+    console.log("At Root ", props);
     return (
         <div className="root">        
             {
@@ -40,4 +41,4 @@ const Root = () => {
     );
 };
 
-export default Root;
+export default withRouter(Root);

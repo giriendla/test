@@ -30,9 +30,8 @@ const styles = theme => ({
   }
 });
 
-
 class Appheader extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -40,10 +39,11 @@ class Appheader extends Component {
     }
   }
 
-
-
   toggleMobileMenu = () => {
-    let currentMenuSate = store.getState().default.mobileMenu;
+    let currentMenuSate = store
+      .getState()
+      .default
+      .mobileMenu;
     currentMenuSate = !currentMenuSate;
     store.dispatch(toggleMobileMenu(currentMenuSate));
   }
@@ -72,7 +72,9 @@ class Appheader extends Component {
   }
   logoutUser() {
     setTimeout(() => {
-      window.localStorage.clear();
+      window
+        .localStorage
+        .clear();
       window.location.pathname = "/login";
     }, 1000);
   }
@@ -83,7 +85,7 @@ class Appheader extends Component {
     const {anchorEl} = this.state;
     let showProfile;
     if (this.props != undefined && this.props.showProfile !== undefined) {
-      showProfile = <div></div>
+      showProfile = "";
     } else {
       showProfile = <div className="profileSection">
         <Button
@@ -152,7 +154,8 @@ class Appheader extends Component {
           </a>
         </Grid>
         <Hidden only={['sm', 'md', 'lg', 'xl']}>
-          <Grid className="headerRightSection" item lg={10} md={10} sm={9} xs={6}>
+          {/* Mobile */}
+          <Grid className="headerRightSection mobileNavigation" item lg={10} md={10} sm={9} xs={6}>
             {this.checkProfile()}
             <div>
               <MenuIcon className="mobileMenuIcon" onClick={this.toggleMobileMenu}/>
@@ -160,17 +163,8 @@ class Appheader extends Component {
           </Grid>
         </Hidden>
         <Hidden only={['xs']}>
-          <Grid
-            className="headerRightSection mobileNavigation"
-            container
-            justify="space-between">
-            <Grid item className="navMenu">
-              <div onClick={this.toggleMobileMenu}>
-                <MenuIcon/>
-              </div>
-              {/* <ClickAwayListener onClickAway={this.toggleMobileMenu}>
-            </ClickAwayListener> */}
-            </Grid>
+          {/* Desktop */}
+          <Grid className="headerRightSection" item lg={10} md={10} sm={9} xs={6}>
             <Grid item className="profileMenu">
               {this.checkProfile()}
             </Grid>

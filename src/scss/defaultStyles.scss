@@ -159,23 +159,45 @@ body {
 
     .headerRightSection {
         text-align: right;
+        display: block;       
 
-        >div {
-            display: inline-block;
+        >.profileSection {
+            display: block;
             vertical-align: middle;
             padding: 8px;
             margin: 0px;
             line-height: 50%;
+            text-align: right;
 
             >button {
                 padding: 0px;
                 margin: 0px;
                 min-width: auto;
+                background-color: transparent !important;
             }
 
             .mobileMenuIcon {
                 font-size: 40px;
                 color: #47b16f;
+            }
+
+
+        }
+        &.mobileNavigation {
+            padding: 5px 8px;
+            >div{
+                display: inline-block;
+                vertical-align: middle;
+                >button {
+                    padding: 0px;
+                    margin: 0px;
+                    min-width: auto;
+                    background-color: transparent !important;
+                }    
+                .mobileMenuIcon {
+                    font-size: 40px;
+                    color: #47b16f;
+                }
             }
         }
     }
@@ -286,25 +308,32 @@ body {
                 position: absolute;
                 right: -10px;
                 top: 10px;
-                >a{
+
+                >a {
                     display: block;
                     padding: 5px 0px;
                 }
             }
-            
+
         }
-        .itemRowBody{
+
+        .itemRowBody {
             display: block;
             padding-bottom: 8px;
-            >div{
+
+            >div {
                 display: block;
                 padding-bottom: 5px;
-                >b, >span{
+
+                >b,
+                >span {
                     display: inline-block;
                 }
-                >b{
+
+                >b {
                     position: relative;
-                    &:after{
+
+                    &:after {
                         content: " : ";
                     }
                 }
