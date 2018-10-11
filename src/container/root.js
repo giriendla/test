@@ -20,17 +20,17 @@ const Root = (props) => {
                     if(n.isLogin){
                         // After Login
                         return (
-                            <Route path={n.link} component={UserPage} key={i} />
+                            <Route {...this.props} path={n.link} component={UserPage} key={i} />
                         )
                     }else{
                         // Before Login
                         if(n.template == 'single'){
                             return (
-                                <Route path={n.link} exact component={LoadSinglePage} key={i}  />
+                                <Route {...this.props} path={n.link} exact component={LoadSinglePage} key={i}  />
                             )
                         }else if(n.template == 'beforeLogin'){
                             return (
-                                <Route path={n.link} exact component={BeforeLoginPage} key={i}  />
+                                <Route {...this.props} path={n.link} exact component={BeforeLoginPage} key={i}  />
                             )
                         }
                     }

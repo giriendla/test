@@ -23,6 +23,7 @@
     "react": "^16.4.2",
     "react-custom-scrollbars": "^4.2.1",
     "react-d3-basic": "^1.6.11",
+    "react-datepicker": "^1.6.0",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",

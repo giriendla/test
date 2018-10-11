@@ -1,0 +1,17 @@
+.stepperHolder {
+    width: auto !important;
+    .stepperContainer {
+        svg[class*="MuiStepIcon-active"],
+        svg[class*="MuiStepIcon-completed"] {
+            fill: #47b16f;
+        }
+
+        $breakpoint-mobile: 600px;
+        @media (max-width: $breakpoint-mobile) {
+            span[class*="MuiStepLabel-label"]{
+                display: none;
+            }
+        }
+    }
+
+}
