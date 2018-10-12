@@ -24,10 +24,15 @@ class RegistrationForm extends Component {
       registerForm: {
         companyContact: {
           name: "",
+          name_error: false,
           title: "",
+          title_error: false,
           phone: "",
+          phone_error: false,
           fax: "",
+          fax_error: false,
           email: "",
+          email_error: false,
           categories: {
             carporateOwner: false,
             branchLocation: false,
@@ -44,8 +49,8 @@ class RegistrationForm extends Component {
       },
       registerFormError: {
         companyContact: {
-          name: true,
-          title: true,
+          name: false,
+          title: false,
           phone: false,
           fax: false,
           email: false,
@@ -84,11 +89,27 @@ class RegistrationForm extends Component {
   }
 
   checkFormChange() {
-    if (this.loadComponent === this.props.component) {
-      console.log("Page Didn't Change");
-    } else {
+    if (this.loadComponent !== this.props.component) {
       console.log("Page Changed to ", this.props.component);
+    } else {
+      // console.log("Page Didn't Change");
     }
+  }
+  updateField = field => event => {
+    console.log("Updated ", field, event);
+    let fieldUpdate = this.state.registerForm;
+    fieldUpdate.companyContact[field] = event.target.value;
+    fieldUpdate.companyContact[field+'_error'] = (event.target.value) ? "" : field + " is required!";
+
+    this.setState({
+      registerForm: fieldUpdate
+    });
+    /* this.setState({
+      [field]: event.target.value,
+      [field + "_error"]: (event.target.value)
+        ? ""
+        : field + " is required!"
+    }); */
   }
 
   companyContactHandleCheckboxChange = name => event => {
@@ -101,15 +122,17 @@ class RegistrationForm extends Component {
   companyContactForm = () => {
     return (
       <Fragment>
+      {JSON.stringify(this.state.registerForm.companyContact)}
         <Grid container spacing={32}>          
           <Grid item xs={12} sm={6} md={6} lg={6}>
             <TextField
               id="name"
               label="Name"
               value={this.state.registerForm.companyContact.name}
+              onChange={this.updateField('name')}
               margin="normal"
               fullWidth
-              helperText={this.state.firstname_error}
+              helperText={this.state.registerFormError.companyContact.name}
               error={(this.state.registerForm.companyContact.name == "")
               ? false
               : true}/>
