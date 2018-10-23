@@ -15,3 +15,14 @@
     }
 
 }
+.phoneMobile{
+    width: 100%;
+    padding: inherit;
+    font-size: inherit;
+    border: none;
+    border-bottom: 1px solid currentColor;
+    padding: 12px;
+    &:focus, &:hover{
+        outline: none;
+    }
+}

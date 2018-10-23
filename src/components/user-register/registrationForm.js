@@ -122,130 +122,134 @@ class RegistrationForm extends Component {
   companyContactForm = () => {
     return (
       <Fragment>
-      {JSON.stringify(this.state.registerForm.companyContact)}
-        <Grid container spacing={32}>          
-          <Grid item xs={12} sm={6} md={6} lg={6}>
-            <TextField
-              id="name"
-              label="Name"
-              value={this.state.registerForm.companyContact.name}
-              onChange={this.updateField('name')}
-              margin="normal"
-              fullWidth
-              helperText={this.state.registerFormError.companyContact.name}
-              error={(this.state.registerForm.companyContact.name == "")
-              ? false
-              : true}/>
+          {/* JSON.stringify(this.state.registerForm.companyContact) */}
+          <Grid container spacing={32}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
+              <TextField
+                id="name"
+                label="Name"
+                value={this.state.registerForm.companyContact.name}
+                onChange={this.updateField('name')}
+                margin="normal"
+                fullWidth
+                helperText={this.state.registerForm.companyContact.name_error}
+                error={(this.state.registerForm.companyContact.name == "")
+                ? false
+                : true}/>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
+              <TextField
+                id="title"
+                label="Title"
+                value={this.state.registerForm.companyContact.title}
+                onChange={this.updateField('title')}
+                margin="normal"
+                fullWidth
+                helperText={this.state.firstname_error}
+                error={(this.state.registerForm.companyContact.title == "")
+                ? false
+                : true}/>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
+              <TextField
+                id="phone"
+                label="Phone"
+                value={this.state.registerForm.companyContact.phone}
+                onChange={this.updateField('phone')}
+                margin="normal"
+                fullWidth
+                helperText={this.state.firstname_error}
+                error={(this.state.registerForm.companyContact.phone == "")
+                ? false
+                : true}/>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
+              <TextField
+                id="fax"
+                label="Fax"
+                value={this.state.registerForm.companyContact.fax}
+                onChange={this.updateField('fax')}
+                margin="normal"
+                fullWidth
+                helperText={this.state.firstname_error}
+                error={(this.state.registerForm.companyContact.fax == "")
+                ? false
+                : true}/>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <TextField
+                id="email"
+                label="Email"
+                value={this.state.registerForm.companyContact.email}
+                onChange={this.updateField('email')}
+                margin="normal"
+                fullWidth
+                helperText={this.state.firstname_error}
+                error={(this.state.registerForm.companyContact.email == "")
+                ? false
+                : true}/>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <b>Submitting As:</b>
+              <FormGroup row>
+                <FormControlLabel
+                  control={< Checkbox checked = {
+                  this.state.registerForm.companyContact.categories.carporateOwner
+                }
+                onChange = {
+                  this.companyContactHandleCheckboxChange('carporateOwner')
+                }
+                value = "carporateOwner" color = "primary" />}
+                  label="Corporate Owner"/>
+                <FormControlLabel
+                  control={< Checkbox checked = {
+                  this.state.registerForm.companyContact.categories.branchLocation
+                }
+                onChange = {
+                  this.companyContactHandleCheckboxChange('branchLocation')
+                }
+                value = "branchLocation" color = "primary" />}
+                  label="Branch Location"/>
+                <FormControlLabel
+                  control={< Checkbox checked = {
+                  this.state.registerForm.companyContact.categories.soleProprietorship
+                }
+                onChange = {
+                  this.companyContactHandleCheckboxChange('soleProprietorship')
+                }
+                value = "soleProprietorship" color = "primary" />}
+                  label="Sole Proprietorship"/>
+                <FormControlLabel
+                  control={< Checkbox checked = {
+                  this.state.registerForm.companyContact.categories.franchisee
+                }
+                onChange = {
+                  this.companyContactHandleCheckboxChange('franchisee')
+                }
+                value = "franchisee" color = "primary" />}
+                  label="Franchisee"/>
+                <FormControlLabel
+                  control={< Checkbox checked = {
+                  this.state.registerForm.companyContact.categories.franchisor
+                }
+                onChange = {
+                  this.companyContactHandleCheckboxChange('franchisor')
+                }
+                value = "franchisor" color = "primary" />}
+                  label="Franchisor"/>
+                <FormControlLabel
+                  control={< Checkbox checked = {
+                  this.state.registerForm.companyContact.categories.staffingAgency
+                }
+                onChange = {
+                  this.companyContactHandleCheckboxChange('staffingAgency')
+                }
+                value = "staffingAgency" color = "primary" />}
+                  label="Staffing Agency"/>
+              </FormGroup>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6} md={6} lg={6}>
-            <TextField
-              id="title"
-              label="Title"
-              value={this.state.registerForm.companyContact.title}
-              margin="normal"
-              fullWidth
-              helperText={this.state.firstname_error}
-              error={(this.state.registerForm.companyContact.title == "")
-              ? false
-              : true}/>
-          </Grid>
-          <Grid item xs={12} sm={6} md={6} lg={6}>
-            <TextField
-              id="phone"
-              label="Phone"
-              value={this.state.registerForm.companyContact.phone}
-              margin="normal"
-              fullWidth
-              helperText={this.state.firstname_error}
-              error={(this.state.registerForm.companyContact.phone == "")
-              ? false
-              : true}/>
-          </Grid>
-          <Grid item xs={12} sm={6} md={6} lg={6}>
-            <TextField
-              id="fax"
-              label="Fax"
-              value={this.state.registerForm.companyContact.fax}
-              margin="normal"
-              fullWidth
-              helperText={this.state.firstname_error}
-              error={(this.state.registerForm.companyContact.fax == "")
-              ? false
-              : true}/>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <TextField
-              id="email"
-              label="Email"
-              value={this.state.registerForm.companyContact.email}
-              margin="normal"
-              fullWidth
-              helperText={this.state.firstname_error}
-              error={(this.state.registerForm.companyContact.email == "")
-              ? false
-              : true}/>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <b>Submitting As:</b>
-            <FormGroup row>
-              <FormControlLabel
-                control={< Checkbox checked = {
-                this.state.registerForm.companyContact.categories.carporateOwner
-              }
-              onChange = {
-                this.companyContactHandleCheckboxChange('carporateOwner')
-              }
-              value = "carporateOwner" color = "primary" />}
-                label="Corporate Owner"/>
-              <FormControlLabel
-                control={< Checkbox checked = {
-                this.state.registerForm.companyContact.categories.branchLocation
-              }
-              onChange = {
-                this.companyContactHandleCheckboxChange('branchLocation')
-              }
-              value = "branchLocation" color = "primary" />}
-                label="Branch Location"/>
-              <FormControlLabel
-                control={< Checkbox checked = {
-                this.state.registerForm.companyContact.categories.soleProprietorship
-              }
-              onChange = {
-                this.companyContactHandleCheckboxChange('soleProprietorship')
-              }
-              value = "soleProprietorship" color = "primary" />}
-                label="Sole Proprietorship"/>
-              <FormControlLabel
-                control={< Checkbox checked = {
-                this.state.registerForm.companyContact.categories.franchisee
-              }
-              onChange = {
-                this.companyContactHandleCheckboxChange('franchisee')
-              }
-              value = "franchisee" color = "primary" />}
-                label="Franchisee"/>
-              <FormControlLabel
-                control={< Checkbox checked = {
-                this.state.registerForm.companyContact.categories.franchisor
-              }
-              onChange = {
-                this.companyContactHandleCheckboxChange('franchisor')
-              }
-              value = "franchisor" color = "primary" />}
-                label="Franchisor"/>
-              <FormControlLabel
-                control={< Checkbox checked = {
-                this.state.registerForm.companyContact.categories.staffingAgency
-              }
-              onChange = {
-                this.companyContactHandleCheckboxChange('staffingAgency')
-              }
-              value = "staffingAgency" color = "primary" />}
-                label="Staffing Agency"/>
-            </FormGroup>
-          </Grid>
-        </Grid>
-      </Fragment>
+        </Fragment>
     )
   }
   localOfficeInformationForm = () => {

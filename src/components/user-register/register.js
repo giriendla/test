@@ -22,7 +22,7 @@ import {withStyles} from "@material-ui/core/styles";
 import './register.scss';
 
 import RegistrationForm from './registrationForm';
-import {CompanyContactForm, CompanyOfficeForm, CorporateOfficeForm, BillingAddressForm, ServiceTypeForm} from './form';
+// import {CompanyContactForm, CompanyOfficeForm, CorporateOfficeForm, BillingAddressForm, ServiceTypeForm} from './form';
 
 const styles = theme => {
   return {
@@ -70,6 +70,7 @@ function getStepContent(step) {
       return "Unknown step";
   }
 }
+const forms = ["Company Contact for Compliance", "Company Branch/Local Office Information", "Corporate Office Information", "Billing Location Information", "Service Type Your Company Offer"];
 
 class UserRegistration extends Component {
   constructor(props) {
@@ -77,26 +78,38 @@ class UserRegistration extends Component {
     this.state = {
       activeStep: 0,
       registerForm: {
-        companyContact: {
-          name: "",
-          name_error: false,
-          title: "",
-          title_error: false,
-          phone: "",
-          phone_error: false,
-          fax: "",
-          fax_error: false,
-          email: "",
-          email_error: false,
-          categories: {
-            carporateOwner: false,
-            branchLocation: false,
-            soleProprietorship: false,
-            franchisee: false,
-            franchisor: false,
-            staffingAgency: false
-          }
-        }
+        "first_name": "",
+        "last_name": "",
+        "phone_mobile": "",
+        "email": "",
+        "password": "",
+        "service_label": [],
+        "child_company_name": "",
+        "child_company_address": "",
+        "child_company_city": "",
+        "child_company_state": "",
+        "child_company_zip": "",
+        "child_company_contact_mail": "",
+        "child_company_contact_phone": "",
+        "child_company_contact_name": "",
+        "parent_company_name": "",
+        "parent_company_address": "",
+        "parent_company_city": "",
+        "parent_company_state": "",
+        "parent_company_zip": "",
+        "parent_company_contact_mail": "",
+        "parent_company_contact_phone": "",
+        "parent_company_contact_name": "",
+        "parent_company_contact_title": "",
+        "billing_company_name": "",
+        "billing_company_address": "",
+        "billing_company_city": "",
+        "billing_company_state": "",
+        "billing_company_zip": "",
+        "billing_company_contact_mail": "",
+        "billing_company_contact_phone": "",
+        "billing_company_contact_name": "",
+        "billing_company_contact_title": ""
       }
     };
     console.log("User Registration", props);
@@ -128,7 +141,7 @@ class UserRegistration extends Component {
     return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
       if (+ match === 0) 
         return ""; // or if (/\s+/.test(match)) for white spaces
-      return index == 0
+      return index === 0
         ? match.toLowerCase()
         : match.toUpperCase();
     });
@@ -145,11 +158,10 @@ class UserRegistration extends Component {
     console.log("Updated ", field, event);
     let fieldUpdate = this.state.registerForm;
     fieldUpdate.companyContact[field] = event.target.value;
-    fieldUpdate.companyContact[field+'_error'] = (event.target.value) ? "" : field + " is required!";
-
-    this.setState({
-      registerForm: fieldUpdate
-    });
+    fieldUpdate.companyContact[field + '_error'] = (event.target.value)
+      ? ""
+      : field + " is required!";
+    this.setState({registerForm: fieldUpdate});
     /* this.setState({
       [field]: event.target.value,
       [field + "_error"]: (event.target.value)
@@ -158,152 +170,64 @@ class UserRegistration extends Component {
     }); */
   }
 
+  updateContactCompany = data => {
+    console.log("Update Contact Company", data);
+    let registerForm = this.state.registerForm;
+    let newRegisterForm = {
+      ...registerForm,
+      ...data
+    };
+    this.setState({registerForm: newRegisterForm});
+    console.log("New State OBject", this.state);
+  }
+  getFormData = () => {
+    return this.state.registerForm;
+  }
+
   companyContactHandleCheckboxChange = name => event => {
-    /* console.log("Selected Checkbox", name, event.target.checked); */
+    console.log("---Start--- \n\nSelected Checkbox \n", name, event.target.checked, "\n ---End--");
     let categories = this.state.registerForm;
     categories.companyContact.categories[name] = event.target.checked;
     this.setState({registerForm: categories});
   };
-  loadStepperForm = () => {
-    const {activeStep} = this.state;
-    const steps = getSteps();
-    if (getStepContent(activeStep) == steps[0]) {
-      return (
-        <Fragment>
-          {JSON.stringify(this.state.registerForm.companyContact)}
-          <Grid container spacing={32}>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
-              <TextField
-                id="name"
-                label="Name"
-                value={this.state.registerForm.companyContact.name}
-                onChange={this.updateField('name')}
-                margin="normal"
-                fullWidth
-                helperText={this.state.registerForm.companyContact.name}
-                error={(this.state.registerForm.companyContact.name == "")
-                ? false
-                : true}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
-              <TextField
-                id="title"
-                label="Title"
-                value={this.state.registerForm.companyContact.title}
-                margin="normal"
-                fullWidth
-                helperText={this.state.firstname_error}
-                error={(this.state.registerForm.companyContact.title == "")
-                ? false
-                : true}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
-              <TextField
-                id="phone"
-                label="Phone"
-                value={this.state.registerForm.companyContact.phone}
-                margin="normal"
-                fullWidth
-                helperText={this.state.firstname_error}
-                error={(this.state.registerForm.companyContact.phone == "")
-                ? false
-                : true}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
-              <TextField
-                id="fax"
-                label="Fax"
-                value={this.state.registerForm.companyContact.fax}
-                margin="normal"
-                fullWidth
-                helperText={this.state.firstname_error}
-                error={(this.state.registerForm.companyContact.fax == "")
-                ? false
-                : true}/>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12}>
-              <TextField
-                id="email"
-                label="Email"
-                value={this.state.registerForm.companyContact.email}
-                margin="normal"
-                fullWidth
-                helperText={this.state.firstname_error}
-                error={(this.state.registerForm.companyContact.email == "")
-                ? false
-                : true}/>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12}>
-              <b>Submitting As:</b>
-              <FormGroup row>
-                <FormControlLabel
-                  control={< Checkbox checked = {
-                  this.state.registerForm.companyContact.categories.carporateOwner
-                }
-                onChange = {
-                  this.companyContactHandleCheckboxChange('carporateOwner')
-                }
-                value = "carporateOwner" color = "primary" />}
-                  label="Corporate Owner"/>
-                <FormControlLabel
-                  control={< Checkbox checked = {
-                  this.state.registerForm.companyContact.categories.branchLocation
-                }
-                onChange = {
-                  this.companyContactHandleCheckboxChange('branchLocation')
-                }
-                value = "branchLocation" color = "primary" />}
-                  label="Branch Location"/>
-                <FormControlLabel
-                  control={< Checkbox checked = {
-                  this.state.registerForm.companyContact.categories.soleProprietorship
-                }
-                onChange = {
-                  this.companyContactHandleCheckboxChange('soleProprietorship')
-                }
-                value = "soleProprietorship" color = "primary" />}
-                  label="Sole Proprietorship"/>
-                <FormControlLabel
-                  control={< Checkbox checked = {
-                  this.state.registerForm.companyContact.categories.franchisee
-                }
-                onChange = {
-                  this.companyContactHandleCheckboxChange('franchisee')
-                }
-                value = "franchisee" color = "primary" />}
-                  label="Franchisee"/>
-                <FormControlLabel
-                  control={< Checkbox checked = {
-                  this.state.registerForm.companyContact.categories.franchisor
-                }
-                onChange = {
-                  this.companyContactHandleCheckboxChange('franchisor')
-                }
-                value = "franchisor" color = "primary" />}
-                  label="Franchisor"/>
-                <FormControlLabel
-                  control={< Checkbox checked = {
-                  this.state.registerForm.companyContact.categories.staffingAgency
-                }
-                onChange = {
-                  this.companyContactHandleCheckboxChange('staffingAgency')
-                }
-                value = "staffingAgency" color = "primary" />}
-                  label="Staffing Agency"/>
-              </FormGroup>
-            </Grid>
-          </Grid>
-        </Fragment>
-      )
-    } else if (getStepContent(activeStep) == steps[1]) {
-      return (<CompanyOfficeForm/>)
-    } else if (getStepContent(activeStep) == steps[2]) {
-      return (<CorporateOfficeForm/>)
-    } else if (getStepContent(activeStep) == steps[3]) {
-      return (<BillingAddressForm/>)
-    } else if (getStepContent(activeStep) == steps[4]) {
-      return (<ServiceTypeForm/>)
-    }
+
+  renderStepperComponent = (view) => {
+
+    return (
+      <Fragment>
+        <div
+          style={{
+          'display': (forms[0] === view)
+            ? 'block'
+            : 'none'
+        }}>
+          <CompanyContact data={this.state.registerForm}/>
+        </div>
+        <div
+          style={{
+          'display': (forms[1] === view)
+            ? 'block'
+            : 'none'
+        }}>updateContactCompany</div>
+      </Fragment>
+    )
+    /* if (forms[0] === view) {
+      return (<CompanyContactForm
+        {...this.props}
+        updateContactCompany={this.updateContactCompany} formData={this.state.registerForm}/>)
+    } else if (forms[1] === view) {
+      return (<CompanyOfficeForm {...this.props}
+        updateContactCompany={this.updateContactCompany} formData={this.getFormData}/>)
+    } else if (forms[2] === view) {
+      return (<CorporateOfficeForm {...this.props}
+        updateContactCompany={this.updateContactCompany}/>)
+    } else if (forms[3] === view) {
+      return (<BillingAddressForm {...this.props}
+        updateContactCompany={this.updateContactCompany}/>)
+    } else if (forms[3] === view) {
+      return (<ServiceTypeForm {...this.props}
+        updateContactCompany={this.updateContactCompany}/>)
+    } */
   }
 
   render() {
@@ -314,11 +238,11 @@ class UserRegistration extends Component {
     return (
       <Grid container className={classes.root + " stepperHolder"}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          {/* JSON.stringify(classes) */}
+          {/* JSON.stringify(this.state) */}
           <Stepper
             className="stepperContainer"
             activeStep={activeStep}
-            connector={< StepConnector classes = {{ line: classes.line }}/>}
+            connector={<StepConnector classes = {{ line: classes.line }}/>}
             orientation="horizontal">
             {steps.map(label => (
               <Step key={label}>
@@ -340,8 +264,8 @@ class UserRegistration extends Component {
               )
               : (
                 <div className="registrationFormContainer">
-                  {this.loadStepperForm()}
-
+                  {/* <RegistrationForm {...this.props} component={getStepContent(activeStep)}/> */}
+                  {this.renderStepperComponent(getStepContent(activeStep))}
                   <div className="margin-top-20">
                     <Button
                       disabled={activeStep === 0}
@@ -379,3 +303,14 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(UserRegistration));
+
+const CompanyContact = (props) => {
+
+  debugger;
+  
+  return (
+    <Fragment>
+      {props}
+    </Fragment>
+  )
+}
