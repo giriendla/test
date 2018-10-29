@@ -22,7 +22,7 @@ import {withStyles} from "@material-ui/core/styles";
 import './register.scss';
 
 import RegistrationForm from './registrationForm';
-// import {CompanyContactForm, CompanyOfficeForm, CorporateOfficeForm, BillingAddressForm, ServiceTypeForm} from './form';
+import {CompanyContactForm, CompanyOfficeForm, CorporateOfficeForm, BillingAddressForm, ServiceTypeForm} from './form';
 
 const styles = theme => {
   return {
@@ -78,38 +78,8 @@ class UserRegistration extends Component {
     this.state = {
       activeStep: 0,
       registerForm: {
-        "first_name": "",
-        "last_name": "",
-        "phone_mobile": "",
-        "email": "",
-        "password": "",
         "service_label": [],
-        "child_company_name": "",
-        "child_company_address": "",
-        "child_company_city": "",
-        "child_company_state": "",
-        "child_company_zip": "",
-        "child_company_contact_mail": "",
-        "child_company_contact_phone": "",
-        "child_company_contact_name": "",
-        "parent_company_name": "",
-        "parent_company_address": "",
-        "parent_company_city": "",
-        "parent_company_state": "",
-        "parent_company_zip": "",
-        "parent_company_contact_mail": "",
-        "parent_company_contact_phone": "",
-        "parent_company_contact_name": "",
-        "parent_company_contact_title": "",
-        "billing_company_name": "",
-        "billing_company_address": "",
-        "billing_company_city": "",
-        "billing_company_state": "",
-        "billing_company_zip": "",
-        "billing_company_contact_mail": "",
-        "billing_company_contact_phone": "",
-        "billing_company_contact_name": "",
-        "billing_company_contact_title": ""
+        "service_type": []
       }
     };
     console.log("User Registration", props);
@@ -171,63 +141,55 @@ class UserRegistration extends Component {
   }
 
   updateContactCompany = data => {
-    console.log("Update Contact Company", data);
-    let registerForm = this.state.registerForm;
-    let newRegisterForm = {
-      ...registerForm,
-      ...data
-    };
+    /* console.log("Update Contact Company", data); */
+    let registerFormDate = this.state.registerForm;
+    let newRegisterForm = { ...registerFormDate, ...data};
     this.setState({registerForm: newRegisterForm});
-    console.log("New State OBject", this.state);
+    /* console.log("New State OBject", this.state); */
   }
   getFormData = () => {
     return this.state.registerForm;
   }
 
   companyContactHandleCheckboxChange = name => event => {
-    console.log("---Start--- \n\nSelected Checkbox \n", name, event.target.checked, "\n ---End--");
+    /* console.log("---Start--- \n\nSelected Checkbox \n", name, event.target.checked, "\n ---End--"); */
     let categories = this.state.registerForm;
     categories.companyContact.categories[name] = event.target.checked;
     this.setState({registerForm: categories});
   };
 
   renderStepperComponent = (view) => {
-
-    return (
+    return(
       <Fragment>
-        <div
-          style={{
-          'display': (forms[0] === view)
-            ? 'block'
-            : 'none'
-        }}>
-          <CompanyContact data={this.state.registerForm}/>
+        <div className="stepperFormsHolder">
+          <div className="stepperForms" style={{ 'display': (forms[0] === view) ? 'block' : 'none'}}>
+          <CompanyContactForm {...this.props}
+                updateContactCompany={this.updateContactCompany} 
+                formData={this.state.registerForm}/>
+          </div>
+          <div className="stepperForms" style={{ 'display': (forms[1] === view) ? 'block' : 'none'}}>
+            <CompanyOfficeForm {...this.props}
+                updateContactCompany={this.updateContactCompany} 
+                formData={this.getFormData}/>
+          </div>
+          <div className="stepperForms" style={{ 'display': (forms[2] === view) ? 'block' : 'none'}}>
+            <CorporateOfficeForm {...this.props}
+                formData={this.state.registerForm}
+                updateContactCompany={this.updateContactCompany}/>
+          </div>
+          <div className="stepperForms" style={{ 'display': (forms[3] === view) ? 'block' : 'none'}}>
+            <BillingAddressForm {...this.props}
+                formData={this.state.registerForm}
+                updateContactCompany={this.updateContactCompany}/>
+          </div>
+          <div className="stepperForms" style={{ 'display': (forms[4] === view) ? 'block' : 'none'}}>
+            <ServiceTypeForm {...this.props}
+                formData={this.state.registerForm}
+                updateContactCompany={this.updateContactCompany}/>
+          </div>
         </div>
-        <div
-          style={{
-          'display': (forms[1] === view)
-            ? 'block'
-            : 'none'
-        }}>updateContactCompany</div>
       </Fragment>
     )
-    /* if (forms[0] === view) {
-      return (<CompanyContactForm
-        {...this.props}
-        updateContactCompany={this.updateContactCompany} formData={this.state.registerForm}/>)
-    } else if (forms[1] === view) {
-      return (<CompanyOfficeForm {...this.props}
-        updateContactCompany={this.updateContactCompany} formData={this.getFormData}/>)
-    } else if (forms[2] === view) {
-      return (<CorporateOfficeForm {...this.props}
-        updateContactCompany={this.updateContactCompany}/>)
-    } else if (forms[3] === view) {
-      return (<BillingAddressForm {...this.props}
-        updateContactCompany={this.updateContactCompany}/>)
-    } else if (forms[3] === view) {
-      return (<ServiceTypeForm {...this.props}
-        updateContactCompany={this.updateContactCompany}/>)
-    } */
   }
 
   render() {
@@ -237,8 +199,15 @@ class UserRegistration extends Component {
 
     return (
       <Grid container className={classes.root + " stepperHolder"}>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
-          {/* JSON.stringify(this.state) */}
+       {/* <div style={{
+          'display': "block", 
+          'width': "100%", 
+          'border': "1px solid #c00",
+          'wordWrap': "break-word"
+        }}>
+          {JSON.stringify(this.state.registerForm)}
+        </div> */}
+        <Grid item xs={12} sm={12} md={12} lg={12}>          
           <Stepper
             className="stepperContainer"
             activeStep={activeStep}
@@ -266,7 +235,7 @@ class UserRegistration extends Component {
                 <div className="registrationFormContainer">
                   {/* <RegistrationForm {...this.props} component={getStepContent(activeStep)}/> */}
                   {this.renderStepperComponent(getStepContent(activeStep))}
-                  <div className="margin-top-20">
+                  <div className="margin-top-20 text-right btnHolder">
                     <Button
                       disabled={activeStep === 0}
                       onClick={this.handleBack}
@@ -303,14 +272,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(UserRegistration));
-
-const CompanyContact = (props) => {
-
-  debugger;
-  
-  return (
-    <Fragment>
-      {props}
-    </Fragment>
-  )
-}

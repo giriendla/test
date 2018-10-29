@@ -26,3 +26,25 @@
         outline: none;
     }
 }
+.stepperFormsHolder{
+    display: block;
+    .stepperForms{
+        display: block;
+    }
+}
+.registrationFormContainer{
+    .text-right{text-align: right;}
+    .btnHolder{
+        button{
+            margin-right: 8px;
+            vertical-align: top;
+            &:last-child{
+                margin-right: 0px;
+            }
+            &:disabled{
+                opacity: 0.8;
+                color: #303030;
+            }
+        }
+    }
+}
