@@ -149,7 +149,7 @@ export default class Visit extends Component {
                 <Grid container>
                     <Grid item sm={6}>
                         <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                            Visits Page {JSON.stringify(this.state.filter)}
+                            Visits Page
                         </Typography>
                     </Grid>
                     <Grid item sm={6} align="right">
