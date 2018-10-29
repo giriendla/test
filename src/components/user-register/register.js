@@ -91,7 +91,8 @@ class UserRegistration extends Component {
     }));
   };
   submitForm = () => {
-    alert("Finished From");
+    console.log("Final Object", this.state.registerForm);
+    window.location.href = "/login";
   }
 
   handleBack = () => {

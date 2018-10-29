@@ -90,7 +90,6 @@ class CompanyContactForm extends Component {
       .updateContactCompany(this.state.data);
     };
     formatPhoneNumber(phoneNumberString) {
-      //debugger;
       var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
       var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
       if (match) {
@@ -104,7 +103,7 @@ class CompanyContactForm extends Component {
         <Fragment>
           {/* JSON.stringify(this.state) */}
           <Grid container spacing={32}>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
               <TextField
                 id="first_name"
                 label="First Name"
@@ -121,7 +120,7 @@ class CompanyContactForm extends Component {
                 ? false
                 : true}/>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
               <TextField
                 id="last_name"
                 label="Last Name"
@@ -138,7 +137,7 @@ class CompanyContactForm extends Component {
                 ? false
                 : true}/>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
               <TextField
                 id="title"
                 label="Title"
@@ -321,7 +320,7 @@ class CompanyOfficeForm extends Component {
   render() {
     return (
       <Fragment>
-        {JSON.stringify(this.state)}
+        {/* JSON.stringify(this.state) */}
         <Grid container spacing={32}>
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <TextField
@@ -1056,10 +1055,7 @@ class ServiceTypeForm extends Component {
           .service_type
           .splice(item, 1);
       }
-
-      //categories.categories.push(name);
     }
-   // console.log("Categore list", this.state);
     this.setState(service_type);
     this
       .props
