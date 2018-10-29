@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
     Button,
     Grid,
@@ -15,7 +15,8 @@ import {
     Popper,
     Grow,
     Paper,
-    ClickAwayListener
+    ClickAwayListener,
+	 TextField
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FilterListIcon from '@material-ui/icons/FilterList';
@@ -54,7 +55,8 @@ export default class Visit extends Component {
         this.state = {
             visitors: [],
             anchorEl: null,
-            open: false
+				open: false,
+				filter: { open: false }
         }
         this.handleClick = this
             .handleClick
@@ -111,7 +113,34 @@ export default class Visit extends Component {
         }
 
         this.setState({ open: false });
-    };
+	 };
+	 toggleFilter = () => {
+		 let state = this.state.filter;
+		 state.open = !state.open
+		 if(state.open == false){
+			 state.search = "";
+			 this.setState({filter: state});
+		 }
+		 this.setState({'filter': state});
+	 }
+	 renderFilter = () => {
+		 if(this.state.filter.open){
+			 return(
+				 <Fragment>
+				 	Rendering Filter
+				 </Fragment>
+			 )
+		 }
+	 }
+	 doFilter = (field) => {
+		 console.log("Filter Searching", field, this.state.filter[field]);
+	 }
+	 updateFilterField = (event, field) => {
+		 console.log("Updating Field", field, event);
+		 let state = this.state;
+		 state.filter[field] = event.target.value;
+		 this.setState(state)
+	 }
     render() {
         const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
@@ -120,60 +149,80 @@ export default class Visit extends Component {
                 <Grid container>
                     <Grid item sm={6}>
                         <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                            Visits Page
+                            Visits Page {JSON.stringify(this.state.filter)}
                         </Typography>
                     </Grid>
                     <Grid item sm={6} align="right">
-                        <Button
-                            buttonRef={node => {
-                                this.anchorEl = node;
-                            }}
-                            aria-owns={open
-                                ? 'menu-list-grow'
-                                : null}
+                        <Button 
+                            buttonRef={node => {this.anchorEl = node;}}
+                            aria-owns={open ? 'menu-list-grow': null}
                             aria-haspopup="true"
-                            onClick={this.handleToggle}>
+                            onClick={(event) => {
+										this.handleClose(event);
+										this.handleToggle();
+										this.toggleFilter();
+									}}>
                             <FilterListIcon />
                         </Button>
-                        <Popper
+                        {/* <Popper
                             open={this.state.open}
                             anchorEl={this.anchorEl}
                             transition
                             disablePortal
-                            style={{
-                                zIndex: 9999
-                            }}>
+                            style={{zIndex: 9999}}>
                             {({ TransitionProps, placement }) => (
                                 <Grow
                                     {...TransitionProps}
                                     id="menu-list-grow"
-                                    style={{
-                                        transformOrigin: placement === 'bottom'
-                                            ? 'center top'
-                                            : 'center bottom'
-                                    }}>
+                                    style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
                                     <Paper>
-                                        <ClickAwayListener onClickAway={this.handleClose}>
-                                            <MenuList>
-                                                <MenuItem
-                                                    onClick={(event) => {
-                                                        this.handleClose(event);
-                                                        this.handleToggle();
-                                                    }}>Search</MenuItem>
-                                            </MenuList>
-                                        </ClickAwayListener>
+													<ClickAwayListener onClickAway={this.handleClose}>
+														<MenuList>
+															<MenuItem onClick={(event) => {
+																		this.handleClose(event);
+																		this.handleToggle();
+																		this.toggleFilter();
+																	}}>Search</MenuItem>
+														</MenuList>
+													</ClickAwayListener>
                                     </Paper>
                                 </Grow>
                             )}
-                        </Popper>
+                        </Popper> */}
                     </Grid>
-                </Grid>
-                <Grid item sm={12}>
+					 </Grid>
+					 <Grid item sm={12} className={(this.state.filter.open) ? "filterContainer active" : "filterContainer inactive"}>
+						<Grid container spacing={32} className="filterContent">
+							<Grid item>
+								<b>Filter</b>
+							</Grid>
+							<Grid item>
+							<label>Search</label>
+							<input type="text" placeholder="Search" value={this.state.filter.search} 
+									onChange={event => {
+										this.doFilter('search');
+										this.updateFilterField(event, 'search');
+									}}/>
+								{/* <TextField
+									id="search"
+									label="Search"
+									className="filterSearch"
+									value={this.state.filter.search}
+									onChange={event => {
+										this.doFilter('search');
+										this.updateFilterField(event, 'search');
+									}}
+									margin="normal"
+								/> */}
+							</Grid>
+					 </Grid>
+					 <Grid item sm={12}>
                     <ListComponent
                         {...this.props}
                         data={this.state.visitors}
                         header={["id", "title", "body", "userId"]} />
                 </Grid>
+            </Grid>
             </Grid>
         );
     };
