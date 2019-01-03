@@ -15,6 +15,7 @@ import Config from './container/config';
 import Appheader from './components/_/header';
 import {Footer} from './components/_/elements';
 import Root from './container/root';
+import { ToastContainer, toast } from 'react-toastify';
 
 class App extends Component {
   static propTypes = {}
@@ -23,6 +24,7 @@ class App extends Component {
       <Router>
         <Grid className="mainContainer">
           <Root />
+          <ToastContainer autoClose={8000} />
         </Grid>
       </Router>
     );
@@ -32,6 +34,7 @@ class App extends Component {
 
 
 const mapStateToProps = state => {
+  console.log("\n\nAt App Checking  Rexux\n", state);
   const obj = state;
   return obj;
 }

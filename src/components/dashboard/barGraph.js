@@ -38,26 +38,30 @@ export default (props) => {
 
   const x = scaleBand()
       .rangeRound([0, width])
-      .padding(0.1),
-    y = scaleLinear().rangeRound([height, 0]);
+      .padding(0.1);
+  // const x = scaleLinear();
+  const y = scaleLinear().rangeRound([height, 0]);
 
   const data = tsvParse(props.data, d => {
     d.frequency = +d.frequency;
     return d;
   });
 
-  x.domain(data.map(d => d.label));
+  x.domain(data.map(d => d.index));
   y.domain([0, max(data, d => d.frequency)]);
 
 
   return(
     <Fragment>
-      <svg width={width} height={height}>
+      {/* <svg width={width} height={height}> */}
+      <svg style={{ width: '100%', height: '500px' }} ref={node => {this.node = node;}}>
         <g transform={`translate(${margin.left}, ${margin.top})`}>
           <g
             className="axis axis--x"
             transform={`translate(0, ${height})`}
-            ref={node => select(node).call(axisBottom(x))}
+            ref={node => select(node).call(axisBottom(x).tickFormat(d => {
+              return this.graphData[d].label;
+            }))}
           />
           <g className="axis axis--y">
             <g ref={node => select(node).call(axisLeft(y).ticks(10))} />
@@ -66,15 +70,33 @@ export default (props) => {
             </text>} */}
           </g>
           {data.map(d => (
-            <rect
-              key={d.label+" new"}
-              className={"bar " + x.bandwidth()}
-              fill={d.color}
-              x={x(d.label)}
-              y={y(d.frequency)}
-              width={x.bandwidth()}
-              height={height - y(d.frequency)}
-            />
+            <Fragment key={d.index} >
+              <rect
+                  // key={d.label+" new"}
+                  className={"bar " + d.index}
+                  fill={d.color}
+                  x={x(d.index)}
+                  y={y(d.frequency)}
+                  width={x.bandwidth()}
+                  height={height - y(d.frequency)}
+                  title={d.label}
+                  index={d.index}
+                  onMouseOver={(event) => {
+                    let index = event.target.attributes.index.value;
+                    let label = document.getElementById("label-"+index);
+                    console.log("Label width", label);
+                    label.style.display = "block";
+                    label.style.opacity = 1;
+                  }}
+                  onMouseOut = {event => {
+                   let index = event.target.attributes.index.value;
+                   let label = document.getElementById("label-" + index);
+                   label.style.display = "none";
+                   label.style.opacity = 0;
+                  }}
+                />
+              <text className="barLabel" id={"label-"+d.index} x={x(d.index)/2} y={y(d.frequency)-10}>{d.label}</text>
+            </Fragment>
           ))}
         </g>
       </svg>
@@ -83,8 +105,16 @@ export default (props) => {
             data.map((n, i) => {
               return (
                 <Grid className="colorBarItem" item key={i} sm={6} md={4} lg={3} xs={12}>
-                  <i color={n.color} style={{backgroundColor: n.color}}></i>
-                 <span>{n.label}</span>
+                {
+                  (n.label.indexOf("mark") === -1) 
+                        ? (
+                            <Fragment>
+                              <i color={n.color} style={{backgroundColor: n.color}}></i>
+                              <span>{n.label}</span>
+                            </Fragment>)
+                          : ""
+                }
+                  
                 </Grid>
               )
             })

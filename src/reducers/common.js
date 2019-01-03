@@ -1,9 +1,8 @@
-import {
-    Mobile_Menu
-} from '../constants/action-types';
+import {Mobile_Menu, Notification} from '../constants/action-types';
 
 const initialState = {
-    mobileMenu: true
+    mobileMenu: true,
+    toast: {status: false, message: ""}
 };
 
 export default function (state = initialState, action) {
@@ -11,6 +10,10 @@ export default function (state = initialState, action) {
         case Mobile_Menu:
             return { ...state,
                 mobileMenu: action.mobileMenu
+            };
+        case Notification:
+            return { ...state,
+                toast: action.toast
             };
         default:
             return state;

@@ -30,3 +30,27 @@
         }
     }
 }
+.bar{
+    opacity: 0.8;
+    &:hover{
+        opacity: 1;
+    }
+}
+#bar_tooltip{
+    display: block;
+    position: absolute;
+}
+.barLabel{
+    opacity: 0;
+    color: black;
+}
+.axis{
+    &.axis--x{
+        .tick{
+            text{
+                transform-origin: 5%, 60%;
+                transform: rotate(-8deg);
+            }
+        }
+    }
+}

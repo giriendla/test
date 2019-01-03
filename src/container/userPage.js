@@ -21,12 +21,16 @@ import "../scss/userStyles.scss";
 import Dashboard from '../components/dashboard/dashboard';
 import Visit from '../components/visits/visit';
 import Employees from '../components/employees/employees';
+import EmployeeCreate from '../components/employees/employee-create';
+import EmployeesEdit from '../components/employees/employee-edit';
 import Account from '../components/account/account';
 import AccountForm from '../components/account/accountform';
 import Profile from '../components/profile/profile';
 import ChangePassword from '../components/profile/changePassword';
 import EditProfile from '../components/profile/editprofile';
 import Communites from '../components/communities/communities';
+import CommonService from '../service/commonServices';
+import { ToastContainer, toast } from 'react-toastify';
 
 const styles = theme => ({
   root: {
@@ -59,9 +63,27 @@ class userPage extends Component {
         <div><Communites {...this.props}/></div>
       );
     } else if (path.indexOf('/employees') !== -1) {
-      return (
-        <div><Employees {...this.props}/></div>
-      );
+      var employee = path.split('/');
+      if (employee.length > 2) {
+        switch (employee[2]) {
+          case "edit":
+            return (
+              <div><EmployeesEdit {...this.props}/></div>
+            );
+            break;
+          case "create":
+            return (
+              <div><EmployeeCreate {...this.props}/></div>
+            );
+            break;
+          default:
+            return false;
+        }
+      } else {
+        return (
+          <div><Employees {...this.props}/></div>
+        );
+      }
     } else if (path.indexOf('/account') !== -1) {
       var account = path.split('/');
       if (account.length > 2) {
@@ -117,6 +139,7 @@ class userPage extends Component {
           </Hidden>
           <Grid className="bodyContent" item lg={10} md={10} sm={9} xs={12}>
             <Scrollbars
+              autoHeightMin={100}
               renderTrackVertical={props => <div {...props} className="track-vertical"/>}>
               <div className="bodySection">
                 {this.loadComponent()}
@@ -125,6 +148,7 @@ class userPage extends Component {
           </Grid>
         </Grid>
         <Footer/>
+        <ToastContainer autoClose={8000} />
       </div>
     );
   }

@@ -12,7 +12,10 @@ import {
 } from '@material-ui/core';
 import Pagination from 'rc-pagination';
 import DeleteIcon from '@material-ui/icons/Delete';
+import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckCircle from '@material-ui/icons/CheckCircle';
+import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import localeInfo from 'rc-pagination/lib/locale/en_US';
 
 export default class ListComponent extends Component {
@@ -51,24 +54,38 @@ export default class ListComponent extends Component {
     /* console.log("Show Total Rows", data, arr); */
   }
   showPaginate() {
+    // debugger;
     let array = this.props.data;
     let page_number = this.state.pgCurrent;
     let page_size = this.state.pgPerPage;
     --page_number; // because pages logically start with 1, but technically with 0
-    return array.slice(page_number * page_size, (page_number + 1) * page_size);
+    if(array != null && array.length > 0){
+      return array.slice(page_number * page_size, (page_number + 1) * page_size);
+    }else{
+      return [];
+    }
   }
 
   render() {
+    // debugger;
+    const {data} = this.props;
+    const count = (data == undefined) ? 0 : data.length;
     return (
       <Fragment>
-        <RenderPageItems data={this.showPaginate()} header={this.props.header}/>
+        <RenderPageItems 
+              data={this.showPaginate()} 
+              header={this.props.header} 
+              view={this.props.view}
+              rowEdit = {this.props.rowEdit}
+              dispuite={this.props.dispuite}
+              listDocuments={this.props.listDocuments}/>
         <Pagination
           defaultCurrent={1}
           onChange={this.onPaginationChange}
           current={this.state.pgCurrent}
           hideOnSinglePage={true}
           locale={localeInfo}
-          total={this.props.data.length}
+          total={count}
           pageSize={this.state.pgPerPage}/>
       </Fragment>
     );
@@ -77,8 +94,10 @@ export default class ListComponent extends Component {
 
 const RenderPageItems = (props) => {
   const data = props;
+  const desktopMedia = ['xs'];
+  const mobileMedia = ['sm', 'md', 'lg', 'xl'];
   const doPaginate = (props) => {
-    console.log("At Render Page Items", props);
+    // console.log("At Render Page Items", props);
   }
   doPaginate(props);
   const showOptions = () => {}
@@ -90,8 +109,8 @@ const RenderPageItems = (props) => {
     }
   }
 
-  const rowsRender = () => {
-    /* console.log("All Props at child", props); */
+  const rowsRender = (props) => {
+    console.log("All Props at child RowsRender", props);
 
     const desktopMedia = ['xs'];
     const mobileMedia = ['sm', 'md', 'lg', 'xl'];
@@ -101,48 +120,7 @@ const RenderPageItems = (props) => {
         <Fragment>
           <div className="paginationHolder">
             <Hidden only={desktopMedia}>
-              <Table className="listTable">
-                <TableHead>
-                  <TableRow>
-                    {props
-                      .header
-                      .map((n, i) => {
-                        return (
-                          <TableCell key={i}>{n}</TableCell>
-                        )
-                      })}
-                    <TableCell>Options</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {props
-                    .data
-                    .map((n, i) => {
-                      /* console.log(n) */
-                      return (
-                        <TableRow key={i}>
-                          {props
-                            .header
-                            .map((k, l) => {
-                              return (
-                                <TableCell key={l}>
-                                  {renderImage(l, n)}
-                                  <span>
-                                    {n[k]}
-                                  </span>
-                                </TableCell>
-                              )
-                            })}
-                          <TableCell>
-                            <a href="javascript:void(0)"><EditIcon className="icon icon-edit"/></a>
-                            <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a>
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })
-}
-                </TableBody>
-              </Table>
+            
             </Hidden>
             <Hidden only={mobileMedia}>
               {props
@@ -154,7 +132,7 @@ const RenderPageItems = (props) => {
                     </div>
                   )
                 })
-}
+              }
             </Hidden>
           </div>
         </Fragment>
@@ -168,9 +146,27 @@ const RenderPageItems = (props) => {
     }
   }
 
+  const loadView = (props, view) => {
+    console.log("At Load View", props, view);
+    switch(props.view) {
+      case "employees":
+        return <Employees {...props} device={view} />;          
+      break;
+      default: 
+        return "No View Found";
+    }
+  }
+
   return (
     <Fragment>
-      {rowsRender(props)}
+      <div className="paginationHolder">
+        <Hidden only={desktopMedia}>
+          {loadView(props, "desktop")}
+        </Hidden>
+        <Hidden only={mobileMedia}>
+          {loadView(props, "mobile")}
+        </Hidden>
+      </div>
     </Fragment>
   )
 }
@@ -207,39 +203,142 @@ const RenderRow = (props) => {
 }
 
 const Employees = (props) => {
-  console.log("At Employees", props);
+  console.log("At Employees Table", props);
+  const renderImage = (data) => {
+    if (data.hasOwnProperty('image')) {
+      return (
+        <div className="profileImage"><img src={data.image}/></div>
+      );
+    }
+  }
+  const editingRow = (id) => {
+    // console.log("Editing Row", id);
+    props.rowEdit(id);
+  }
+  const dispuiteEmployee = data => {
+    // console.log("Disputing Employee at Pagination", data);
+    if(data.status !== "Disputed"){
+      props.dispuite(data);
+    }
+  }
+  const listDocuments = data => {
+    console.log("Showing List at Pagination of Documents", data);
+    props.listDocuments(data);
+  }
+  const renderView = (props) => {
+    console.log("\n\n/////////// At Render View Pagination \n", props);
+    if(props.device == "desktop"){
+      return (
+        <Table className="listTable">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Service</TableCell>
+              <TableCell>Last Visited</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell> </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props
+              .data
+              .map((n, i) => {
+                /* console.log(n) */
+                return (
+                  <TableRow key={i}>
+                    <TableCell>
+                      {renderImage(n)}
+                      <span>
+                        {n.name}
+                      </span>
+                    </TableCell>
+                    <TableCell>{n.email}</TableCell>
+                    <TableCell>{n.phone_mobile}</TableCell>
+                    <TableCell>{n.service}</TableCell>
+                    <TableCell>{n.lastVisitedData}</TableCell>
+                    <TableCell>{n.status}</TableCell>
+                    <TableCell numeric className="tableOptionSection">
+                      <a href="javascript:void(0)" 
+                          onClick={() => {listDocuments(n)}}>
+                          <span title="Documents">
+                            <LibraryBooks className="icon icon-edit"/>
+                          </span>
+                      </a>
+                      <a href="javascript:void(0)" 
+                          onClick={() => {editingRow(n)}}>
+                          <span title="Edit">
+                            <EditIcon className="icon icon-edit"/>
+                          </span>
+                      </a>
+                      <a href="javascript:void(0)" onClick={() => { dispuiteEmployee(n);}}>
+                        {
+                          (n.status == "Disputed") 
+                            ? <span title="Disputed" style={{cursor: "auto"}}>
+                                <DeleteIcon className="icon icon-delete"/>
+                              </span>
+                            : <span title="Dispute"><DeleteIcon className="icon icon-delete"/></span>
+                        }
+                      </a>
+                      {/* <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a> */}
+                    </TableCell>
+                  </TableRow>
+                )
+              })
+            }
+          </TableBody>
+        </Table>
+      );
+    }else if(props.device === "mobile"){
+      return(
+        <div className="mobilePagitnationItem">
+          <Table className="listTable">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone</TableCell>
+                <TableCell>Service</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Options</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {props
+                .data
+                .map((n, i) => {
+                  /* console.log(n) */
+                  return (
+                    <TableRow key={i}>
+                      <TableCell>
+                        {renderImage(n)}
+                        <span>
+                          {n.name}
+                        </span>
+                      </TableCell>
+                      <TableCell>{n.name}</TableCell>
+                      <TableCell>{n.name}</TableCell>
+                      <TableCell>{n.name}</TableCell>
+                      <TableCell>{n.name}</TableCell>
+                      <TableCell>
+                        <a href="javascript:void(0)" onClick={props.edit(n)} ><EditIcon className="icon icon-edit"/></a>
+                        <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+              }
+            </TableBody>
+          </Table>
+        </div>
+      ) 
+    }
+  }
+
   return (
     <Fragment>
-      <div className="itemRowHeading">
-        <h3>
-          <span><img src={props.image} className="employeeImage"/></span>
-          <span>{props.name}</span>
-        </h3>
-        <div className="itemRowOptions">
-          <a href="javascript:void(0)"><EditIcon className="icon icon-edit"/></a>
-          <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a>
-        </div>
-      </div>
-    <div className="itemRowBody">
-      <div>
-        <b>Phone</b> <span>{props.phone}</span>
-      </div>
-      <div>
-        <b>Email</b> <span>{props.email}</span>
-      </div>
-      <div>
-        <b>Company</b> <span>{props.company.name}</span>
-      </div>
-      <div>
-        <b>Company</b> <span>{props.company.name}</span>
-      </div>
-      <div>
-        <b>Address</b> 
-        <span>
-          {`${props.address.suite}, ${props.address.street}, ${props.address.city} - ${props.address.zipcode}`}
-        </span>
-      </div>
-    </div>
+      {renderView(props)}
     </Fragment>
   )
 }

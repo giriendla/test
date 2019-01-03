@@ -13,12 +13,12 @@ import Pagination from '../_/pagination';
 export default class ListComponent extends Component {
   constructor(props) {
     super(props);
-    console.log("props", props);
+    console.log("props at ListComponent", props);
   }
   render() {
     return (
       <Fragment>
-        <Pagination {...this.props}/>
+        <Pagination {...this.props} view="employees"/>
       </Fragment>
     );
   }

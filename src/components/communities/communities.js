@@ -52,7 +52,7 @@ export default class Communities extends Component {
         super(props);
 
         this.state = {
-            visitors: [],
+            communications: [],
             anchorEl: null,
             open: false
         }
@@ -80,9 +80,9 @@ export default class Communities extends Component {
             .get(axios.getEmployees())
             .then((response) => {
                 // console.log("Employee Response", response);
-                this.setState({ visitors: response.data });
+                this.setState({ communications: response.data });
                 // console.log("At First Response", this.state.visitors);
-                store.dispatch(getAllUsers(response.data));
+                // store.dispatch(getAllUsers(response.data));
             })
             /* .then(allUsers =>
                   dispatch({
@@ -170,8 +170,7 @@ export default class Communities extends Component {
                 </Grid>
                 <Grid item sm={12}>
                     <ListComponent
-                        {...this.props}
-                        data={this.state.visitors}
+                        data={this.state.communications}
                         header={["id", "name", "username", "email", "phone"]} />
                 </Grid>
             </Grid>

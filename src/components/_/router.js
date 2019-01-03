@@ -17,6 +17,8 @@ import Account from '../account/account';
 import AccountForm from '../account/accountform';
 import Communities from '../communities/communities';
 import Employees from "../employees/employees";
+import EmployeesEdit from '../employees/employee-edit';
+import EmployeeCreate from '../employees/employee-create';
 import Login from "../login/login";
 import Forgotpassword from "../forgotpassword/forgotpassword";
 import ResetPassword from "../forgotpassword/resetPassword";
@@ -44,7 +46,6 @@ export default class Approute extends Component {
             }
         });
         console.log("Config.isRoute", this.isRoute);
-
         return (
             <Grid container className="bodyContainer">
 
@@ -60,6 +61,8 @@ export default class Approute extends Component {
                             <Route path="/account/edit/:id" component={AccountForm} />
                             <Route path="/communites" component={Communities} />
                             <Route path="/employees" component={Employees} />
+                            <Route path="/employees/create" component={EmployeesCreate} />
+                            <Route path="/employees/edit/:id" component={EmployeesEdit} />
                             <Route path="/login" component={Login} />
                             <Route path="/forgotpassword" component={Forgotpassword} />
                             <Route path="/resetpassword" component={ResetPassword} />
@@ -67,6 +70,7 @@ export default class Approute extends Component {
                             <Route path="/profile/edit" component={EditProfile} />
                             <Route path="/profile/changepassword" component={ChangePassword} />
                             <Route path="/register" component={Register} />
+                            <Route path="/register/:id" component={Register} />
                             <Route path="/visit" component={Visit} />
                         </div>
                     </Scrollbars>

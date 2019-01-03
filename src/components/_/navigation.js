@@ -12,10 +12,29 @@ export default class MainNav extends Component {
     constructor(props){
         super(props);
         console.log("At Navigation", props);
+        this.state = {
+            doRedirect: false,
+            redirectUrl: null
+        }
+    }
+    redirect = (event, link) => {
+        event.preventDefault();
+        console.log("Redirecting to", event, link); 
+        this.setState({
+            doRedirect: true,
+            redirectUrl: link.link
+        });
+        // onClick={(event) => {this.redirect(event, n)}} 
     }
 
     render() {
         const currentUrl = this.props.match.url;
+        const {doRedirect, redirectUrl} = this.state;
+
+        /* if (doRedirect) {
+            return <Redirect to={redirectUrl}/>;
+        } */
+        
         return (
             <div className="mainNavigation">
                 <ul>

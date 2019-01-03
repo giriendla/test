@@ -10,6 +10,7 @@ import Forgotpassword from '../components/forgotpassword/forgotpassword';
 import Resetpassword from '../components/forgotpassword/resetPassword';
 import Register from '../components/register/register';
 import UserRegistration from '../components/user-register/register';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default class LoadSinglePage extends Component {
   constructor(props) {
@@ -29,6 +30,9 @@ export default class LoadSinglePage extends Component {
       );
     }
   }
+  scrollUpdate = evt => {
+    console.log("Scroll Event", evt);
+  }
   render() {
     return (
       <div>
@@ -42,13 +46,17 @@ export default class LoadSinglePage extends Component {
             sm={12}
             xs={12}>
             <Scrollbars
-              renderTrackVertical={props => <div {...props} className="track-vertical"/>}>
+              autoHeightMin={100}
+              onUpdate={this.scrollUpdate.bind(this)}
+              renderTrackVertical={props => <div {...props} 
+              className="track-vertical"/>}>
               <div className="bodySection">
                 {this.checkView()}
               </div>
-            </Scrollbars>
+              </Scrollbars>
           </Grid>
         </Grid>
+        <ToastContainer autoClose={8000} />
         <Footer/>
       </div>
     )

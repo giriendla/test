@@ -4,18 +4,53 @@ import {
     Route,
     Link,
     Redirect,
-    withRouter
+    withRouter,
+    matchPath
   } from "react-router-dom";
+import PropTypes from "prop-types";
 import UserPage from './userPage';
 import LoadSinglePage from './singlePage';
 import BeforeLoginPage from './loginPage';
 import Config from './config';
-
+import CommonService from '../service/commonServices';
+let params = null;
 const Root = (props) => {
     console.log("At Root ", props);
+        // alert("At Root Element");
+    
+    console.log("Window path", window.location.pathname);
+
+    const match = matchPath(props.history.location.pathname, {
+        path: '/register/:id',
+        exact: true,
+        strict: false
+    });
+    if(match !== null && match.params.id !== undefined && match.params.id != ""){
+        params = match.params.id;
+    }else{
+        params = null;
+    }
+    
+    
+
+    
+    if(window.location.pathname === '/'){
+        if(CommonService.getToken() !== null){
+            window.location.href = "/dashboard"; 
+        }else{
+            window.location.href = "/login";
+        }
+    }
+    
+    let nonLoginPages = ["/login", "/register", "/register/"+params];
+    // console.log("is Url loggedin or not", nonLoginPages.indexOf(window.location.pathname));
+    if ((nonLoginPages.indexOf(window.location.pathname) === -1) && CommonService.getToken() === null) {
+        window.location.href = "/login";
+    }
+    
     return (
-        <div className="root">        
-            {
+        <div className="root">
+            {                
                 Config.mainnav.map((n, i) => {
                     if(n.isLogin){
                         // After Login
@@ -26,7 +61,7 @@ const Root = (props) => {
                         // Before Login
                         if(n.template == 'single'){
                             return (
-                                <Route {...this.props} path={n.link} exact component={LoadSinglePage} key={i}  />
+                                <Route {...this.props} path={n.link} component={LoadSinglePage} key={i}  />
                             )
                         }else if(n.template == 'beforeLogin'){
                             return (
@@ -35,8 +70,16 @@ const Root = (props) => {
                         }
                     }
                 })
+                
             } 
-            <Route path="/" exact component={BeforeLoginPage} />           
+
+            {
+                (CommonService.getToken() === null)
+                            ? <Route path="/" exact component={BeforeLoginPage} />
+                            : <Route path="/" exact component={UserPage} />
+            }
+
+                       
         </div>
     );
 };
