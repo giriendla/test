@@ -400,43 +400,14 @@ body {
   .news {
     position: absolute;
     top: 50%;
-    left: 25%;
+    left: 18%;
     transform: translateY(-50%);
-    background-color: #fff;
-    width: 65%;
+    width: 75%;
     min-height: 20px;
     padding: 5px 15px;
     box-shadow: none;
-    border-radius: 8px;
     padding-bottom: 8px;
     z-index: 0;
     color: #000;
-    border-bottom: 1px solid #ccc;
-    &:before {
-      content: " News ";
-      position: absolute;
-      left: 0;
-      top: 0;
-      padding: 6px 15px;
-      background-color: #47b16f;
-      /* height: 20px; */
-      min-height: 20px;
-      line-height: 20px;
-      font-weight: bold;
-      font-size: 14px;
-      color: #fff;
-      border-radius: 8px 0px 0px 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    >div {
-      display: block;
-      width: calc(100% - 65px);
-      margin-left: 65px;
-      color: #555;
-      .ui-marquee {
-        
-      }
-    }
   }
 }

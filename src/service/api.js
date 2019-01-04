@@ -89,5 +89,8 @@ axios.login = () => {
 axios.getDashboardData = () => {
   return Config.baseUrl + Config.api.dashboard.url;
 };
+axios.getCommunitiesList = () => {
+  return Config.baseUrl + Config.api.commounities.list.url;
+};
 
 export default axios;

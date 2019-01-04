@@ -23,10 +23,16 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios';
 import MainNav from '../_/navigation';
 import Config from '../../container/config';
-import { callUsers } from '../../actions';
+import {callUsers} from '../../actions';
 import store from '../../store';
-import { getAllUsers } from '../../actions';
-import ListComponent from '../employees/list';
+import {getAllUsers} from '../../actions';
+import ListComponent from './list';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import CommonService from '../../service/commonServices';
+import { ToastContainer, toast } from 'react-toastify';
+import ModalDialog from '../_/modal';
+import Pagination from './pagination';
 
 const options = [
     'None',
@@ -52,7 +58,7 @@ export default class Communities extends Component {
         super(props);
 
         this.state = {
-            communications: [],
+            communicaties: [],
             anchorEl: null,
             open: false
         }
@@ -77,10 +83,10 @@ export default class Communities extends Component {
 
     getCommunitiesList() {
         axios
-            .get(axios.getEmployees())
+            .get(axios.getCommunitiesList())
             .then((response) => {
-                // console.log("Employee Response", response);
-                this.setState({ communications: response.data });
+                console.log("Communities Response", response);
+                this.setState({ communicaties: response.data });
                 // console.log("At First Response", this.state.visitors);
                 // store.dispatch(getAllUsers(response.data));
             })
@@ -113,7 +119,7 @@ export default class Communities extends Component {
         this.setState({ open: false });
     };
     render() {
-        const { anchorEl } = this.state;
+        const { anchorEl, communicaties } = this.state;
         const open = Boolean(anchorEl);
         return (
             <Grid container>
@@ -169,9 +175,11 @@ export default class Communities extends Component {
                     </Grid>
                 </Grid>
                 <Grid item sm={12}>
-                    <ListComponent
-                        data={this.state.communications}
-                        header={["id", "name", "username", "email", "phone"]} />
+                    <Pagination 
+                        {...this.props}
+                        view="communities"
+                        data={this.state.employeesFilterArr}
+                        header={["name", "email", "phone", "service", "status"]}/>                    
                 </Grid>
             </Grid>
         );
