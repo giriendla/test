@@ -60,7 +60,12 @@ export default class Communities extends Component {
         this.state = {
             communicaties: [],
             anchorEl: null,
-            open: false
+            open: false,
+            fitlerOpen: false,
+            filter: {
+                search: "",
+                showNoData: false
+            },
         }
         this.handleClick = this
             .handleClick
@@ -86,7 +91,8 @@ export default class Communities extends Component {
             .get(axios.getCommunitiesList())
             .then((response) => {
                 console.log("Communities Response", response);
-                this.setState({ communicaties: response.data });
+                
+                this.setState({ communicaties: response.communities});
                 // console.log("At First Response", this.state.visitors);
                 // store.dispatch(getAllUsers(response.data));
             })
@@ -107,78 +113,88 @@ export default class Communities extends Component {
 
     handleToggle = () => {
         this.setState(state => ({
-            open: !state.open
+            fitlerOpen: !state.fitlerOpen
         }));
     };
 
-    handleClose = event => {
-        if (this.anchorEl.contains(event.target)) {
-            return;
+    toggleFilter = () => {
+        let state = this.state;
+        state.fitlerOpen = !state.fitlerOpen
+        if (state.fitlerOpen == false) {
+            state.filter.search = "";
         }
+        this.setState(state);
+    }
 
+    handleClose = event => {
+        if (this.anchorEl.contains(event.target)) {return;}
         this.setState({ open: false });
     };
+    updateFilterField = (event, field) => {
+        // console.log("Updating Field", field, event);
+    
+        let state = this.state;
+        state.filter[field] = event.target.value;
+        this.setState(state)
+      }
     render() {
         const { anchorEl, communicaties } = this.state;
         const open = Boolean(anchorEl);
+        console.log("At Communiteis Data Length", communicaties);
         return (
             <Grid container>
                 <Grid container>
                     <Grid item sm={6}>
-                        <Typography className="pageTitle titleSection" variant="title" gutterBottom>
-                            Communities Page
-                        </Typography>
+                    <Typography className="pageTitle titleSection" variant="title" gutterBottom>
+                        Communities
+                    </Typography>
                     </Grid>
                     <Grid item sm={6} align="right">
-                        <Button
-                            buttonRef={node => {
-                                this.anchorEl = node;
-                            }}
-                            aria-owns={open
-                                ? 'menu-list-grow'
-                                : null}
-                            aria-haspopup="true"
-                            onClick={this.handleToggle}>
-                            <FilterListIcon />
-                        </Button>
-                        <Popper
-                            open={this.state.open}
-                            anchorEl={this.anchorEl}
-                            transition
-                            disablePortal
-                            style={{
-                                zIndex: 9999
-                            }}>
-                            {({ TransitionProps, placement }) => (
-                                <Grow
-                                    {...TransitionProps}
-                                    id="menu-list-grow"
-                                    style={{
-                                        transformOrigin: placement === 'bottom'
-                                            ? 'center top'
-                                            : 'center bottom'
-                                    }}>
-                                    <Paper>
-                                        <ClickAwayListener onClickAway={this.handleClose}>
-                                            <MenuList>
-                                                <MenuItem
-                                                    onClick={(event) => {
-                                                        this.handleClose(event);
-                                                        this.handleToggle();
-                                                    }}>Search</MenuItem>
-                                            </MenuList>
-                                        </ClickAwayListener>
-                                    </Paper>
-                                </Grow>
-                            )}
-                        </Popper>
+                    {/* <Button className="btn btn-primary btn-round"
+                            onClick={this.createEmployee}>Create</Button> */}
+                    <Button buttonRef={node => { this.anchorEl = node; }}
+                                    aria-owns={open ? 'menu-list-grow' : null}
+                                    aria-haspopup="true"
+                                    onClick={(event) => {
+                                                this.handleClose(event);
+                                                this.handleToggle();
+                                                this.toggleFilter();
+                                            }}>
+                        <FilterListIcon/>
+                    </Button>            
+                    </Grid>
+                    <Grid item sm={12} className={(this.state.fitlerOpen) 
+                                                                        ? "filterContainer active"
+                                                                        : "filterContainer inactive"}>
+                    <Grid item className="filterContent">
+                        {/* <div className="filterHeading">
+                        <b>Filter</b>
+                        </div> */}
+                        <div className="filterFields">
+                        <form className="commentForm" onSubmit={this.doSearch}>
+                            <div className="filterItem">
+                            <label>Search</label>
+                            <input
+                            type="text"
+                            placeholder="Search"
+                            value={this.state.filter.search}
+                            onChange={event => {
+                                this.updateFilterField(event, 'search');
+                            }}/>
+                            </div>
+                            <span className="submitFilterInline">
+                            <button type="submit" className="btn btn-primary">Search</button>
+                            </span>
+                        </form>
+                        </div>
+                    </Grid>
                     </Grid>
                 </Grid>
                 <Grid item sm={12}>
                     <Pagination 
                         {...this.props}
                         view="communities"
-                        data={this.state.employeesFilterArr}
+                        data={communicaties}
                         header={["name", "email", "phone", "service", "status"]}/>                    
                 </Grid>
             </Grid>

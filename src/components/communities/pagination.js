@@ -55,6 +55,7 @@ export default class ListComponent extends Component {
   }
   showPaginate() {
     // debugger;
+    console.log("At Paginqation Data Length", this.props);
     let array = this.props.data;
     let page_number = this.state.pgCurrent;
     let page_size = this.state.pgPerPage;
@@ -69,16 +70,13 @@ export default class ListComponent extends Component {
   render() {
     // debugger;
     const {data} = this.props;
-    const count = (data == undefined) ? 0 : data.length;
+    const count = (data === undefined) ? 0 : data.length;
     return (
       <Fragment>
         <RenderPageItems 
               data={this.showPaginate()} 
               header={this.props.header} 
-              view={this.props.view}
-              rowEdit = {this.props.rowEdit}
-              dispuite={this.props.dispuite}
-              listDocuments={this.props.listDocuments}/>
+              view={this.props.view} />
         <Pagination
           defaultCurrent={1}
           onChange={this.onPaginationChange}
@@ -109,48 +107,11 @@ const RenderPageItems = (props) => {
     }
   }
 
-  const rowsRender = (props) => {
-    console.log("All Props at child RowsRender", props);
-
-    const desktopMedia = ['xs'];
-    const mobileMedia = ['sm', 'md', 'lg', 'xl'];
-
-    if (props.data.length > 0) {
-      return (
-        <Fragment>
-          <div className="paginationHolder">
-            <Hidden only={desktopMedia}>
-            
-            </Hidden>
-            <Hidden only={mobileMedia}>
-              {props
-                .data
-                .map((n, i) => {
-                  return (
-                    <div key={i} className="mobilePagitnationItem">
-                      <RenderRow data={n}/>
-                    </div>
-                  )
-                })
-              }
-            </Hidden>
-          </div>
-        </Fragment>
-      )
-    } else {
-      return (
-        <div>
-          {/* <h3>No Records to show</h3> */}
-        </div>
-      )
-    }
-  }
-
   const loadView = (props, view) => {
     console.log("At Load View", props, view);
     switch(props.view) {
-      case "employees":
-        return <Employees {...props} device={view} />;          
+      case "communities":
+        return <Communities {...props} device={view} />;          
       break;
       default: 
         return "No View Found";
@@ -171,39 +132,9 @@ const RenderPageItems = (props) => {
   )
 }
 
-const RenderRow = (props) => {
-  const view = window.location.pathname;
-  const render = () => {
-    if (view == "/employees") {
-      return (
-        <Fragment>
-          <Employees {...props.data}/>
-        </Fragment>
-      )
-    } else if (view == "/visit") {
-      return (
-        <div>Rendering Visit</div>
-      )
-    } else if (view == "/communities") {
-      return (
-        <div>Rendering Communities</div>
-      )
-    } else {
-      return (
-        <div>No View</div>
-      )
-    }
-  }
-  return (
-    <div>
-      {render()}
-      {/* JSON.stringify(props.data) */}
-    </div>
-  )
-}
 
-const Employees = (props) => {
-  console.log("At Employees Table", props);
+const Communities = (props) => {
+  console.log("At Communities Table", props);
   const renderImage = (data) => {
     if (data.hasOwnProperty('image')) {
       return (
@@ -211,20 +142,7 @@ const Employees = (props) => {
       );
     }
   }
-  const editingRow = (id) => {
-    // console.log("Editing Row", id);
-    props.rowEdit(id);
-  }
-  const dispuiteEmployee = data => {
-    // console.log("Disputing Employee at Pagination", data);
-    if(data.status !== "Disputed"){
-      props.dispuite(data);
-    }
-  }
-  const listDocuments = data => {
-    console.log("Showing List at Pagination of Documents", data);
-    props.listDocuments(data);
-  }
+
   const renderView = (props) => {
     console.log("\n\n/////////// At Render View Pagination \n", props);
     if(props.device == "desktop"){
@@ -232,13 +150,11 @@ const Employees = (props) => {
         <Table className="listTable">
           <TableHead>
             <TableRow>
+              <TableCell>Code</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Service</TableCell>
-              <TableCell>Last Visited</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell> </TableCell>
+              <TableCell>Shipping Address</TableCell>
+              <TableCell>Billing Address</TableCell>             
             </TableRow>
           </TableHead>
           <TableBody>
@@ -248,41 +164,22 @@ const Employees = (props) => {
                 /* console.log(n) */
                 return (
                   <TableRow key={i}>
-                    <TableCell>
-                      {renderImage(n)}
-                      <span>
-                        {n.name}
-                      </span>
-                    </TableCell>
+                    <TableCell>{n.code}</TableCell>
+                    <TableCell>{n.name}</TableCell>
                     <TableCell>{n.email}</TableCell>
-                    <TableCell>{n.phone_mobile}</TableCell>
-                    <TableCell>{n.service}</TableCell>
-                    <TableCell>{n.lastVisitedData}</TableCell>
-                    <TableCell>{n.status}</TableCell>
-                    <TableCell numeric className="tableOptionSection">
-                      <a href="javascript:void(0)" 
-                          onClick={() => {listDocuments(n)}}>
-                          <span title="Documents">
-                            <LibraryBooks className="icon icon-edit"/>
-                          </span>
-                      </a>
-                      <a href="javascript:void(0)" 
-                          onClick={() => {editingRow(n)}}>
-                          <span title="Edit">
-                            <EditIcon className="icon icon-edit"/>
-                          </span>
-                      </a>
-                      <a href="javascript:void(0)" onClick={() => { dispuiteEmployee(n);}}>
-                        {
-                          (n.status == "Disputed") 
-                            ? <span title="Disputed" style={{cursor: "auto"}}>
-                                <DeleteIcon className="icon icon-delete"/>
-                              </span>
-                            : <span title="Dispute"><DeleteIcon className="icon icon-delete"/></span>
-                        }
-                      </a>
-                      {/* <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a> */}
-                    </TableCell>
+                    <TableCell>{`
+                              ${n.shipping_street}, 
+                              ${n.shipping_city}, 
+                              ${n.shipping_state_abbr}, 
+                              ${n.shipping_zip}
+                            `}</TableCell>
+                    <TableCell>{`
+                              ${n.billing_street}, 
+                              ${n.billing_city}, 
+                              ${n.billing_state_abbr}, 
+                              ${n.billing_zip}, 
+                              ${n.billing_country}
+                            `}</TableCell>
                   </TableRow>
                 )
               })
@@ -293,44 +190,34 @@ const Employees = (props) => {
     }else if(props.device === "mobile"){
       return(
         <div className="mobilePagitnationItem">
-          <Table className="listTable">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>Service</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Options</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {props
-                .data
-                .map((n, i) => {
-                  /* console.log(n) */
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>
-                        {renderImage(n)}
-                        <span>
-                          {n.name}
-                        </span>
-                      </TableCell>
-                      <TableCell>{n.name}</TableCell>
-                      <TableCell>{n.name}</TableCell>
-                      <TableCell>{n.name}</TableCell>
-                      <TableCell>{n.name}</TableCell>
-                      <TableCell>
-                        <a href="javascript:void(0)" onClick={props.edit(n)} ><EditIcon className="icon icon-edit"/></a>
-                        <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })
-              }
-            </TableBody>
-          </Table>
+        <Table className="listTable">
+        <TableHead>
+          <TableRow>
+            <TableCell>Code</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Shipping Address</TableCell>
+            <TableCell>Billing Address</TableCell>             
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props
+            .data
+            .map((n, i) => {
+              /* console.log(n) */
+              return (
+                <TableRow key={i}>
+                  <TableCell>{n.code}</TableCell>
+                  <TableCell>{n.name}</TableCell>
+                  <TableCell>{n.email}</TableCell>
+                  <TableCell>{`${n.shipping_street}, ${n.shipping_city}, ${n.shipping_state_abbr}, ${n.shipping_zip}`}</TableCell>
+                  <TableCell>{`${n.billing_street}, ${n.billing_city}, ${n.billing_state_abbr}, ${n.billing_zip}, ${n.billing_country}`}</TableCell>
+                </TableRow>
+              )
+            })
+          }
+        </TableBody>
+      </Table>
         </div>
       ) 
     }
