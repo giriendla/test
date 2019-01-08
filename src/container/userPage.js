@@ -31,6 +31,10 @@ import EditProfile from '../components/profile/editprofile';
 import Communites from '../components/communities/communities';
 import CommonService from '../service/commonServices';
 import { ToastContainer, toast } from 'react-toastify';
+import Company from '../components/companies/company';
+import CompanyCreate from '../components/companies/company-create';
+import CompanyEdit from '../components/companies/company-edit';
+
 
 const styles = theme => ({
   root: {
@@ -99,6 +103,28 @@ class userPage extends Component {
       } else {
         return (
           <div><Account {...this.props}/></div>
+        );
+      }
+    } else if (path.indexOf('/company') !== -1) {
+      var company = path.split('/');
+      if (company.length > 2) {
+        switch (company[2]) {
+          case "edit":
+            return (
+              <div><CompanyEdit {...this.props} /></div>
+            );
+            break;
+          case "create":
+            return (
+              <div><CompanyCreate {...this.props} /></div>
+            );
+            break;
+          default:
+            return false;
+        }
+      } else {
+        return (
+          <div><Company {...this.props} /></div>
         );
       }
     } else if (path.indexOf('/profile/edit') !== -1) {

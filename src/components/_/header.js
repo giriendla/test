@@ -42,9 +42,10 @@ class Appheader extends Component {
       showNews: false
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     this.newsScroll();
   }
+ 
   
   newsScroll = () => {
     let localStore = CommonService.localStore.get("userData");
@@ -55,12 +56,12 @@ class Appheader extends Component {
     this.setState({ news });
     console.log("Header is at Header Section", news);
 
-    if (news.length > 0) {
+    /* if (news.length > 0) {
       this.setState({ showNews: true });
       console.log("News Scrolling");
     } else {
       this.setState({ showNews: false });
-    }
+    } */
   };
   toggleMobileMenu = () => {
     let currentMenuSate = store.getState().default.mobileMenu;
@@ -188,17 +189,22 @@ class Appheader extends Component {
     return (
       <div className="news">
         <div>
+        {news.length ? 
           <Marquee 
-              title=""
-              text={newsString.join("   ")}
-              loop={true}
-              hoverToStop={true}
-              leading={10}
-              trailing={10} />
+          title=""
+          text={newsString.join("   ")}
+          loop={true}
+          hoverToStop={true}
+          leading={10}
+          trailing={10} />
+          : <div></div>
+        }
         </div>
       </div>
     )
   };
+
+
   render() {
     const { news, showNews } = this.state;
     return (
@@ -246,7 +252,8 @@ class Appheader extends Component {
                 lg={10}
                 className="newsSection"
               >
-                { (showNews) ? this.newsRender(news) : "" }
+              {this.newsRender(news)}
+                { /* (showNews) ? this.newsRender(news) : "" */ }
               </Grid>
               <Grid item xs={2} sm={2} md={2} lg={2} className="profileMenu">
                 {this.checkProfile()}

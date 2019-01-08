@@ -92,5 +92,17 @@ axios.getDashboardData = () => {
 axios.getCommunitiesList = () => {
   return Config.baseUrl + Config.api.commounities.list.url;
 };
+axios.getStateData = () => {
+  return Config.baseUrl + Config.api.company.states.url;
+};
+axios.getCompanies = () => {
+  return Config.baseUrl + Config.api.company.list.url;
+};
+axios.createCompany = () => {
+  return Config.baseUrl + Config.api.company.create.url;
+};
+axios.getServiceTypes = () => {
+  return Config.baseUrl + Config.api.serviceTypes.url;
+};
 
 export default axios;

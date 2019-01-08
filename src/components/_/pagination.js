@@ -109,48 +109,14 @@ const RenderPageItems = (props) => {
     }
   }
 
-  const rowsRender = (props) => {
-    console.log("All Props at child RowsRender", props);
-
-    const desktopMedia = ['xs'];
-    const mobileMedia = ['sm', 'md', 'lg', 'xl'];
-
-    if (props.data.length > 0) {
-      return (
-        <Fragment>
-          <div className="paginationHolder">
-            <Hidden only={desktopMedia}>
-            
-            </Hidden>
-            <Hidden only={mobileMedia}>
-              {props
-                .data
-                .map((n, i) => {
-                  return (
-                    <div key={i} className="mobilePagitnationItem">
-                      <RenderRow data={n}/>
-                    </div>
-                  )
-                })
-              }
-            </Hidden>
-          </div>
-        </Fragment>
-      )
-    } else {
-      return (
-        <div>
-          {/* <h3>No Records to show</h3> */}
-        </div>
-      )
-    }
-  }
-
   const loadView = (props, view) => {
     console.log("At Load View", props, view);
     switch(props.view) {
       case "employees":
         return <Employees {...props} device={view} />;          
+      break;
+      case "company":
+        return <Company {...props} device={view} />;          
       break;
       default: 
         return "No View Found";
@@ -171,36 +137,7 @@ const RenderPageItems = (props) => {
   )
 }
 
-const RenderRow = (props) => {
-  const view = window.location.pathname;
-  const render = () => {
-    if (view == "/employees") {
-      return (
-        <Fragment>
-          <Employees {...props.data}/>
-        </Fragment>
-      )
-    } else if (view == "/visit") {
-      return (
-        <div>Rendering Visit</div>
-      )
-    } else if (view == "/communities") {
-      return (
-        <div>Rendering Communities</div>
-      )
-    } else {
-      return (
-        <div>No View</div>
-      )
-    }
-  }
-  return (
-    <div>
-      {render()}
-      {/* JSON.stringify(props.data) */}
-    </div>
-  )
-}
+
 
 const Employees = (props) => {
   console.log("At Employees Table", props);
@@ -331,6 +268,110 @@ const Employees = (props) => {
               }
             </TableBody>
           </Table>
+        </div>
+      ) 
+    }
+  }
+
+  return (
+    <Fragment>
+      {renderView(props)}
+    </Fragment>
+  )
+}
+const Company = (props) => {
+  console.log("At Company Table", props);
+
+  const editingRow = (id) => {
+    // console.log("Editing Row", id);
+    props.rowEdit(id);
+  }
+  const renderView = (props) => {
+    console.log("\n\n/////////// At Render View Pagination \n", props);
+    if(props.device == "desktop"){
+      return (
+        <Table className="listTable">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Address</TableCell>
+              <TableCell> </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props
+              .data
+              .map((n, i) => {
+                /* console.log(n) */
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{n.name}</TableCell>
+                    <TableCell>{n.email}</TableCell>
+                    <TableCell>{`
+                          ${(n.shipping_street !== null && n.shipping_street !== "") ? n.shipping_street : ""}  
+                          ${(n.shipping_city !== null && n.shipping_city !== "") ? ", "+n.shipping_city : ""}  
+                          ${(n.shipping_state_abbr !== null && n.shipping_state_abbr !== "") ? ", "+n.shipping_state_abbr : ""}
+                          ${(n.shipping_zip !== null && n.shipping_zip !== "") ? ", "+n.shipping_zip : ""}
+                        `}</TableCell>
+                    <TableCell numeric className="tableOptionSection">                      
+                      <a href="javascript:void(0)" 
+                          onClick={() => {editingRow(n)}}>
+                          <span title="Edit">
+                            <EditIcon className="icon icon-edit"/>
+                          </span>
+                      </a>                      
+                      {/* <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a> */}
+                    </TableCell>
+                  </TableRow>
+                )
+              })
+            }
+          </TableBody>
+        </Table>
+      );
+    }else if(props.device === "mobile"){
+      return(
+        <div className="mobilePagitnationItem">
+        <Table className="listTable">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Address</TableCell>
+            <TableCell> </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props
+            .data
+            .map((n, i) => {
+              /* console.log(n) */
+              return (
+                <TableRow key={i}>
+                  <TableCell>{n.name}</TableCell>
+                  <TableCell>{n.email}</TableCell>
+                  <TableCell>{`
+                        ${(n.shipping_street !== null && n.shipping_street !== "") ? n.shipping_street : ""}  
+                        ${(n.shipping_city !== null && n.shipping_city !== "") ? ", "+n.shipping_city : ""}  
+                        ${(n.shipping_state_abbr !== null && n.shipping_state_abbr !== "") ? ", "+n.shipping_state_abbr : ""}
+                        ${(n.shipping_zip !== null && n.shipping_zip !== "") ? ", "+n.shipping_zip : ""}
+                      `}</TableCell>
+                  <TableCell numeric className="tableOptionSection">                      
+                    <a href="javascript:void(0)" 
+                        onClick={() => {editingRow(n)}}>
+                        <span title="Edit">
+                          <EditIcon className="icon icon-edit"/>
+                        </span>
+                    </a>                      
+                    {/* <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a> */}
+                  </TableCell>
+                </TableRow>
+              )
+            })
+          }
+        </TableBody>
+      </Table>
         </div>
       ) 
     }

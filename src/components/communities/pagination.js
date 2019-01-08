@@ -150,11 +150,9 @@ const Communities = (props) => {
         <Table className="listTable">
           <TableHead>
             <TableRow>
-              <TableCell>Code</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Shipping Address</TableCell>
-              <TableCell>Billing Address</TableCell>             
+              <TableCell>Address</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -164,7 +162,6 @@ const Communities = (props) => {
                 /* console.log(n) */
                 return (
                   <TableRow key={i}>
-                    <TableCell>{n.code}</TableCell>
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.email}</TableCell>
                     <TableCell>{`
@@ -172,13 +169,6 @@ const Communities = (props) => {
                               ${n.shipping_city}, 
                               ${n.shipping_state_abbr}, 
                               ${n.shipping_zip}
-                            `}</TableCell>
-                    <TableCell>{`
-                              ${n.billing_street}, 
-                              ${n.billing_city}, 
-                              ${n.billing_state_abbr}, 
-                              ${n.billing_zip}, 
-                              ${n.billing_country}
                             `}</TableCell>
                   </TableRow>
                 )
@@ -193,11 +183,9 @@ const Communities = (props) => {
         <Table className="listTable">
         <TableHead>
           <TableRow>
-            <TableCell>Code</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>Shipping Address</TableCell>
-            <TableCell>Billing Address</TableCell>             
+            <TableCell>Address</TableCell>         
           </TableRow>
         </TableHead>
         <TableBody>
@@ -207,11 +195,9 @@ const Communities = (props) => {
               /* console.log(n) */
               return (
                 <TableRow key={i}>
-                  <TableCell>{n.code}</TableCell>
                   <TableCell>{n.name}</TableCell>
                   <TableCell>{n.email}</TableCell>
                   <TableCell>{`${n.shipping_street}, ${n.shipping_city}, ${n.shipping_state_abbr}, ${n.shipping_zip}`}</TableCell>
-                  <TableCell>{`${n.billing_street}, ${n.billing_city}, ${n.billing_state_abbr}, ${n.billing_zip}, ${n.billing_country}`}</TableCell>
                 </TableRow>
               )
             })

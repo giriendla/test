@@ -27,6 +27,9 @@ import ChangePassword from "../profile/changePassword";
 import EditProfile from '../profile/editprofile';
 import Register from '../register/register';
 import Visit from '../visits/visit';
+import Company from "../companies/company";
+import CompanyEdit from '../companies/company-edit';
+import CompanyCreate from '../companies/company-create';
 
 
 export default class Approute extends Component {
@@ -63,6 +66,9 @@ export default class Approute extends Component {
                             <Route path="/employees" component={Employees} />
                             <Route path="/employees/create" component={EmployeesCreate} />
                             <Route path="/employees/edit/:id" component={EmployeesEdit} />
+                            <Route path="/company" component={Company} />
+                            <Route path="/company/create" component={CompanyCreate} />
+                            <Route path="/company/edit/:id" component={CompanyEdit} />
                             <Route path="/login" component={Login} />
                             <Route path="/forgotpassword" component={Forgotpassword} />
                             <Route path="/resetpassword" component={ResetPassword} />

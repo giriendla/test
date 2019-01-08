@@ -59,6 +59,7 @@ export default class Communities extends Component {
 
         this.state = {
             communicaties: [],
+            communicatiesFilterArr: [],
             anchorEl: null,
             open: false,
             fitlerOpen: false,
@@ -80,10 +81,11 @@ export default class Communities extends Component {
             .handleToggle
             .bind(this);
     }
-    componentWillMount() { }
+    componentWillMount() { 
+        this.getCommunitiesList();
+    }
     componentDidMount() {
         console.log("All Props", this.props);
-        this.getCommunitiesList();
     }
 
     getCommunitiesList() {
@@ -92,7 +94,10 @@ export default class Communities extends Component {
             .then((response) => {
                 console.log("Communities Response", response);
                 
-                this.setState({ communicaties: response.communities});
+                this.setState({ 
+                    communicaties: response.communities,
+                    communicatiesFilterArr: response.communities
+                });
                 // console.log("At First Response", this.state.visitors);
                 // store.dispatch(getAllUsers(response.data));
             })
@@ -137,8 +142,39 @@ export default class Communities extends Component {
         state.filter[field] = event.target.value;
         this.setState(state)
       }
+      doSearch = event => {
+        event.preventDefault();
+        event.stopPropagation()
+        let searchKey = this.state.filter.search;
+        let obj = this.state.communicaties;
+        let arr = {};
+        let finalObj = [];
+        if(searchKey !== ""){
+          for(var i=0; i < obj.length; i++){
+            var row = obj[i];
+            for(var key in row){
+                var item = row[key];
+                // console.log("key", key, item);
+                if(typeof item == "string"){
+                    item = item.toLowerCase();
+                    searchKey = searchKey.toLowerCase();
+                    if(item.indexOf(searchKey) > -1){
+                        arr[i] = i;
+                        // console.log("\n\ni am string\n", i, key, item, "\nArr : ", arr);
+                    }
+                }
+            }
+          }
+          for(var key in arr){
+            finalObj.push(obj[key]);
+          }
+          this.setState({communicatiesFilterArr: finalObj});
+        }else{
+          this.setState({communicatiesFilterArr: this.state.communicaties});
+        }
+      }
     render() {
-        const { anchorEl, communicaties } = this.state;
+        const { anchorEl, communicaties, communicatiesFilterArr } = this.state;
         const open = Boolean(anchorEl);
         console.log("At Communiteis Data Length", communicaties);
         return (
@@ -194,7 +230,7 @@ export default class Communities extends Component {
                     <Pagination 
                         {...this.props}
                         view="communities"
-                        data={communicaties}
+                        data={communicatiesFilterArr}
                         header={["name", "email", "phone", "service", "status"]}/>                    
                 </Grid>
             </Grid>
