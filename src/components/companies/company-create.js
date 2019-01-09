@@ -51,6 +51,7 @@ export default class CompanyCreate extends Component {
             loader: false,
             employee: {},
             serviceTypes: [],
+            emailPattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
             companyData: {
                 "phone_mobile": "",
                 "company_name": "",
@@ -60,7 +61,7 @@ export default class CompanyCreate extends Component {
                 "company_zip": "",
                 "company_contact_mail": "",
                 "contact_name": "",
-                // "service_label": ""
+                "service_label": ""
             },
             companyError: {},
             doRedirect: false,
@@ -119,47 +120,22 @@ export default class CompanyCreate extends Component {
         });
     }
 
-    emailValidation = (data) => {
-        let {RegisterForm, registerError} = this.state;
-        let key = "";
-        let message = "";
-        if(this.state.activeStep === 0){
-          key = "email";
-          message = "Email is required";
-        }else if(this.state.activeStep === 1){
-          key = "parent_company_contact_mail"
-          message = "Carporate Email is required";
-        }else if(this.state.activeStep === 2){
-          key = "child_company_contact_mail"
-          message = "Company Email is required";
-        }else if(this.state.activeStep === 3){
-          key = "comp_contact_email";
-          message = "Email is required";
-        }else if(this.state.activeStep === 4){
-          key = "billing_company_contact_mail"
-          message = "Billing Email is required";
-        }
-    
-        let expression = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-          if(data.data[key] === ""){
-            let {registerError} = this.state;
-            registerError[key] = null;
-            registerError[key+"_Message"] = message;
-            this.setState({registerError});
+    emailValidation = (data, key) => {
+        let {companyData, companyError, emailPattern} = this.state;        
+    // debugger;
+        if(data === ""){
+            companyError[key] = null;
+            companyError[key+"_Message"] = "Email is required";
+            this.setState({companyError});
           }else{
-            if(expression.test(data.data[key])){
-              let {registerError} = this.state;
-              console.log("At Input success", data.data[key]);
-              registerError[key] = "";
-              registerError[key+"_Message"] = "";
-              this.setState({registerError});                    
+            if(emailPattern.test(data)){
+                companyError[key] = "";
+                companyError[key+"_Message"] = "";                
             }else{
-              let {registerError} = this.state;
-              registerError[key] = null;
-              registerError[key+"_Message"] = "Invalid Email";
-              this.setState({registerError});
-              console.log("At Input Failed", data.data[key]);
+                companyError[key] = null;
+                companyError[key+"_Message"] = "Invalid Email";
             }
+            this.setState({companyError});
           }
       }
     
@@ -168,8 +144,14 @@ export default class CompanyCreate extends Component {
     handleFormChange = name => event => {
         //   debugger;
         let state = this.state;
+        if(name === "company_contact_mail"){
+            this.emailValidation(event.target.value, name);
         state.companyData[name] = event.target.value;
+            // state.companyError[name] = (event.target.value !== null && event.target.value !== '') ? '' : null;
+        }else{
+            state.companyData[name] = event.target.value;
         state.companyError[name] = (event.target.value !== null && event.target.value !== '') ? '' : null;
+        }
         this.setState(state);
     }
     handleRadioChange = event => {
@@ -192,26 +174,16 @@ export default class CompanyCreate extends Component {
 
 
     getCompaniesList() {
-        let that = this;
-        /* this.setState({
-            serviceTypes: CommonService.localStore.get("service_label")
-        });  */
-        // this.setState({loader: true});
         axios
             .get(axios.getCompanies())
             .then((response) => {
-                // this.setState({loader: false});
-                /* toast.success("Employees List! Successfully...", {
-                  position: toast.POSITION.TOP_CENTER
-                }); */
-                debugger;
                 console.log("Employee Response", response);
                 let services = JSON.parse(response.service_labels);
                 this.setState({
                     serviceTypes: services
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 // that.setState({loader: false});
                 /* toast.error(error.response.data.message, {
                   position: toast.POSITION.TOP_CENTER
@@ -222,15 +194,11 @@ export default class CompanyCreate extends Component {
     submitEmployeeForm = () => {
         // debugger;
         console.log("Employee Creation Submitted", this.state.companyData);
-        let that = this;
-        // "phone_mobile": "",
-        //     "company_name": "",
-        //     "company_address": "",
-        //     "company_contact_mail": "",
-        //     "service_label": ""
-        let companyError = this.state.companyError;
-        let companyData = this.state.companyData;
-        if (this.state.companyData.company_name === "") {
+
+        let { companyError, companyData} = this.state;
+
+
+        if (companyData.company_name === "") {
             companyError.company_name = null;
             this.setState({ companyError })
         } else {
@@ -280,14 +248,14 @@ export default class CompanyCreate extends Component {
             companyError.contact_name = "";
             this.setState({ companyError })
         }
-        // if (this.state.companyData.service_label === "") {
-        //     companyError.service_label = null;
-        //     this.setState({ companyError })
-        // } else {
-        //     companyError.service_label = "";
-        //     this.setState({ companyError })
-        // }
-        if (this.state.companyData.company_contact_mail === "") {
+        if (this.state.companyData.service_label === "") {
+            companyError.service_label = null;
+            this.setState({ companyError })
+        } else {
+            companyError.service_label = "";
+            this.setState({ companyError })
+        }
+        if (companyData.company_contact_mail === "" || companyError.company_contact_mail_Message !== "") {
             companyError.company_contact_mail = null;
             this.setState({ companyError })
         } else {
@@ -302,8 +270,8 @@ export default class CompanyCreate extends Component {
             && companyData.company_zip !== ""
             && companyData.phone_mobile !== ""
             && companyData.contact_name !== ""
-            && companyData.company_contact_mail !== ""
-            // && companyData.service_label !== ""
+            && companyError.company_contact_mail !== null
+            && companyData.service_label !== ""
         ) {
             this.setState({ loader: true });
             axios
@@ -323,10 +291,14 @@ export default class CompanyCreate extends Component {
                     toast.success(response.message, {
                         position: toast.POSITION.TOP_CENTER
                     });
+                    this.setState({
+                        doRedirect: true,
+                        redirectUrl: "/company"
+                    });
                     console.log("Company Create Response", response);
                 })
-                .catch(function (error) {
-                    that.setState({ loader: false });
+                .catch((error) => {
+                    this.setState({ loader: false });
                     toast.error(error.response.data.message, {
                         position: toast.POSITION.TOP_CENTER
                     });
@@ -339,7 +311,7 @@ export default class CompanyCreate extends Component {
 
 
     render() {
-        const { loader, employee, companyData, companyError, serviceTypes, redirectUrl, doRedirect } = this.state;
+        const { loader, employee, companyData, companyError, serviceTypes, redirectUrl, doRedirect, emailPattern } = this.state;
         if (doRedirect) {
             return <Redirect to={redirectUrl} />;
         }
@@ -353,12 +325,6 @@ export default class CompanyCreate extends Component {
                     </Grid>
                 </Grid>
                 <Grid container spacing={32}>
-                    {/* "phone_mobile": "",
-        "company_name": "",
-        "company_address": "",
-        "company_city": "",
-        "company_contact_mail": "",
-        "service_label": "" */}
                     <Grid item xs={12} sm={12}>
                         <TextField
                             label="Company Name"
@@ -470,7 +436,7 @@ export default class CompanyCreate extends Component {
                             onChange={this.handleFormChange('company_contact_mail')}
                             margin="normal"
                             fullWidth
-                            helperText={(companyError.company_contact_mail !== null) ? "" : "Contact Email field is required"}
+                            helperText={companyError.company_contact_mail_Message}
                             error={(companyError.company_contact_mail !== null) ? false : true} />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={6}>

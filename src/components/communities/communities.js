@@ -62,6 +62,7 @@ export default class Communities extends Component {
             communicatiesFilterArr: [],
             anchorEl: null,
             open: false,
+            loader: false,
             fitlerOpen: false,
             filter: {
                 search: "",
@@ -89,11 +90,12 @@ export default class Communities extends Component {
     }
 
     getCommunitiesList() {
+        this.setState({loader: true});
         axios
             .get(axios.getCommunitiesList())
             .then((response) => {
-                console.log("Communities Response", response);
-                
+                this.setState({loader: false});
+                console.log("Communities Response", response);                
                 this.setState({ 
                     communicaties: response.communities,
                     communicatiesFilterArr: response.communities
@@ -108,6 +110,7 @@ export default class Communities extends Component {
                   })
                 ) */
             .catch(function (error) {
+                this.setState({loader: false});
                 console.log("At First Error", error);
             });
     }
@@ -174,7 +177,7 @@ export default class Communities extends Component {
         }
       }
     render() {
-        const { anchorEl, communicaties, communicatiesFilterArr } = this.state;
+        const { anchorEl, communicaties, communicatiesFilterArr, loader } = this.state;
         const open = Boolean(anchorEl);
         console.log("At Communiteis Data Length", communicaties);
         return (
@@ -233,6 +236,7 @@ export default class Communities extends Component {
                         data={communicatiesFilterArr}
                         header={["name", "email", "phone", "service", "status"]}/>                    
                 </Grid>
+                {CommonService.renderLoader(loader)}
             </Grid>
         );
     };

@@ -252,7 +252,7 @@ class Appheader extends Component {
                 lg={10}
                 className="newsSection"
               >
-              {this.newsRender(news)}
+              {/* this.newsRender(news) */}
                 { /* (showNews) ? this.newsRender(news) : "" */ }
               </Grid>
               <Grid item xs={2} sm={2} md={2} lg={2} className="profileMenu">

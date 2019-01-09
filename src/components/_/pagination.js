@@ -296,6 +296,7 @@ const Company = (props) => {
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Address</TableCell>
+              <TableCell>Company Type</TableCell>
               <TableCell> </TableCell>
             </TableRow>
           </TableHead>
@@ -309,18 +310,22 @@ const Company = (props) => {
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.email}</TableCell>
                     <TableCell>{`
-                          ${(n.shipping_street !== null && n.shipping_street !== "") ? n.shipping_street : ""}  
-                          ${(n.shipping_city !== null && n.shipping_city !== "") ? ", "+n.shipping_city : ""}  
-                          ${(n.shipping_state_abbr !== null && n.shipping_state_abbr !== "") ? ", "+n.shipping_state_abbr : ""}
-                          ${(n.shipping_zip !== null && n.shipping_zip !== "") ? ", "+n.shipping_zip : ""}
-                        `}</TableCell>
-                    <TableCell numeric className="tableOptionSection">                      
+                    ${(n.shipping_street !== null && n.shipping_street !== "") ? n.shipping_street : ""}  
+                    ${(n.shipping_city !== null && n.shipping_city !== "") ? ", "+n.shipping_city : ""}  
+                    ${(n.shipping_state_abbr !== null && n.shipping_state_abbr !== "") ? ", "+n.shipping_state_abbr : ""}
+                    ${(n.shipping_zip !== null && n.shipping_zip !== "") ? ", "+n.shipping_zip : ""}
+                    `}</TableCell>
+                    <TableCell style={{'textTransform': "uppercase"}}>{n.companyType}</TableCell>
+                    <TableCell numeric className="tableOptionSection">
+                    {
+                      (n.companyType === "child") ?
                       <a href="javascript:void(0)" 
                           onClick={() => {editingRow(n)}}>
                           <span title="Edit">
                             <EditIcon className="icon icon-edit"/>
                           </span>
-                      </a>                      
+                      </a> : ""
+                    }
                       {/* <a href="javascript:void(0)"><DeleteIcon className="icon icon-delete"/></a> */}
                     </TableCell>
                   </TableRow>

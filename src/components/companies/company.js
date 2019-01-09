@@ -105,14 +105,21 @@ export default class Company extends Component {
 
     getCompaniesList() {
         let that = this;
+        this.setState({loader: true});
         axios
             .get(axios.getCompanies())
             .then((response) => {
-                // this.setState({loader: false});
+                this.setState({loader: false});
                 /* toast.success("Employees List! Successfully...", {
                   position: toast.POSITION.TOP_CENTER
                 }); */
                 // debugger;
+                if(response.child_companies.length > 0){
+                    for(let i = 0; i<response.child_companies.length; i++){
+                        response.child_companies[i]["companyType"] = "child";                    
+                    }
+                }
+                response.parent_company["companyType"] = "parent";
                 let company = (response.child_companies.length > 0) ? response.child_companies : [];
                 // company = response.child_companies;
                 company.unshift(response.parent_company);
@@ -235,6 +242,11 @@ export default class Company extends Component {
         this.setState(state);
     }
     editRow = (data) => {
+
+        this.setState({
+            doRedirect: true,
+            redirectUrl: "/company/edit/"+data.sugar_id
+        })
        console.log("At Edit Row in Companies", data);
     }
 

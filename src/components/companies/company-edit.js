@@ -6,6 +6,9 @@ import {
     Menu,
     MenuList,
     MenuItem,
+    FormControl,
+    FormHelperText,
+    Select,
     TableHead,
     TableRow,
     TableCell,
@@ -19,7 +22,9 @@ import {
     ClickAwayListener,
     Radio,
     RadioGroup,
-    TextField
+    TextField,
+    Input,
+    InputLabel
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FilterListIcon from '@material-ui/icons/FilterList';
@@ -39,31 +44,38 @@ import './company.scss';
 
 const ITEM_HEIGHT = 48;
 
-export default class CompanyEdit extends Component {
+export default class CompanyCreate extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loader: false,
-            pageTitle: "",
-            company: {},
+            employee: {},
             serviceTypes: [],
+            emailPattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
             companyData: {
                 "phone_mobile": "",
-                "first_name": "",
-                "last_name": "",
-                "email": "",
+                "company_name": "",
+                "company_address": "",
+                "company_city": "",
+                "company_state": "",
+                "company_zip": "",
+                "company_contact_mail": "",
+                "contact_name": "",
                 "service_label": ""
             },
             companyError: {},
             doRedirect: false,
-            redirectUrl: null
+            redirectUrl: null,
+            us_states: []
         }
-        this.getEmpoyeeListById = this.getEmpoyeeListById.bind(this);
     }
-    componentWillMount() { }
+    componentWillMount() {
+        this.getStates();
+        this.getServiceTypes();
+        this.getCompaniesList(this.getParams());
+    }
     componentDidMount() {
         console.log("All Props", this.props);
-        this.getEmpoyeeListById(this.getParams());
     }
 
     getParams() {
@@ -73,145 +85,287 @@ export default class CompanyEdit extends Component {
             strict: false
         });
         console.log("MATch Params", match);
-        this.pageTitle(match);
-
-        return (match !== (null || undefined) && match.params !== (null || undefined))
-            ? match.params.id
-            : null;
+        // this.pageTitle(match);
+    
+        return (match !== (null || undefined) && match.params !== (null || undefined)) 
+                        ? match.params.id 
+                        : null;
     }
-
     pageTitle(match) {
         const arr = match.path.split('/');
-        if (arr[2] === "edit") {
-            this.setState({ pageTitle: "Edit Company" });
-        } else if (match == null) {
-            this.setState({ pageTitle: "Create Company" });
+        if(arr[2] === "edit"){
+            this.setState({pageTitle: "Edit Company"});
+        }else if(match == null){
+            this.setState({pageTitle: "Create Company"});
         }
         console.log("At Page Title Method\n", this.state);
+      }
+    getCompaniesList(id) {
+        let that = this;
+        axios
+            .get(axios.getCompanies())
+            .then((response) => {
+                // this.setState({loader: false});
+                /* toast.success("Employees List! Successfully...", {
+                  position: toast.POSITION.TOP_CENTER
+                }); */
+                // debugger;
+                for(let i = 0; i<response.child_companies.length; i++){
+                    response.child_companies[i]["companyType"] = "child";                    
+                }
+                response.parent_company["companyType"] = "parent";
+                let company = (response.child_companies.length > 0) ? response.child_companies : [];
+                // company = response.child_companies;
+                company.unshift(response.parent_company);
+
+                for(let i = 0; i<company.length; i++){
+                   let item = company[i];
+                   if(id === item.sugar_id){
+                    //    debugger;
+
+                    let obj = {
+                        "id": item.sugar_id,
+                        "company_name": item.name,
+                        "company_address": item.shipping_street,
+                        "company_state": item.us_state_sugar_id,
+                        "company_city": item.shipping_city,
+                        "company_zip": item.pin_c,
+                        "company_contact_mail": item.email
+                      }
+                      this.setState({
+                          companyData: obj
+                        });
+                       this.emailValidation(item.email, "company_contact_mail");
+                       console.log("Selected Company", item, obj);
+                       break;
+                   }
+                }                
+                console.log("Company list Response", response, this.state.companies);
+
+            })
+            .catch(function (error) {
+                // that.setState({loader: false});
+                /* toast.error(error.response.data.message, {
+                  position: toast.POSITION.TOP_CENTER
+                }); */
+                console.log("At First Error", error);
+            });        
     }
+
+    getStates = () => {
+        axios
+        .get(axios.getStateData())
+        .then((response) => {
+            console.log("States Response", response);
+            this.setState({us_states : response.us_states});
+            // let employees = response.employees;
+            // let services = JSON.parse(response.service_labels);
+            // this.setState({
+            //     serviceTypes: services
+            // });
+        })
+        .catch(function (error) {
+            // that.setState({loader: false});
+            /* toast.error(error.response.data.message, {
+              position: toast.POSITION.TOP_CENTER
+            }); */
+            console.log("At First Error", error);
+        });
+    }
+    getServiceTypes = () => {
+        axios
+        .get(axios.getServiceTypes())
+        .then((response) => {
+            
+            console.log("States Response ServiceTypes", response);
+            response.service_labels = (typeof response.service_labels === "string" ? JSON.parse(response.service_labels) : response.service_labels);
+            this.setState({serviceTypes : response.service_labels});
+            // let employees = response.employees;
+            // let services = JSON.parse(response.service_labels);
+            // this.setState({
+            //     serviceTypes: services
+            // });
+        })
+        .catch(function (error) {
+            // that.setState({loader: false});
+            /* toast.error(error.response.data.message, {
+              position: toast.POSITION.TOP_CENTER
+            }); */
+            console.log("At First Error", error);
+        });
+    }
+
+    emailValidation = (data, key) => {
+        let {companyData, companyError, emailPattern} = this.state;        
+    // debugger;
+        if(data === ""){
+            companyError[key] = null;
+            companyError[key+"_Message"] = "Email is required";
+            this.setState({companyError});
+          }else{
+            if(emailPattern.test(data)){
+                companyError[key] = "";
+                companyError[key+"_Message"] = "";                
+            }else{
+                companyError[key] = null;
+                companyError[key+"_Message"] = "Invalid Email";
+            }
+            this.setState({companyError});
+          }
+      }
+    
+
+
     handleFormChange = name => event => {
+        //   debugger;
         let state = this.state;
-        state.companyData[name] = event.target.value;
-        state.companyError[name] = (event.target.value !== null && event.target.value !== '') ? '' : null;
+        if(name === "company_contact_mail"){
+            this.emailValidation(event.target.value, name);
+            state.companyData[name] = event.target.value;
+            // state.companyError[name] = (event.target.value !== null && event.target.value !== '') ? '' : null;
+        }else{
+            state.companyData[name] = event.target.value;
+            state.companyError[name] = (event.target.value !== null && event.target.value !== '') ? '' : null;
+        }
         this.setState(state);
     }
     handleRadioChange = event => {
+        // debugger;      
         var state = this.state;
         state.companyData.service_label = event.target.value;
+        if (state.companyData.service_label !== "") {
+            state.companyError.service_label = "";
+        } else {
+            state.companyError.service_label = null;
+        }
         this.setState(state);
     }
-
-
-    getEmpoyeeListById(id) {
-        let that = this;
-        if (id !== (null || undefined)) {
-            this.setState({ loader: true });
-            axios
-                .get(axios.getEmployeeById(id))
-                .then((response) => {
-                    this.setState({ loader: false });
-                    /* toast.success("Employees List! Successfully...", {
-                    position: toast.POSITION.TOP_CENTER
-                    }); */
-                    // debugger;
-                    console.log("Employee Response", response);
-                    debugger;
-                    let employee = response.employee_data;
-                    let serviceLabel = CommonService.localStore.get("service_label");
-                    let services = JSON.parse(serviceLabel.service_label);
-                    this.setState({
-                        serviceTypes: services
-                    });
-                    if (this.getParams() !== null) {
-                        // const lastVisitedData = employee[i]['last_visit_date'];
-                        const baseObj = {
-                            "id": employee.sugar_id,
-                            "phone_mobile": employee.phone_mobile,
-                            "first_name": employee.first_name,
-                            "last_name": employee.last_name,
-                            "email": employee.email,
-                            "service_label": services[employee.service]
-                        };
-                        console.log("Selected Record is ", employee);
-                        // if(item.name == null ){
-                        employee.name = employee.first_name + " " + employee.last_name;
-                        employee.name = CommonService.toTitleCase(employee.name)
-                        employee.status = CommonService.toTitleCase(employee.status)
-                        employee.email = (employee.email == null) ? " - " : employee.email;
-                        employee.phone = employee.phone_mobile;
-                        // }
-                        employee.service = (employee.service == (0 || null || undefined)) ? "-" : CommonService.toTitleCase(services[employee.service]);
-                        if (employee.image == undefined && employee.image == null) {
-                            employee.image = Config.images + "user.png";
-                        }
-
-                        let obj = {
-                            employee_data: employee
-                        }
-
-                        this.setState({
-                            employee: obj,
-                            serviceTypes: services,
-                            companyData: baseObj
-                        });
-
-                        console.log("this.state in edit company\n", this.state);
-                    } else {
-                        this.setState({
-                            doRedirect: true,
-                            redirectUrl: "/company"
-                        });
-                    }
-
-                })
-                .catch(function (error) {
-                    that.setState({ loader: false });
-                    /* toast.error(error.response.data.message, {
-                    position: toast.POSITION.TOP_CENTER
-                    }); */
-                    console.log("At First Error", error);
-                });
-        }
-    }
-    submitEmployeeForm = () => {
-        console.log("Company Creation Submitted", this.state.companyData);
-        console.log("Company Creation Submitted", this.state.companyData);
-        let that = this;
-        this.setState({ loader: true });
-        // axios
-        //     .post(axios.editEmployee(), this.state.companyData)
-        //     .then((response) => {
-        //         this.setState({ loader: false });
-        //         toast.success(response.message, {
-        //             position: toast.POSITION.TOP_CENTER
-        //         });
-        //         console.log("Employee Create Response", response);
-        //         // setTimeout(() => {
-        //         this.setState({
-        //             doRedirect: true,
-        //             redirectUrl: '/company'
-        //         });
-        //         // }, 3000);
-        //     })
-        //     .catch(function (error) {
-        //         that.setState({ loader: false });
-        //         toast.error(error.response.data.message, {
-        //             position: toast.POSITION.TOP_CENTER
-        //         });
-        //         console.log("At First Error", error);
-        //     });
-    }
-
-    cancelEdit = () => {
+    cancelCreate = event => {
         this.setState({
             doRedirect: true,
             redirectUrl: "/company"
         })
     }
 
-    render() {
-        const { loader, company, pageTitle, companyData, companyError, serviceTypes, doRedirect, redirectUrl } = this.state;
+    submitEmployeeForm = () => {
+        // debugger;
+        console.log("Employee Creation Submitted", this.state.companyData);
+        let { companyError, companyData} = this.state;
 
+        if (companyData.company_name === "") {
+            companyError.company_name = null;
+            this.setState({ companyError })
+        } else {
+            companyError.company_name = "";
+            this.setState({ companyError })
+        }
+
+        if (this.state.companyData.company_address === "") {
+            companyError.company_address = null;
+            this.setState({ companyError })
+        } else {
+            companyError.company_address = "";
+            this.setState({ companyError })
+        }
+        if (this.state.companyData.company_city === "") {
+            companyError.company_city = null;
+            this.setState({ companyError })
+        } else {
+            companyError.company_city = "";
+            this.setState({ companyError })
+        }
+        if (this.state.companyData.company_state === "") {
+            companyError.company_state = null;
+            this.setState({ companyError })
+        } else {
+            companyError.company_state = "";
+            this.setState({ companyError })
+        }
+        if (this.state.companyData.company_zip === "") {
+            companyError.company_zip = null;
+            this.setState({ companyError })
+        } else {
+            companyError.company_zip = "";
+            this.setState({ companyError })
+        }
+        if (this.state.companyData.phone_mobile === "") {
+            companyError.phone_mobile = null;
+            this.setState({ companyError })
+        } else {
+            companyError.phone_mobile = "";
+            this.setState({ companyError })
+        }
+        if (this.state.companyData.contact_name === "") {
+            companyError.contact_name = null;
+            this.setState({ companyError })
+        } else {
+            companyError.contact_name = "";
+            this.setState({ companyError })
+        }
+        if (this.state.companyData.service_label === "") {
+            companyError.service_label = null;
+            this.setState({ companyError })
+        } else {
+            companyError.service_label = "";
+            this.setState({ companyError })
+        }
+        if (companyData.company_contact_mail === "" || companyError.company_contact_mail_Message !== "") {
+            companyError.company_contact_mail = null;
+            this.setState({ companyError })
+        } else {
+            companyError.company_contact_mail = "";
+            this.setState({ companyError })
+        }
+
+        if (companyData.company_name !== ""
+            && companyData.company_address !== ""
+            && companyData.company_city !== ""
+            && companyData.company_state !== ""
+            && companyData.company_zip !== ""
+            && companyData.phone_mobile !== ""
+            && companyData.contact_name !== ""
+            && companyError.company_contact_mail !== null
+            && companyData.service_label !== ""
+        ) {
+            this.setState({ loader: true });
+            axios
+                .post(axios.editCompany(), this.state.companyData)
+                .then((response) => {
+                    this.setState({
+                        loader: false,
+                        companyData: {
+                            "phone_mobile": "",
+                            "company_name": "",
+                            "company_address": "",
+                            "company_city": "",
+                            "company_contact_mail": "",
+                            "service_label": ""
+                        }
+                    });
+                    toast.success(response.message, {
+                        position: toast.POSITION.TOP_CENTER
+                    });
+                    this.setState({
+                        doRedirect: true,
+                        redirectUrl: "/company"
+                    });
+                    console.log("Company Create Response", response);
+                })
+                .catch((error) => {
+                    this.setState({ loader: false });
+                    toast.error(error.response.data.message, {
+                        position: toast.POSITION.TOP_CENTER
+                    });
+                    console.log("At First Error", error);
+                });
+        } else {
+            return false;
+        }
+    }
+
+
+    render() {
+        const { loader, employee, companyData, companyError, serviceTypes, redirectUrl, doRedirect, emailPattern } = this.state;
         if (doRedirect) {
             return <Redirect to={redirectUrl} />;
         }
@@ -220,47 +374,129 @@ export default class CompanyEdit extends Component {
                 <Grid container className="header" justify="space-between" >
                     <Grid item>
                         <Typography className="pageTitle titleSection" variant="title" gutterBottom align="left">
-                            {pageTitle}
+                            Company Edit
                         </Typography>
                     </Grid>
                 </Grid>
                 <Grid container spacing={32}>
-                    {/* "phone_mobile": "",
-        "first_name": "",
-        "last_name": "",
-        "email": "",
-        "service_label": "" */}
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={12}>
                         <TextField
-                            label="First Name"
-                            value={companyData.first_name}
-                            onChange={this.handleFormChange('first_name')}
+                            label="Company Name"
+                            value={companyData.company_name}
+                            onChange={this.handleFormChange('company_name')}
                             placeholder="First Name"
                             type="text"
                             fullWidth
                             margin="normal"
-                            helperText={(companyError.first_name !== null) ? "" : "First Name field required."}
-                            error={(companyError.first_name !== null)
+                            helperText={(companyError.company_name !== null) ? "" : "First Name field required."}
+                            error={(companyError.company_name !== null)
                                 ? false
                                 : true} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            label="Last Name"
-                            value={companyData.last_name}
-                            onChange={this.handleFormChange('last_name')}
-                            placeholder="Last Name"
-                            type="text"
-                            fullWidth
+                            id="company_address"
+                            label="Address"
                             margin="normal"
-                            helperText={(companyError.last_name !== null) ? "" : "Last Name field required."}
-                            error={(companyError.last_name !== null)
-                                ? false
-                                : true} />
+                            value={companyData.company_address}
+                            onChange={this.handleFormChange('company_address')}
+                            fullWidth
+                            helperText={(companyError.company_address !== null) ? '' : 'Address field required'}
+                            error={(companyError.company_address !== null) ? false : true} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            // id="company_contact_mail"
+                            label="City"
+                            defaultValue={undefined}
+                            value={companyData.company_city}
+                            onChange={this.handleFormChange('company_city')}
+                            margin="normal"
+                            fullWidth
+                            helperText={(companyError.company_city !== null) ? "" : "City field is requied"}
+                            error={(companyError.company_city !== null) ? false : true} />
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <FormControl xs={12} style={{ 'width': "100%" }} className="inputSelect">
+                            <InputLabel
+                                htmlFor="state"
+                                style={{ 'color': (companyError.company_state === null) ? '#f44336' : '#00000088' }}>
+                                State
+                            </InputLabel>
+                            <Select
+                                name="company_state"
+                                className="company_state"
+                                value={companyData.company_state}
+                                onChange={this.handleFormChange('company_state')}
+                                input={<Input id="company_state" />}>
+                                <MenuItem value="">
+                                    <em>-State-</em>
+                                </MenuItem>
+                                {this.state.us_states.map((n, i) => {
+                                    if (n !== null) {
+                                        return (
+                                            <MenuItem value={n.sugar_id} key={i}>
+                                                {CommonService.toTitleCase(n.name)}
+                                            </MenuItem>
+                                        )
+                                    }
+                                })}
+                            </Select>
+                            {(companyError.company_state === null)
+                                ? <FormHelperText style={{ 'color': '#f44336' }}>State is required!</FormHelperText>
+                                : ""}
+                        </FormControl>
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            id="company_zip"
+                            label="Zip"
+                            value={companyData.company_zip}
+                            onChange={this.handleFormChange('company_zip')}
+                            onInput={(e) => {
+                                e.target.value = e.target.value.replace(/[^\d]/g, "");
+                                e.target.value = (e.target.value == "NaN") ? null : e.target.value;
+                            }}
+                            margin="normal"
+                            fullWidth
+                            helperText={(companyError.company_zip !== null) ? "" : 'Zip field required'}
+                            error={(companyError.company_zip !== null) ? false : true} />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={6}>
                         <TextField
-                            label="Phone"
+                            label="Contact Name"
+                            value={companyData.contact_name}
+                            onChange={this.handleFormChange('contact_name')}
+                            placeholder="First Name"
+                            type="text"
+                            fullWidth
+                            margin="normal"
+                            helperText={(companyError.contact_name !== null) ? "" : "Contact Name field required."}
+                            error={(companyError.contact_name !== null)
+                                ? false
+                                : true} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            id="company_contact_mail"
+                            label="Contact Email"
+                            value={companyData.company_contact_mail}
+                            onChange={this.handleFormChange('company_contact_mail')}
+                            margin="normal"
+                            fullWidth
+                            helperText={companyError.company_contact_mail_Message}
+                            error={(companyError.company_contact_mail !== null) ? false : true} />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <TextField
+                            label="Contact Phone"
+                            defaultValue={undefined}
                             value={companyData.phone_mobile}
                             onChange={this.handleFormChange('phone_mobile')}
                             margin="normal"
@@ -270,66 +506,59 @@ export default class CompanyEdit extends Component {
                                 e.target.value = (e.target.value == "NaN") ? "" : e.target.value;
                             }}
                             fullWidth
-                            disabled
-                            helperText={(companyError.phone_mobile !== null) ? "" : "Phone field is requied"}
+                            helperText={(companyError.phone_mobile !== null) ? "" : "Contact Phone field is requied"}
                             error={(companyError.phone_mobile !== null) ? false : true} />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={6} lg={6}>
-                        <TextField
-                            id="email"
-                            label="Email"
-                            value={companyData.email}
-                            onChange={this.handleFormChange('email')}
-                            margin="normal"
-                            fullWidth
-                            helperText={(companyError.email !== null) ? "" : "Email field is required"}
-                            error={(companyError.email !== null) ? false : true} />
+                    <Grid item xs={12} sm={6} md={6} lg={6} className="serviceTypeContainer1 margin-top-20">
+                    <FormControl xs={12} style={{ 'width': "100%" }}>
+                            <InputLabel
+                                htmlFor="service type"
+                                style={{ 'color': (companyError.service_label === null) ? '#f44336' : 'currentColor' }}>
+                                Service Type
+                            </InputLabel>
+                            <Select
+                                name="serviceType"
+                                className="serviceType"
+                                value={companyData.service_label}
+                                onChange={this.handleRadioChange}
+                                input={<Input id="serviceType" />}>
+                                <MenuItem value="">
+                                    <em>-Service Type-</em>
+                                </MenuItem>
+                                {serviceTypes.map((n, i) => {
+                                    if (n !== null) {
+                                        return (
+                                            <MenuItem value={n} key={i}>
+                                                {CommonService.toTitleCase(n)}
+                                            </MenuItem>
+                                        )
+                                    }
+                                })}
+                            </Select>
+                            {(companyError.service_label === null)
+                                ? <FormHelperText style={{ 'color': '#f44336' }}>Service type is required!</FormHelperText>
+                                : ""}
+                        </FormControl>
                     </Grid>
                 </Grid>
-                <Grid container className="serviceTypeContainer1 margin-top-20" spacing={32}>
+
+                <Grid container spacing={32} className="margin-top-20 text-right">
                     <Grid item xs={12} sm={12}>
-                        <b>SERVICE TYPE</b> : {companyData.service_label}
-                    </Grid>
-                    {
-                        /* serviceTypes.map((n, i) => {
-                            if(n !== null){
-                                return (
-                                    <Grid item xs={12} sm={4} key={i}>
-                                        <Radio
-                                            checked={companyData.service_label === n}
-                                            onChange={this.handleRadioChange}
-                                            value={n}
-                                            name="serviceType"
-                                            aria-label={CommonService.toTitleCase(n)}
-                                            />
-                                    <b className="serviceTypeLabel">{CommonService.toTitleCase(n)}</b>
-                                    </Grid> 
-                                )
-                            }
-                        }) */
-                    }
-                </Grid>
-                <Grid container spacing={32} className="margin-top-20">
-                    <Grid item xs={12} sm={12} className="btnHolder">
                         <Button
-                            onClick={this.cancelEdit}
+                            onClick={this.cancelCreate}
                             className="btn btn-secondary">
                             Cancel
-                </Button>
+                        </Button>
                         <Button
+                            type="submit"
                             onClick={this.submitEmployeeForm}
                             variant="contained"
                             color="primary"
                             className="btn btn-primary">
                             Update
-                </Button>
+                        </Button>
                     </Grid>
                 </Grid>
-
-
-
-
-
                 {CommonService.renderLoader(loader)}
                 <ToastContainer autoClose={5000} />
             </Grid>

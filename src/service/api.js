@@ -101,6 +101,9 @@ axios.getCompanies = () => {
 axios.createCompany = () => {
   return Config.baseUrl + Config.api.company.create.url;
 };
+axios.editCompany = () => {
+  return Config.baseUrl + Config.api.company.edit.url;
+};
 axios.getServiceTypes = () => {
   return Config.baseUrl + Config.api.serviceTypes.url;
 };
