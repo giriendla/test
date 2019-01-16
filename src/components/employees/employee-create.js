@@ -128,8 +128,10 @@ export default class EmployeeCreate extends Component {
   }
   submitEmployeeForm = () => {
     // debugger;
+    
     console.log("Employee Creation Submitted", this.state.employeeData);
     let that = this;
+    debugger;
     // "phone_mobile": "",
     //     "first_name": "",
     //     "last_name": "",
@@ -137,7 +139,7 @@ export default class EmployeeCreate extends Component {
     //     "service_label": ""
     let employeeError = this.state.employeeError;
     let employeeData = this.state.employeeData;
-    if(this.state.employeeData.first_name === ""){
+    if(employeeData.first_name.trim() === ""){
       employeeError.first_name = null;
       this.setState({employeeError})
     }else{
@@ -145,28 +147,28 @@ export default class EmployeeCreate extends Component {
       this.setState({employeeError})
     }
 
-    if(this.state.employeeData.last_name === ""){
+    if (employeeData.last_name.trim() === ""){
       employeeError.last_name = null;
       this.setState({employeeError})
     }else{
       employeeError.last_name = "";
       this.setState({employeeError})
     }
-    if(this.state.employeeData.phone_mobile === ""){
+    if (employeeData.phone_mobile.trim() === ""){
       employeeError.phone_mobile = null;
       this.setState({employeeError})
     }else{
       employeeError.phone_mobile = "";
       this.setState({employeeError})
     }
-    if(this.state.employeeData.service_label === ""){
+    if (employeeData.service_label.trim() === ""){
       employeeError.service_label = null;
       this.setState({employeeError})
     }else{
       employeeError.service_label = "";
       this.setState({employeeError})
     }
-    if(this.state.employeeData.email === ""){
+    if (employeeData.email.trim() === ""){
       employeeError.email = null;
       this.setState({employeeError})
     }else{
@@ -174,11 +176,11 @@ export default class EmployeeCreate extends Component {
       this.setState({employeeError})
     }
 
-    if(employeeData.first_name !== "" 
-        &&  employeeData.last_name !== "" 
-        &&  employeeData.phone_mobile !== ""
-        &&  employeeData.email !== ""
-        &&  employeeData.service_label !== ""){
+    if(employeeData.first_name.trim() !== "" 
+      && employeeData.last_name.trim() !== "" 
+      && employeeData.phone_mobile.trim() !== ""
+      && employeeData.email.trim() !== ""
+      && employeeData.service_label.trim() !== ""){
           this.setState({loader: true});
           axios
             .post(axios.createEmployee(), this.state.employeeData)
