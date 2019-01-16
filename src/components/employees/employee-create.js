@@ -183,18 +183,23 @@ export default class EmployeeCreate extends Component {
           axios
             .post(axios.createEmployee(), this.state.employeeData)
             .then((response) => {
+
               this.setState({loader: false,
-              employeeData: {
-                  "phone_mobile": "",
-                  "first_name": "",
-                  "last_name": "",
-                  "email": "",
-                  "service_label": ""
-                }});
-              toast.success(response.message, {
+                employeeData: {
+                    "phone_mobile": "",
+                    "first_name": "",
+                    "last_name": "",
+                    "email": "",
+                    "service_label": ""
+                  }});
+                toast.success(response.message, {
                 position: toast.POSITION.TOP_CENTER
-              });
-              console.log("Employee Create Response", response);
+                });
+                console.log("Employee Create Response", response);
+                    this.setState({
+                        doRedirect: true,
+                        redirectUrl: '/employees'
+                    });              
             })
             .catch(function (error) {
               that.setState({loader: false});
@@ -316,22 +321,26 @@ export default class EmployeeCreate extends Component {
             </Grid>
         </Grid>
         
-        <Grid container spacing={32} className="margin-top-20 text-right">
-            <Grid item xs={12} sm={12}>
-                <Button
-                    onClick={this.cancelCreate}
-                    className="btn btn-secondary">
-                    Cancel
-                </Button>
-                <Button
-                    type="submit"
-                    onClick={this.submitEmployeeForm}
-                    variant="contained"
-                    color="primary"
-                    className="btn btn-primary">
-                    Create
-                </Button>
-            </Grid>
+        <Grid container>
+          <Grid container spacing={16} justify="left" className="margin-top-20">
+              <Grid item>
+                  <Button
+                      onClick={this.cancelCreate}
+                      className="btn btn-secondary">
+                      Cancel
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                      type="submit"
+                      onClick={this.submitEmployeeForm}
+                      variant="contained"
+                      color="primary"
+                      className="btn btn-primary">
+                      Create
+                  </Button>
+              </Grid>
+          </Grid>
         </Grid>
         {CommonService.renderLoader(loader)}
         <ToastContainer autoClose={5000} />

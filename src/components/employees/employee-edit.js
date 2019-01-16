@@ -115,7 +115,6 @@ export default class EmployeesEdit extends Component {
             }); */
             // debugger;
             console.log("Employee Response", response);
-            debugger;
             let employee = response.employee_data;
             let serviceLabel = CommonService.localStore.get("service_label");
             let services = JSON.parse(serviceLabel.service_label);
@@ -175,31 +174,74 @@ export default class EmployeesEdit extends Component {
   }
   submitEmployeeForm = () => {
       console.log("Employee Creation Submitted", this.state.employeeData);
-      console.log("Employee Creation Submitted", this.state.employeeData);
     let that = this;
-    this.setState({loader: true});
-    axios
-      .post(axios.editEmployee(), this.state.employeeData)
-      .then((response) => {
-        this.setState({loader: false});
-        toast.success(response.message, {
-          position: toast.POSITION.TOP_CENTER
-        });
-        console.log("Employee Create Response", response);
-        // setTimeout(() => {
-            this.setState({
-                doRedirect: true,
-                redirectUrl: '/employees'
-            });
-        // }, 3000);
-      })
-      .catch(function (error) {
-        that.setState({loader: false});
-        toast.error(error.response.data.message, {
-          position: toast.POSITION.TOP_CENTER
-        });
-        console.log("At First Error", error);
-      });
+
+    let employeeError = this.state.employeeError;
+    let employeeData = this.state.employeeData;
+    if(this.state.employeeData.first_name === ""){
+      employeeError.first_name = null;
+      this.setState({employeeError})
+    }else{
+      employeeError.first_name = "";
+      this.setState({employeeError})
+    }
+
+    if(this.state.employeeData.last_name === ""){
+      employeeError.last_name = null;
+      this.setState({employeeError})
+    }else{
+      employeeError.last_name = "";
+      this.setState({employeeError})
+    }
+    
+    if(this.state.employeeData.service_label === ""){
+      employeeError.service_label = null;
+      this.setState({employeeError})
+    }else{
+      employeeError.service_label = "";
+      this.setState({employeeError})
+    }
+    if(this.state.employeeData.email === ""){
+      employeeError.email = null;
+      this.setState({employeeError})
+    }else{
+      employeeError.email = "";
+      this.setState({employeeError})
+    }
+
+
+    if(employeeData.first_name !== "" 
+        &&  employeeData.last_name !== "" 
+        &&  employeeData.email !== ""
+        &&  employeeData.service_label !== ""){
+          this.setState({loader: true});
+          axios
+            .post(axios.editEmployee(), this.state.employeeData)
+            .then((response) => {
+                this.setState({loader: false});
+                toast.success(response.message, {
+                position: toast.POSITION.TOP_CENTER
+                });
+                console.log("Employee Create Response", response);
+                // setTimeout(() => {
+                    this.setState({
+                        doRedirect: true,
+                        redirectUrl: '/employees'
+                    });
+                // }, 3000);
+            })
+            .catch(function (error) {
+                that.setState({loader: false});
+                toast.error(error.response.data.message, {
+                position: toast.POSITION.TOP_CENTER
+                });
+                console.log("At First Error", error);
+            });                     
+        }else{           
+          return false;
+        }
+
+    
   }
     
   cancelEdit = () => {
@@ -309,20 +351,24 @@ export default class EmployeesEdit extends Component {
                     }) */
                 }
         </Grid>
-        <Grid container spacing={32} className="margin-top-20">
-            <Grid item xs={12} sm={12} className="btnHolder">
-                <Button
-                    onClick={this.cancelEdit}   
-                    className="btn btn-secondary">
-                    Cancel
-                </Button>
-                <Button
-                    onClick={this.submitEmployeeForm}
-                    variant="contained"
-                    color="primary"
-                    className="btn btn-primary">
-                    Update
-                </Button>
+        <Grid container >
+            <Grid container spacing={16} className="margin-top-20">
+                <Grid item>
+                    <Button
+                        onClick={this.cancelEdit}   
+                        className="btn btn-secondary">
+                        Cancel
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button
+                        onClick={this.submitEmployeeForm}
+                        variant="contained"
+                        color="primary"
+                        className="btn btn-primary">
+                        Update
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
 

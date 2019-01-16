@@ -488,21 +488,25 @@ export default class CompanyCreate extends Component {
                     </Grid>
                 </Grid>
 
-                <Grid container spacing={32} className="margin-top-20 text-right">
-                    <Grid item xs={12} sm={12}>
-                        <Button
-                            onClick={this.cancelCreate}
-                            className="btn btn-secondary">
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            onClick={this.submitEmployeeForm}
-                            variant="contained"
-                            color="primary"
-                            className="btn btn-primary">
-                            Create
-                        </Button>
+                <Grid container>
+                    <Grid container spacing={16} justify="left"  className="margin-top-20">
+                        <Grid item>
+                            <Button
+                                onClick={this.cancelCreate}
+                                className="btn btn-secondary">
+                                Cancel
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                type="submit"
+                                onClick={this.submitEmployeeForm}
+                                variant="contained"
+                                color="primary"
+                                className="btn btn-primary">
+                                Create
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
                 {CommonService.renderLoader(loader)}
