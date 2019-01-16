@@ -198,7 +198,7 @@ export default class CompanyCreate extends Component {
         let { companyError, companyData} = this.state;
 
 
-        if (companyData.company_name === "") {
+        if (companyData.company_name.trim() === "") {
             companyError.company_name = null;
             this.setState({ companyError })
         } else {
@@ -206,14 +206,14 @@ export default class CompanyCreate extends Component {
             this.setState({ companyError })
         }
 
-        if (this.state.companyData.company_address === "") {
+        if (this.state.companyData.company_address.trim() === "") {
             companyError.company_address = null;
             this.setState({ companyError })
         } else {
             companyError.company_address = "";
             this.setState({ companyError })
         }
-        if (this.state.companyData.company_city === "") {
+        if (this.state.companyData.company_city.trim() === "") {
             companyError.company_city = null;
             this.setState({ companyError })
         } else {
@@ -227,21 +227,21 @@ export default class CompanyCreate extends Component {
             companyError.company_state = "";
             this.setState({ companyError })
         }
-        if (this.state.companyData.company_zip === "") {
+        if (this.state.companyData.company_zip.trim() === "") {
             companyError.company_zip = null;
             this.setState({ companyError })
         } else {
             companyError.company_zip = "";
             this.setState({ companyError })
         }
-        if (this.state.companyData.phone_mobile === "") {
+        if (this.state.companyData.phone_mobile.trim() === "") {
             companyError.phone_mobile = null;
             this.setState({ companyError })
         } else {
             companyError.phone_mobile = "";
             this.setState({ companyError })
         }
-        if (this.state.companyData.contact_name === "") {
+        if (this.state.companyData.contact_name.trim() === "") {
             companyError.contact_name = null;
             this.setState({ companyError })
         } else {
@@ -255,7 +255,7 @@ export default class CompanyCreate extends Component {
             companyError.service_label = "";
             this.setState({ companyError })
         }
-        if (companyData.company_contact_mail === "" || companyError.company_contact_mail_Message !== "") {
+        if (companyData.company_contact_mail.trim() === "" || companyError.company_contact_mail_Message.trim() !== "") {
             companyError.company_contact_mail = null;
             this.setState({ companyError })
         } else {
@@ -263,14 +263,14 @@ export default class CompanyCreate extends Component {
             this.setState({ companyError })
         }
 
-        if (companyData.company_name !== ""
-            && companyData.company_address !== ""
-            && companyData.company_city !== ""
+        if (companyData.company_name.trim() !== ""
+            && companyData.company_address.trim() !== ""
+            && companyData.company_city.trim() !== ""
             && companyData.company_state !== ""
-            && companyData.company_zip !== ""
-            && companyData.phone_mobile !== ""
-            && companyData.contact_name !== ""
-            && companyError.company_contact_mail !== null
+            && companyData.company_zip.trim() !== ""
+            && companyData.phone_mobile.trim() !== ""
+            && companyData.contact_name.trim() !== ""
+            && companyError.company_contact_mail.trim() !== null
             && companyData.service_label !== ""
         ) {
             this.setState({ loader: true });
