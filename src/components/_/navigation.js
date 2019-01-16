@@ -7,6 +7,7 @@ import {
     Redirect,
     withRouter
   } from "react-router-dom";
+import Business from '@material-ui/icons/Business';
 
 export default class MainNav extends Component {
     constructor(props){
@@ -42,7 +43,7 @@ export default class MainNav extends Component {
                         if(n.isLogin && !n.hasOwnProperty('child')){
                             return <li key={i}>
                             <Link to={n.link} className={(n.link === currentUrl) ? "active": ""}>
-                                <img src={Config.images + "icons/white/" + n.icon} />
+                                <img src={Config.images + "icons/white/" + n.icon} /> 
                                 <span>{n.name}</span>
                             </Link>
                             </li>

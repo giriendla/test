@@ -39,7 +39,7 @@ const Config = {
     {
       name: "Companies",
       link: "/company",
-      icon: "employees.png",
+      icon: "building.svg",
       isLogin: true,
       template: "user"
     },

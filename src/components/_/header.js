@@ -43,7 +43,7 @@ class Appheader extends Component {
     };
   }
   componentDidMount() {
-    this.newsScroll();
+    // this.newsScroll();
   }
  
   
